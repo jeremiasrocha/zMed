@@ -1,0 +1,88 @@
+package br.com.techHouse.zmed.enums;
+
+public enum DDDEnum {
+	
+	ACRE_68("68"),
+	ALAGOAS_82("82"),
+	AMAPA_96("96"),
+	AMAZONAS_92("92"), 
+	AMAZONAS_97("97"),
+	BAHIA_71("71"),
+	BAHIA_73("73"),
+	BAHIA_74("74"),
+	BAHIA_75("75"),
+	BAHIA_77("77"),
+	CEARA_85("85"),
+	CEARA_88("88"),
+	DISTRITO_FEDERAL_61("61"),
+	ESPIRITO_SANTO_27("27"),
+	ESPIRITO_SANTO_28("28"),
+	GOIAS_64("64"),
+	GOIAS_62("62"),
+	MARANHAO_98("98"),
+	MARANHAO_99("99"),
+	MATO_GROSSO_65("65"),
+	MATO_GROSSO_66("66"),
+	MATO_GROSS_DO_SUL_67("67"),
+	MINAS_GERAIS_31("31"),
+	MINAS_GERAIS_32("32"),
+	MINAS_GERAIS_33("33"),
+	MINAS_GERAIS_34("34"),
+	MINAS_GERAIS_35("35"),
+	MINAS_GERAIS_37("37"),
+	MINAS_GERAIS_38("38"),
+	PARA_91("91"),
+	PARA_93("93"),
+	PARA_94("94"),
+	PARAIBA_83("83"),
+	PARANA_41("41"),
+	PARANA_42("42"),
+	PARANA_43("43"),
+	PARANA_44("44"),
+	PARANA_45("45"),
+	PARANA_46("46"),
+	PERNAMBUCO_81("81"),
+	PERNAMBUCO_87("87"),
+	PIAUI_86("86"),
+	PIAUI_89("89"),	
+	RIO_DE_JANEIRO_21("21"),
+	RIO_DE_JANEIRO_22("22"),
+	RIO_DE_JANEIRO_23("23"),
+	RIO_DE_JANEIRO_24("24"),
+	RIO_GRANDE_DO_NORTE_84("84"),
+	RIO_GRANDE_DO_SUL_51("51"),
+	RIO_GRANDE_DO_SUL_53("53"),
+	RIO_GRANDE_DO_SUL_54("54"),
+	RIO_GRANDE_DO_SUL_55("55"),
+	RONDONIA_69("69"),
+	RORAIMA_95("95"),
+	SANTA_CATARINA_47("47"),
+	SANTA_CATARINA_48("48"),
+	SANTA_CATARINA_49("49"),
+	SAO_PAULO_11("11"),
+	SAO_PAULO_12("12"),
+	SAO_PAULO_13("13"),
+	SAO_PAULO_14("14"),
+	SAO_PAULO_15("15"),
+	SAO_PAULO_16("16"),
+	SAO_PAULO_17("17"),
+	SAO_PAULO_18("18"),
+	SAO_PAULO_19("19"),
+	SERGIPE_79("79"),
+	TOCANTINS_63("63");
+
+	private DDDEnum(String ddd) {
+		this.ddd = ddd;
+	}
+
+	private String ddd;
+
+	public String getDDD() {
+		return ddd;
+	}
+
+	public String getName() {
+		return name();
+	}
+
+}

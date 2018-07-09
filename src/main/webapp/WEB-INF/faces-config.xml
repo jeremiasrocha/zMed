@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<faces-config version="2.2" 
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+ 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+ 		                http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+ 
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>medicamento</from-outcome>
+			<to-view-id>/pages/medicamento/medicamento.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>medicamentoInventario</from-outcome>
+			<to-view-id>/pages/medicamento/medicamento_inventario.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>fornecedor</from-outcome>
+			<to-view-id>/pages/fornecedor/fornecedor.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<application>
+		<locale-config>
+			<default-locale>pt_BR</default-locale>
+		</locale-config>
+		<resource-bundle>
+			<base-name>resources</base-name>
+			<var>resources</var>
+		</resource-bundle>
+		<message-bundle>messages</message-bundle>
+	</application>
+
+</faces-config>

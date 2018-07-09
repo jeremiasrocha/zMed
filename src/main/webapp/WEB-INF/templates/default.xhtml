@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+    
+    <title>#{resources['label.global.tituloProjeto']}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <link rel="stylesheet" href="#{request.contextPath}/resources/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="#{request.contextPath}/resources/css/sb-admin.css" />
+    
+    <link rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="#{request.contextPath}/resources/css/jquery.circliful.css" />
+    <link rel="stylesheet" href="#{request.contextPath}/resources/css/morris.css" />
+    <link rel="stylesheet" href="#{request.contextPath}/resources/css/icons.css" />
+    <link rel="stylesheet" href="#{request.contextPath}/resources/css/switchery.min.css" />
+    <link rel="stylesheet" href="#{request.contextPath}/resources/css/style.css" />
+    <link rel="stylesheet" href="#{request.contextPath}/resources/css/estilo.css" />
+    
+    <script src="#{request.contextPath}/resources/jquery/jquery-1.8.3.min.js"></script>
+    <script src="#{request.contextPath}/resources/jquery/jquery-ui-1.9.2.custom.min.js"></script>
+    
+    <link rel="stylesheet" href="#{request.contextPath}/resources/jquery/jquery-1.8.3.min.css" />
+	
+    <script src="#{request.contextPath}/resources/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="#{request.contextPath}/resources/jquery-easing/jquery.easing.min.js"></script>
+    <script src="#{request.contextPath}/resources/datatables/jquery.dataTables.js"></script>
+    <script src="#{request.contextPath}/resources/datatables/dataTables.bootstrap4.js"></script>
+    <script src="#{request.contextPath}/resources/js/sb-admin.min.js"></script>
+    <script src="#{request.contextPath}/resources/js/sb-admin-datatables.min.js"></script>
+    <script src="#{request.contextPath}/resources/js/modernizr.min.js"></script>
+    <script src="#{request.contextPath}/resources/js/popper.min.js"></script>
+    <script src="#{request.contextPath}/resources/js/bootstrap.min.js"></script>
+    <script src="#{request.contextPath}/resources/js/detect.js"></script>
+    <script src="#{request.contextPath}/resources/js/fastclick.js"></script>
+    <script src="#{request.contextPath}/resources/js/jquery.slimscroll.js"></script>
+    <script src="#{request.contextPath}/resources/js/jquery.blockUI.js"></script>
+    <script src="#{request.contextPath}/resources/js/waves.js"></script>
+    <script src="#{request.contextPath}/resources/js/mascaras.js"></script>
+    <script src="#{request.contextPath}/resources/js/jsf.js"></script>
+    
+</h:head>
+
+<h:body class="fixed-nav sticky-footer bg-dark" id="page-top">
+	<h:form id="formDefault" prependId="false">
+	
+<!--=================================================================== INÍCIO MENU PRINCIPAL ================================================================================-->
+		
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav"> 
+			<a class="navbar-brand" href="index.html">#{resources['label.global.tituloProjeto']}</a>
+			
+			<button class="navbar-toggler navbar-toggler-right" type="button"
+				data-toggle="collapse" data-target="#navbarResponsive"
+				aria-controls="navbarResponsive" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+			        
+			        <!-- MENU MEDICAMENTO -->
+			        <li class="nav-item" data-toggle="tooltip" data-placement="right">
+						<a class="nav-link nav-link-collapse collapsed"	data-toggle="collapse" href="#menuMedicamento" data-parent="#exampleAccordion"> 
+							<i class="fa fa-eyedropper"></i>
+							<span class="nav-link-text">#{resources['label.uc.medicamento.titulo']}</span>
+						</a>
+						<ul class="sidenav-second-level collapse" id="menuMedicamento">
+							<li> 
+								<h:commandLink action="#{medicamentoController.abrirTela()}" >
+									<h:outputText value="#{resources['label.global.avulso']}" />
+								</h:commandLink>
+							</li>
+							<li> 
+								<h:commandLink action="#{medicamentoInventarioController.abrirTela()}" >
+									<h:outputText value="#{resources['label.global.inventario']}" />
+								</h:commandLink>
+							</li>
+						</ul>
+					</li>
+			        
+					<!-- MENU MATERIAL -->
+					<li class="nav-item" data-toggle="tooltip" data-placement="right">
+						<a class="nav-link nav-link-collapse collapsed"	data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion"> 
+							<i class="fa fa-medkit"></i>
+							<span class="nav-link-text">#{resources['label.uc.material.titulo']}</span>
+						</a>
+						<ul class="sidenav-second-level collapse" id="collapseComponents">
+							<li><a href="#">Avulso</a></li>
+							<li><a href="#">Inventário</a></li>
+						</ul>
+					</li>
+					
+					<!-- MENU FORNECEDOR -->
+					<li class="nav-item" data-toggle="tooltip" data-placement="right">
+						<h:commandLink action="#{fornecedorController.abrirTela()}" styleClass="nav-link" >
+							<i class="fa fa-truck"></i>
+							<span class="nav-link-text">
+								<h:outputText value="#{resources['label.uc.fornecedor.titulo']}" />
+							</span>
+						</h:commandLink>
+					</li>
+					
+					<!-- MENU PARÂMETROS -->
+					<li class="nav-item" data-toggle="tooltip" data-placement="right">
+						<a class="nav-link nav-link-collapse collapsed"	data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion"> 
+							<i class="fa fa-gears"></i>
+							<span class="nav-link-text">Parâmetros</span>
+						</a>
+						<ul class="sidenav-second-level collapse" id="collapseComponents">
+							<li><a href="navbar.html">Internos</a></li>
+							<li><a href="cards.html">Operadora</a></li>
+						</ul>
+					</li>
+					
+					<!-- MENU RELATÓRIO -->
+					<li class="nav-item" data-toggle="tooltip" data-placement="right">
+						<a class="nav-link" href="charts.html"> 
+							<i class="fa fa-line-chart"></i> 
+							<span class="nav-link-text">Relatórios</span>
+						</a>
+					</li>
+					
+					<!-- MENU LINKS -->
+					<li class="nav-item" data-toggle="tooltip" data-placement="right">
+						<a class="nav-link" href="#">
+							<i class="fa fa-fw fa-link"></i> 
+							<span class="nav-link-text">Links</span>
+						</a>
+					</li>
+				</ul>
+				
+				<ul class="navbar-nav sidenav-toggler">
+					<li class="nav-item">
+						<a class="nav-link text-center"	id="sidenavToggler"> 
+						<i class="fa fa-fw fa-angle-left"></i>
+						</a>
+					</li>
+				</ul>
+				
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item dropdown">
+						<a	class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+							<i class="fa fa-fw fa-envelope"></i> 
+							<span class="indicator text-primary d-none d-lg-block"> 
+								<i class="fa fa-fw fa-circle"></i>
+							</span>
+						</a>
+						
+						<div class="dropdown-menu" aria-labelledby="messagesDropdown">
+							<h6 class="dropdown-header">Mensagens:</h6>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#"> 
+								<strong>David Miller</strong> 
+								<span class="small float-right text-muted">11:21 AM</span>
+								<div class="dropdown-message small">Hey there! This new
+									version of SB Admin is pretty awesome! These messages clip off
+									when they reach the end of the box so they don't overflow over to
+									the sides!
+								</div>
+							</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item small" href="#">
+								Visualizar Todos
+							</a>
+						</div>
+					</li>
+					
+					<li class="nav-item dropdown">
+						<a	class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+							<i class="fa fa-fw fa-bell"></i> 
+							<span class="indicator text-warning d-none d-lg-block"> 
+								<i	class="fa fa-fw fa-circle"></i>
+							</span>
+						</a>
+						
+						<div class="dropdown-menu" aria-labelledby="alertsDropdown">
+							<h6 class="dropdown-header">Alertas:</h6>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#"> 
+								<span class="text-success">
+									<strong> <i class="fa fa-long-arrow-up fa-fw"></i>Status Update	</strong>
+								</span> 
+								<span class="small float-right text-muted">11:21 AM</span>
+								<div class="dropdown-message small">This is an automated
+									server response message. All systems are online.
+								</div>
+							</a>
+							
+							<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#"> 
+									<span class="text-danger">
+										<strong> <i class="fa fa-long-arrow-down fa-fw"></i>Status Update</strong>
+									</span> 
+									<span class="small float-right text-muted">11:21 AM</span>
+									<div class="dropdown-message small">This is an automated
+										server response message. All systems are online.
+									</div>
+								</a>
+							
+							<div class="dropdown-divider"></div>
+								<a class="dropdown-item small" href="#">
+									Visualizar Todos
+								</a>
+						</div>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="modal"	data-target="#exampleModal"> 
+							<i class="fa fa-fw fa-sign-out"></i>Logout
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+<!--=================================================================== FIM MENU PRINCIPAL ================================================================================-->		
+		
+		<div class="content-wrapper">
+			
+			<!-- DIV CONTENT UTILIZADA POR TODAS AS PÁGINAS -->
+			<div class="container-fluid">
+				<div id="content">
+					<h:messages infoClass="alert-message alert-message-success" errorClass="alert-message alert-message-danger" warnClass="alert-message alert-message-warning" id="idMessages"/>
+					<ui:insert name="content" />
+				</div>
+			</div>
+	
+			<!-- RODAPÉ -->
+			<footer class="sticky-footer">
+				<div class="container">
+					<div class="text-center">
+						<small>Tech House Systens</small>
+					</div>
+				</div>
+			</footer>
+	
+			<!-- BUTTON PAGE TOP  -->
+			<a class="scroll-to-top rounded" href="#page-top"> <i
+				class="fa fa-angle-up"></i>
+			</a>
+	
+			<!-- DIV LOGOUT -->
+			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Ready to
+								Leave?</h5>
+							<button class="close" type="button" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">Select "Logout" below if you are
+							ready to end your current session.</div>
+						<div class="modal-footer">
+							<button class="btn btn-secondary" type="button"
+								data-dismiss="modal">Cancel</button>
+							<a class="btn btn-primary" href="login.html">Logout</a>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+		</div>
+	</h:form>
+</h:body>
+
+</html>
