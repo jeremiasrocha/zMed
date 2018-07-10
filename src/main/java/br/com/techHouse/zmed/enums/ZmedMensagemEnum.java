@@ -33,7 +33,11 @@ public enum ZmedMensagemEnum {
 	
 	//MENSAGENS FORNECEDOR
 	UC_FORNECEDOR_NAO_ENCONTRADO("label.uc.fornecedor.msg.fornecedorNaoEncontrado","label.uc.fornecedor.msg.fornecedorNaoEncontrado"),
-	UC_FORNECEDOR_JA_CADASTRADO("label.uc.fornecedor.msg.fornecedorJaCadastrado","label.uc.fornecedor.msg.fornecedorJaCadastrado");
+	UC_FORNECEDOR_JA_CADASTRADO("label.uc.fornecedor.msg.fornecedorJaCadastrado","label.uc.fornecedor.msg.fornecedorJaCadastrado"),
+	
+	//MENSAGENS FORNECEDOR
+	UC_OPERADORA_NAO_ENCONTRADA("label.uc.operadora.msg.operadoraNaoEncontrada","label.uc.operadora.msg.operadoraNaoEncontrada"),
+	UC_OPERADORA_JA_CADASTRADA("label.uc.operadora.msg.operadoraJaCadastrada","label.uc.operadora.msg.operadoraJaCadastrada");
 	
 	private ZmedMensagemEnum(String key,String text){
 		this.key = key;

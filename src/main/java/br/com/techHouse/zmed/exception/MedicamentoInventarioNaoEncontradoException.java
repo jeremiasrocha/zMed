@@ -1,8 +1,8 @@
 package br.com.techHouse.zmed.exception;
 
-public class MedicamentoInventarioNaoEncontradoException extends MedicamentoException {
+public class MedicamentoInventarioNaoEncontradoException extends MedicamentoInventarioException {
 
-	private static final long serialVersionUID = -8586045766479022529L;
+	private static final long serialVersionUID = -82109071495966679L;
 
 	public MedicamentoInventarioNaoEncontradoException() {
 		super();

@@ -2,7 +2,7 @@ package br.com.techHouse.zmed.exception;
 
 public class NotaFiscalException extends Exception {
 
-	private static final long serialVersionUID = -6824738106171016123L;
+	private static final long serialVersionUID = -5377401030897280241L;
 
 	public NotaFiscalException() {
 		super();

@@ -5,7 +5,8 @@ public enum ZmedNavegacaoEnum {
 	medicamento,
 	medicamentoInventario,
 	notaFiscal,
-	fornecedor;
+	fornecedor,
+	operadora;
 	
 	public String getName(){
 		return name();

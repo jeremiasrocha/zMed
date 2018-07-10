@@ -14,22 +14,22 @@ import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import br.com.techHouse.zmed.entity.Fornecedor;
+import br.com.techHouse.zmed.entity.Operadora;
 import br.com.techHouse.zmed.enums.ZmedMensagemEnum;
-import br.com.techHouse.zmed.exception.FornecedorNaoEncontradoException;
+import br.com.techHouse.zmed.exception.OperadoraNaoEncontradaException;
 import br.com.techHouse.zmed.message.MensagemFactory;
-import br.com.techHouse.zmed.to.FornecedorTO;
+import br.com.techHouse.zmed.to.OperadoraTO;
 import br.com.techHouse.zmed.util.UtilNullEmpty;
 
 @Stateless
-public class OperadoraDAO extends ZmedDataAbstract<Fornecedor> {
+public class OperadoraDAO extends ZmedDataAbstract<Operadora> {
 	
 	private @Inject MensagemFactory mensagemFactory;
 
 	@Override
-	public Fornecedor recuperar(Serializable id) throws Exception {
-		CriteriaQuery<Fornecedor> criteria = getCriteriaBuilder().createQuery(Fornecedor.class);
-		Root<Fornecedor> root = criteria.from(Fornecedor.class);
+	public Operadora recuperar(Serializable id) throws Exception {
+		CriteriaQuery<Operadora> criteria = getCriteriaBuilder().createQuery(Operadora.class);
+		Root<Operadora> root = criteria.from(Operadora.class);
 		try {
 			return getManager().createQuery(criteria.select(root).where(getCriteriaBuilder().equal(root.get("id"), id))).getSingleResult();
 		} catch (NoResultException e) {
@@ -37,9 +37,9 @@ public class OperadoraDAO extends ZmedDataAbstract<Fornecedor> {
 		}
 	}
 
-	public Fornecedor recuperarCompleto(Integer id) throws Exception {
-		CriteriaQuery<Fornecedor> criteria = getCriteriaBuilder().createQuery(Fornecedor.class);
-		Root<Fornecedor> root = criteria.from(Fornecedor.class);
+	public Operadora recuperarCompleto(Integer id) throws Exception {
+		CriteriaQuery<Operadora> criteria = getCriteriaBuilder().createQuery(Operadora.class);
+		Root<Operadora> root = criteria.from(Operadora.class);
 		try {
 			return getManager().createQuery(criteria.select(root).where(getCriteriaBuilder().equal(root.get("id"), id))).getSingleResult();
 		} catch (NoResultException e) {
@@ -47,51 +47,51 @@ public class OperadoraDAO extends ZmedDataAbstract<Fornecedor> {
 		}
 	}
 
-	public Fornecedor recuperarPorNome(String nome) throws FornecedorNaoEncontradoException {
+	public Operadora recuperarPorNome(String nome) throws OperadoraNaoEncontradaException {
 		try {
-			CriteriaQuery<Fornecedor> criteria = getCriteriaBuilder().createQuery(Fornecedor.class);
-			Root<Fornecedor> root = criteria.from(Fornecedor.class);
+			CriteriaQuery<Operadora> criteria = getCriteriaBuilder().createQuery(Operadora.class);
+			Root<Operadora> root = criteria.from(Operadora.class);
 			return getManager().createQuery(criteria.select(root).where(getCriteriaBuilder().equal(root.get("nome"), nome))).getSingleResult();
 		} catch (NoResultException e) {
-			throw new FornecedorNaoEncontradoException(mensagemFactory.getMensagem(ZmedMensagemEnum.UC_FORNECEDOR_NAO_ENCONTRADO.getKey())+": "+nome);
+			throw new OperadoraNaoEncontradaException(mensagemFactory.getMensagem(ZmedMensagemEnum.UC_OPERADORA_NAO_ENCONTRADA.getKey())+": "+nome);
 		}
 	}
 
-	private Predicate[] comporFiltro(Root<Fornecedor> root, FornecedorTO fornecedorTO, CriteriaQuery<?> criteria) {
+	private Predicate[] comporFiltro(Root<Operadora> root, OperadoraTO operadoraTO, CriteriaQuery<?> criteria) {
 		List<Predicate> listaPredicate = new ArrayList<>();
 		listaPredicate.add(comporFiltroPorDataExclusao(root));
-		if (!UtilNullEmpty.isNullOrEmpty(fornecedorTO.getFornecedor().getId())) {
-			listaPredicate.add(comporFiltroPorId(fornecedorTO.getFornecedor().getId(), root));
+		if (!UtilNullEmpty.isNullOrEmpty(operadoraTO.getOperadora().getId())) {
+			listaPredicate.add(comporFiltroPorId(operadoraTO.getOperadora().getId(), root));
 		}
-		if (!UtilNullEmpty.isNullOrEmpty(fornecedorTO.getFornecedor().getCodigo())) {
-			listaPredicate.add(comporFiltroPorCodigo(fornecedorTO.getFornecedor().getCodigo().toString(), root));
+		if (!UtilNullEmpty.isNullOrEmpty(operadoraTO.getOperadora().getRegistroAns())) {
+			listaPredicate.add(comporFiltroPorRegistroANS(operadoraTO.getOperadora().getRegistroAns().toString(), root));
 		}
-		if (!UtilNullEmpty.isNullOrEmpty(fornecedorTO.getFornecedor().getDataCadastro())) {
-			listaPredicate.add(comporFiltroPorDataCadastro(fornecedorTO.getFornecedor().getDataCadastro(), root));
+		if (!UtilNullEmpty.isNullOrEmpty(operadoraTO.getOperadora().getDataCadastro())) {
+			listaPredicate.add(comporFiltroPorDataCadastro(operadoraTO.getOperadora().getDataCadastro(), root));
 		}
 		return (Predicate[]) listaPredicate.toArray(new Predicate[listaPredicate.size()]);
 	}
 	
-	private Predicate comporFiltroPorCodigo(String codigo, Root<Fornecedor> root) {
-		return getCriteriaBuilder().like(getCriteriaBuilder().lower(getCriteriaBuilder().trim(root.<String>get("codigo"))), "%"+codigo.toLowerCase()+"%");
+	private Predicate comporFiltroPorRegistroANS(String registroANS, Root<Operadora> root) {
+		return getCriteriaBuilder().like(getCriteriaBuilder().lower(getCriteriaBuilder().trim(root.<String>get("registroAns"))), "%"+registroANS.toLowerCase()+"%");
 	}
 	
-	private Predicate comporFiltroPorDataCadastro(Date dataCadastro, Root<Fornecedor> root) {
+	private Predicate comporFiltroPorDataCadastro(Date dataCadastro, Root<Operadora> root) {
 		return getCriteriaBuilder().equal(root.<Timestamp>get("dataCadastro"), dataCadastro);
 	}
 	
-	private Predicate comporFiltroPorId(Integer id, Root<Fornecedor> root) {
+	private Predicate comporFiltroPorId(Integer id, Root<Operadora> root) {
 		return getCriteriaBuilder().equal(root.<String>get("id"), id);
 	}
 	
-	private Predicate comporFiltroPorDataExclusao(Root<Fornecedor> root) {
+	private Predicate comporFiltroPorDataExclusao(Root<Operadora> root) {
 		return getCriteriaBuilder().or(getCriteriaBuilder().isNull(root.<Date>get("dataExclusao")));
 	}
 
-	public List<Fornecedor> pesquisar(FornecedorTO fornecedorTO) {
-		CriteriaQuery<Fornecedor> criteria = getCriteriaBuilder().createQuery(Fornecedor.class);
-		Root<Fornecedor> root = criteria.from(Fornecedor.class);
-		Predicate[] listaPredicate = comporFiltro(root, fornecedorTO, criteria);
+	public List<Operadora> pesquisar(OperadoraTO operadoraTO) {
+		CriteriaQuery<Operadora> criteria = getCriteriaBuilder().createQuery(Operadora.class);
+		Root<Operadora> root = criteria.from(Operadora.class);
+		Predicate[] listaPredicate = comporFiltro(root, operadoraTO, criteria);
 		try {
 			return getManager().createQuery(criteria.select(root).where(listaPredicate)).getResultList();
 		} catch (Exception e) {
@@ -99,12 +99,12 @@ public class OperadoraDAO extends ZmedDataAbstract<Fornecedor> {
 		}
 	}
 
-	public void excluirFornecedor(Fornecedor fornecedor) {
-		CriteriaUpdate<Fornecedor> criteria = getCriteriaBuilder().createCriteriaUpdate(Fornecedor.class);
-		Root<Fornecedor> root = criteria.from(Fornecedor.class);
+	public void excluirOperadora(Operadora operadora) {
+		CriteriaUpdate<Operadora> criteria = getCriteriaBuilder().createCriteriaUpdate(Operadora.class);
+		Root<Operadora> root = criteria.from(Operadora.class);
 		criteria.set("dataExclusao", new Date());
-		criteria.set("status", fornecedor.getStatus());
-		criteria.where(getCriteriaBuilder().equal(root.get("id"),fornecedor.getId()));
+		criteria.set("status", operadora.getStatus());
+		criteria.where(getCriteriaBuilder().equal(root.get("id"),operadora.getId()));
 		getManager().createQuery(criteria).executeUpdate();
 	}
 	

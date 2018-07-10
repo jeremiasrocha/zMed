@@ -8,85 +8,71 @@
     template="/WEB-INF/templates/default.xhtml">
     
 <ui:define name="content">
-	<h:form id="formFornecedor" prependId="false" >
+	<h:form id="formOperadora" prependId="false" >
 		<div style="background-color: #e8e8e8;">
 
         <!-- TITLE -->
 		<h5 class="card-header" style="background-color: #28a5d4; color: white; text-transform: uppercase;">
-			<b>#{resources['label.uc.fornecedor.titulo']}</b>
+			<b>#{resources['label.uc.operadora.titulo']}</b>
 		</h5><br/>
 		 
-		<!-- FORNECEDOR LIST -->
-		<h:panelGroup layout="block" styleClass="row" id="panelPesquisarFornecedor">
+		<!-- OPERADORA LIST -->
+		<h:panelGroup layout="block" styleClass="row" id="panelPesquisarOperadora">
             <div class="col-md-12">
                 <div class="card-box">
-                    <h4 class="m-t-0 header-title"><b>#{resources['label.uc.fornecedor.fornecedores']}</b></h4>
+                    <h4 class="m-t-0 header-title"><b>#{resources['label.uc.operadora.operadoras']}</b></h4>
                     <p class="text-muted m-b-30 font-13">
                     </p>
                     <div class="row">
                         <div class="col-sm-12 form-inline">
+                        	<div class="form-group m-r-10">
+                                <label for="codigo" class="mr-sm-2">#{resources['label.global.registroANS']}:</label>
+                                <h:inputText value="#{operadoraController.to.operadora.registroAns}" pt:type="number" styleClass="form-control" label="#{resources['label.global.registroANS']}" pt:placeholder="#{resources['label.global.registroANS']}" />
+                            </div>
                             <div class="form-group m-r-10">
                             	<label for="nome" class="mr-sm-2">#{resources['label.global.nome']}:</label>
-                                <h:inputText value="#{fornecedorController.to.fornecedor.nome}" styleClass="form-control" label="#{resources['label.global.nome']}" pt:placeholder="#{resources['label.global.nome']}" />
+                                <h:inputText value="#{operadoraController.to.operadora.nome}" styleClass="form-control" label="#{resources['label.global.nome']}" pt:placeholder="#{resources['label.global.nome']}" />
                             </div>
                             <div class="form-group m-r-10">
-                                <label for="codigo" class="mr-sm-2">#{resources['label.global.codigo']}:</label>
-                                <h:inputText value="#{fornecedorController.to.fornecedor.codigo}" pt:type="number" styleClass="form-control" label="#{resources['label.global.codigo']}" pt:placeholder="#{resources['label.global.codigo']}" />
+                                <label for="codigo" class="mr-sm-2">#{resources['label.global.cnpj']}:</label>
+                                <h:inputText value="#{operadoraController.to.operadora.cnpj}" pt:type="number" styleClass="form-control" label="#{resources['label.global.cnpj']}" pt:placeholder="#{resources['label.global.cnpj']}" />
                             </div>
-                            <div class="form-group m-r-10">
-							    <label for="tipoOperacao" class="mr-sm-2">#{resources['label.global.tipoOperacao']}:</label>
-						    	<h:selectOneMenu styleClass="form-control select2" value="#{fornecedorController.to.fornecedor.tipoOperacao}" label="#{resources['label.global.tipoOperacao']}" >
-						       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
-						       		<f:selectItem itemLabel="#{resources['label.global.aluguel']}" itemValue="#{resources['label.global.aluguel']}" />
-          							<f:selectItem itemLabel="#{resources['label.global.compra']}" itemValue="#{resources['label.global.compra']}" />
-          							<f:selectItem itemLabel="#{resources['label.global.venda']}" itemValue="#{resources['label.global.venda']}" />
-          							<f:selectItem itemLabel="#{resources['label.global.outros']}" itemValue="#{resources['label.global.outros']}" />
-						       	</h:selectOneMenu>
-							</div>
                             <h:commandButton value="#{resources['label.global.pesquisar']}" styleClass="btn btn-primary pull-left">
-                            	<f:ajax execute="panelPesquisarFornecedor" listener="#{fornecedorController.pesquisar()}" event="click" render="@form"></f:ajax>
+                            	<f:ajax execute="panelPesquisarOperadora" listener="#{operadoraController.pesquisar()}" event="click" render="@form"></f:ajax>
                             </h:commandButton><br /><br /><br />
                             <div class="col-12">
                                 <div class="card-box table-responsive">
-                                	<h:dataTable id="lstFornecedor" value="#{fornecedorController.to.listaFornecedor}" var="fornecedor" styleClass="table table-striped table-bordered table-hover">
+                                	<h:dataTable id="lstOperadora" value="#{operadoraController.to.listaOperadora}" var="operadora" styleClass="table table-striped table-bordered table-hover">
 										<h:column>
-											<f:facet name="header">#{resources['label.global.codigo']}</f:facet>
-											<h:outputText value="#{fornecedor.codigo}"/>
+											<f:facet name="header">#{resources['label.global.registroANS']}</f:facet>
+											<h:outputText value="#{operadora.registroAns}"/>
 										</h:column>
 										<h:column>
 											<f:facet name="header">#{resources['label.global.nome']}</f:facet>
-											<h:outputText value="#{fornecedor.nome}"/>
+											<h:outputText value="#{operadora.nome}"/>
 										</h:column>
 										<h:column>
-											<f:facet name="header">#{resources['label.global.tipoOperacao']}</f:facet>
-											<h:outputText value="#{fornecedor.tipoOperacao}"/>
-										</h:column>
-										<h:column>
-											<f:facet name="header">#{resources['label.global.produtosAltoCusto']}</f:facet>
-											<h:outputText value="#{fornecedor.altoCusto}"/>
+											<f:facet name="header">#{resources['label.global.status']}</f:facet>
+											<h:outputText value="#{operadora.status}"/>
 										</h:column>
 										<h:column>
 											<f:facet name="header">#{resources['label.global.telefone']}</f:facet>
-											<h:outputText value="#{fornecedor.telefone}"/>
+											<h:outputText value="#{operadora.telefone}"/>
 										</h:column>
 										<h:column>
-											<f:facet name="header">#{resources['label.global.endereco']}</f:facet>
-											<h:outputText value="#{fornecedor.enderecoCompleto}"/> - <h:outputText value="#{fornecedor.uf}"/>
-										</h:column>
-										<h:column>
-											<f:facet name="header">#{resources['label.global.cep']}</f:facet>
-											<h:outputText value="#{fornecedor.cep}"/>
+											<f:facet name="header">#{resources['label.global.email']}</f:facet>
+											<h:outputText value="#{operadora.email}"/>
 										</h:column>
 										<h:column>
 											<f:facet name="header">#{resources['label.global.acoes']}</f:facet>
 								    			<div class="actions">
 										    		<h:commandLink title="#{resources['label.global.excluir']}" class="on-default">
 										    			<i class="fa fa-trash-o"></i>
-										    			<f:ajax execute="@this" render="panelPesquisarFornecedor" listener="#{fornecedorController.excluir(fornecedor)}" ></f:ajax>
+										    			<f:ajax execute="@this" render="panelPesquisarOperadora" listener="#{operadoraController.excluir(operadora)}" ></f:ajax>
 										    		</h:commandLink>
 										    		<h:commandLink title="#{resources['label.global.alterar']}" class="on-default">
 										    			<i class="fa fa-pencil"></i>
-										    			<f:ajax execute="@this" render="panelNovoFornecedor" listener="#{fornecedorController.recuperarCompletoPorId(fornecedor)}" ></f:ajax>
+										    			<f:ajax execute="@this" render="panelNovaOperadora" listener="#{operadoraController.recuperarCompletoPorId(operadora)}" ></f:ajax>
 										    		</h:commandLink>
 									    		</div>
 										</h:column>
@@ -99,11 +85,11 @@
             </div>
         </h:panelGroup>
 		
-	    <!-- FORNECEDOR NEW -->
-        <h:panelGroup layout="block" styleClass="row" id="panelNovoFornecedor">
+	    <!-- OPERADORA NEW -->
+        <h:panelGroup layout="block" styleClass="row" id="panelNovaOperadora">
             <div class="col-12">
                 <div class="card-box">
-                    <h4 class="m-t-0 header-title"><b>#{resources['label.uc.fornecedor.novoFornecedor']}</b></h4>
+                    <h4 class="m-t-0 header-title"><b>#{resources['label.uc.operadora.novaOperadora']}</b></h4>
                     <p class="text-muted m-b-30 font-14">
                     </p>
                     <div class="row">

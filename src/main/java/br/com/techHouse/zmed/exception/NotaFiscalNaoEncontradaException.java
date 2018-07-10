@@ -1,8 +1,8 @@
 package br.com.techHouse.zmed.exception;
 
-public class NotaFiscalNaoEncontradaException extends MedicamentoException {
+public class NotaFiscalNaoEncontradaException extends NotaFiscalException {
 
-	private static final long serialVersionUID = -8586045766479022529L;
+	private static final long serialVersionUID = -42171713497866420L;
 
 	public NotaFiscalNaoEncontradaException() {
 		super();
