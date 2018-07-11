@@ -26,6 +26,13 @@
 		</navigation-case>
 	</navigation-rule>
 	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>operadora</from-outcome>
+			<to-view-id>/pages/operadora/operadora.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
 	<application>
 		<locale-config>
 			<default-locale>pt_BR</default-locale>

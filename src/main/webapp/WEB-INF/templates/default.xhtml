@@ -105,15 +105,33 @@
 						</h:commandLink>
 					</li>
 					
-					<!-- MENU PARÂMETROS -->
+					<!-- MENU OPERADORA -->
 					<li class="nav-item" data-toggle="tooltip" data-placement="right">
-						<a class="nav-link nav-link-collapse collapsed"	data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion"> 
+						<h:commandLink action="#{operadoraController.abrirTela()}" styleClass="nav-link" >
+							<i class="fa fa-building-o"></i>
+							<span class="nav-link-text">
+								<h:outputText value="#{resources['label.uc.operadora.titulo']}" />
+							</span>
+						</h:commandLink>
+					</li>
+					
+					 <!-- MENU PARÂMETROS -->
+			        <li class="nav-item" data-toggle="tooltip" data-placement="right">
+						<a class="nav-link nav-link-collapse collapsed"	data-toggle="collapse" href="#menuParametros" data-parent="#exampleAccordion"> 
 							<i class="fa fa-gears"></i>
-							<span class="nav-link-text">Parâmetros</span>
+							<span class="nav-link-text">#{resources['label.uc.parametros.titulo']}</span>
 						</a>
-						<ul class="sidenav-second-level collapse" id="collapseComponents">
-							<li><a href="navbar.html">Internos</a></li>
-							<li><a href="cards.html">Operadora</a></li>
+						<ul class="sidenav-second-level collapse" id="menuParametros">
+							<li> 
+								<h:commandLink action="#{medicamentoController.abrirTela()}" >
+									<h:outputText value="#{resources['label.uc.operadora.titulo']}" />
+								</h:commandLink>
+							</li>
+							<li> 
+								<h:commandLink action="#{medicamentoInventarioController.abrirTela()}" >
+									<h:outputText value="#{resources['label.global.inventario']}" />
+								</h:commandLink>
+							</li>
 						</ul>
 					</li>
 					

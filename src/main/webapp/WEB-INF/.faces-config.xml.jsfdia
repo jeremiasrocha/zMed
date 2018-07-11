@@ -34,4 +34,13 @@
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#pages#fornecedor#fornecedor.xhtml"
   PATH="/pages/fornecedor/fornecedor.xhtml" SHAPE="240,257,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::3" SHAPE="32,353,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::3" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="operadora::#pages#operadora#operadora.xhtml"
+    NAME="output" PATH="/pages/operadora/operadora.xhtml"
+    TARGET="rules:#pages#operadora#operadora.xhtml" TITLE="operadora" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#operadora#operadora.xhtml"
+  PATH="/pages/operadora/operadora.xhtml" SHAPE="240,369,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

@@ -29,6 +29,7 @@ public class OperadoraController extends ZmedController<OperadoraTO> {
 	 			}
 			}
 			getTo().setListaOperadora(OperadoraService.pesquisar(getTo()));
+			getTo().getListaOperadora();
 		}catch(Exception e){
 			e.printStackTrace();
 		}	

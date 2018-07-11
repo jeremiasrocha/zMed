@@ -22,7 +22,7 @@ public class Operadora implements Serializable {
 	@Column(name="alto_custo")
 	private String altoCusto;
 
-	private Integer cep;
+	private String cep;
 
 	private String cnpj;
 
@@ -97,11 +97,11 @@ public class Operadora implements Serializable {
 		this.altoCusto = altoCusto;
 	}
 
-	public Integer getCep() {
+	public String getCep() {
 		return this.cep;
 	}
 
-	public void setCep(Integer cep) {
+	public void setCep(String cep) {
 		this.cep = cep;
 	}
 
