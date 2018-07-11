@@ -10,6 +10,7 @@ import java.util.Date;
  * The persistent class for the "zMed_medicamento" database table.
  * 
  */
+
 @Entity
 @Table(name="zmed_medicamento")
 public class Medicamento implements Serializable {

@@ -29,8 +29,9 @@ public class ParametrosOperadora implements Serializable {
 	@Column(name="id_operadora")
 	private Integer idOperadora;
 
-	@Column(name="id_usuario_cadastro")
-	private Integer idUsuarioCadastro;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_usuario_cadastro")
+	private Usuario usuarioCadastro;
 
 	private String pagamento;
 
@@ -75,12 +76,12 @@ public class ParametrosOperadora implements Serializable {
 		this.idOperadora = idOperadora;
 	}
 
-	public Integer getIdUsuarioCadastro() {
-		return this.idUsuarioCadastro;
+	public Usuario getUsuarioCadastro() {
+		return this.usuarioCadastro;
 	}
 
-	public void setIdUsuarioCadastro(Integer idUsuarioCadastro) {
-		this.idUsuarioCadastro = idUsuarioCadastro;
+	public void setUsuarioCadastro(Usuario usuarioCadastro) {
+		this.usuarioCadastro = usuarioCadastro;
 	}
 
 	public String getPagamento() {
