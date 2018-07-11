@@ -7,15 +7,15 @@
     template="/WEB-INF/templates/default.xhtml">
     
 <ui:define name="content">
-	<h:form id="formOperadora" enctype="multipart/form-data" >
+	<h:form id="formParametrosOperadora" enctype="multipart/form-data" >
 		<div style="background-color: #e8e8e8;">
 
         <!-- TITLE -->
 		<h5 class="card-header" style="background-color: #28a5d4; color: white; text-transform: uppercase;">
-			<b>#{resources['label.uc.operadora.titulo']}</b>
+			<b>#{resources['label.uc.parametros.operadora.listaParametros']}</b>
 		</h5><br/>
 		 
-		<!-- OPERADORA LIST -->
+		<!-- PANEL OPERADORA LIST -->
 		<h:panelGroup layout="block" styleClass="row" id="panelPesquisarOperadora">
             <div class="col-md-12">
                 <div class="card-box">
@@ -24,182 +24,64 @@
                     </p>
                     <div class="row">
                         <div class="col-sm-12 form-inline">
-                        	<div class="form-group m-r-10">
-                                <label for="codigo" class="mr-sm-2">#{resources['label.global.registroANS']}:</label>
-                                <h:inputText value="#{operadoraController.to.operadora.registroAns}" pt:type="number" styleClass="form-control" label="#{resources['label.global.registroANS']}" pt:placeholder="#{resources['label.global.registroANS']}" />
-                            </div>
-                            <div class="form-group m-r-10">
-                            	<label for="nome" class="mr-sm-2">#{resources['label.global.nome']}:</label>
-                                <h:inputText value="#{operadoraController.to.operadora.nome}" styleClass="form-control" label="#{resources['label.global.nome']}" pt:placeholder="#{resources['label.global.nome']}" />
-                            </div>
-                            <div class="form-group m-r-10">
-                                <label for="codigo" class="mr-sm-2">#{resources['label.global.cnpj']}:</label>
-                                <h:inputText value="#{operadoraController.to.operadora.cnpj}" pt:type="number" styleClass="form-control" label="#{resources['label.global.cnpj']}" pt:placeholder="#{resources['label.global.cnpj']}" />
-                            </div>
-                            <h:commandButton value="#{resources['label.global.pesquisar']}" styleClass="btn btn-primary pull-left">
-                            	<f:ajax execute="panelPesquisarOperadora" listener="#{operadoraController.pesquisar()}" event="click" render="@form"></f:ajax>
-                            </h:commandButton><br /><br /><br />
-                            <div class="col-12">
-                                <div class="card-box table-responsive">
-                                	<h:dataTable id="lstOperadora" value="#{operadoraController.to.listaOperadora}" var="operadora" styleClass="table table-striped table-bordered table-hover">
-										<h:column>
-											<f:facet name="header">#{resources['label.global.registroANS']}</f:facet>
-											<h:outputText value="#{operadora.registroAns}"/>
-										</h:column>
-										<h:column>
-											<f:facet name="header">#{resources['label.global.nome']}</f:facet>
-											<h:outputText value="#{operadora.nome}"/>
-										</h:column>
-										<h:column>
-											<f:facet name="header">#{resources['label.global.status']}</f:facet>
-											<h:outputText value="#{operadora.status}"/>
-										</h:column>
-										<h:column>
-											<f:facet name="header">#{resources['label.global.telefone']}</f:facet>
-											<h:outputText value="#{operadora.telefone}"/>
-										</h:column>
-										<h:column>
-											<f:facet name="header">#{resources['label.global.email']}</f:facet>
-											<h:outputText value="#{operadora.email}"/>
-										</h:column>
-										<h:column>
-											<f:facet name="header">#{resources['label.global.acoes']}</f:facet>
-								    			<div class="actions">
-										    		<h:commandLink title="#{resources['label.global.excluir']}" class="on-default">
-										    			<i class="fa fa-trash-o"></i>
-										    			<f:ajax execute="@this" render="panelPesquisarOperadora" listener="#{operadoraController.excluir(operadora)}" ></f:ajax>
-										    		</h:commandLink>
-										    		<h:commandLink title="#{resources['label.global.alterar']}" class="on-default">
-										    			<i class="fa fa-pencil"></i>
-										    			<f:ajax execute="@this" render="panelNovaOperadora" listener="#{operadoraController.recuperarCompletoPorId(operadora)}" ></f:ajax>
-										    		</h:commandLink>
-									    		</div>
-										</h:column>
-									</h:dataTable>
-                                </div>
-                            </div>
+                        	
+                        	<div class="form-group row">
+							    <label class="col-2 col-form-label">#{resources['label.uc.operadora.titulo']}:</label>
+							    <div class="col-10">
+							    	<h:selectOneMenu styleClass="form-control select2" value="#{parametrosOperadoraController.to.parametrosOperadora.operadora}" label="#{resources['label.uc.operadora.titulo']}" onclick="mostrarDivParametrosOperadora(this);"  >
+							       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
+							       		<f:selectItems value="#{parametrosOperadoraController.to.listaOperadora}" var="operadora" 
+							       				itemLabel="#{operadora.nome}" itemValue="operadora"/>
+							       		<f:converter converterId="operadoraConverter" />
+							       	</h:selectOneMenu>	 
+							    </div>
+							</div>
+                            
                         </div>
                     </div>
                 </div>
             </div>
         </h:panelGroup>
 		
-	    <!-- OPERADORA NEW -->
-        <h:panelGroup layout="block" styleClass="row" id="panelNovaOperadora">
+	    <!-- PANEL PARÂMETROS OPERADORA -->
+        <h:panelGroup layout="block" styleClass="row" id="panelParametrosOperadora">
             <div class="col-12">
                 <div class="card-box">
-                    <h4 class="m-t-0 header-title"><b>#{resources['label.uc.operadora.novaOperadora']}</b></h4>
+                    <h4 class="m-t-0 header-title"><b>#{resources['label.uc.parametros.operadora.titulo']}</b></h4>
                     <p class="text-muted m-b-30 font-14">
                     </p>
                     <div class="row">
                         <div class="col-12">
                             <div class="p-20">
                             	<div class="form-group row">
-								    <label class="col-2 col-form-label">#{resources['label.global.registroANS']}:</label>
+								    <label class="col-2 col-form-label">#{resources['label.global.envioFatura']}:</label>
 								    <div class="col-10">
-								        <h:inputText value="#{operadoraController.to.operadora.registroAns}" styleClass="form-control" pt:type="number" required="true" label="#{resources['label.global.registroANS']}" pt:placeholder="#{resources['label.global.registroANS']}" />
+								        <h:inputText value="#{parametrosOperadoraController.to.parametrosOperadora.envioFatura}" styleClass="form-control" label="#{resources['label.global.envioFatura']}" pt:placeholder="#{resources['label.placeHolder.tempoModoLugar']}" />
 								    </div>
 								</div>
 								<div class="form-group row">
-								    <label class="col-2 col-form-label">#{resources['label.global.nome']}:</label>
+								    <label class="col-2 col-form-label">#{resources['label.global.tipoPagamento']}:</label>
 								    <div class="col-10">
-								        <h:inputText value="#{operadoraController.to.operadora.nome}" styleClass="form-control" required="true" label="#{resources['label.global.nome']}" pt:placeholder="#{resources['label.uc.operadora.placeHolder.nome']}" />
+								        <h:inputText value="#{parametrosOperadoraController.to.parametrosOperadora.tipoPagamento}" styleClass="form-control" label="#{resources['label.global.tipoPagamento']}" pt:placeholder="#{resources['label.placeHolder.tipoPagamento']}" />
 								    </div>
 								</div>
 								<div class="form-group row">
-								    <label class="col-2 col-form-label">#{resources['label.global.razaoSocial']}:</label>
+								    <label class="col-2 col-form-label">#{resources['label.global.pagamento']}:</label>
 								    <div class="col-10">
-								        <h:inputText value="#{operadoraController.to.operadora.razaoSocial}" styleClass="form-control" required="true" label="#{resources['label.global.razaoSocial']}" pt:placeholder="#{resources['label.uc.operadora.placeHolder.razaoSocial']}" />
+								        <h:inputText value="#{parametrosOperadoraController.to.parametrosOperadora.pagamento}" styleClass="form-control" label="#{resources['label.global.pagamento']}" pt:placeholder="#{resources['label.placeHolder.tempoModoLugar']}" />
 								    </div>
 								</div>
 								<div class="form-group row">
-								    <label class="col-2 col-form-label">#{resources['label.global.cnpj']}:</label>
+								    <label class="col-2 col-form-label">#{resources['label.uc.parametros.operadora.utilizaPacote']}:</label>
 								    <div class="col-10">
-								        <h:inputText value="#{operadoraController.to.operadora.cnpj}" styleClass="form-control" pt:type="number" required="true" label="#{resources['label.global.cnpj']}" pt:placeholder="#{resources['label.placeHolder.cnpj']}" />
+								        <h:inputText value="#{parametrosOperadoraController.to.parametrosOperadora.utilizaPacote}" styleClass="form-control"  required="true" label="#{resources['label.uc.parametros.operadora.utilizaPacote']}" pt:placeholder="#{resources['label.uc.parametros.operadora.utilizaPacote']}" />
 								    </div>
 								</div>
-								<div class="form-group row">
-								    <label class="col-2 col-form-label">#{resources['label.uc.operadora.dataAssinaturaContrato']}:</label>
-								    <div class="col-10">
-								        <h:inputText value="#{operadoraController.to.operadora.dataAssinaturaContrato}" styleClass="form-control" onkeypress="mascara(this,data);" required="true" label="#{resources['label.uc.operadora.dataAssinaturaContrato']}" pt:placeholder="#{resources['label.global.mascaraData']}" >
-								    		<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-								    	</h:inputText>
-								    </div>
-								</div>
-								
-								
-								
-								
-								
-								
-								<div class="col-sm-6">
-									<div class="form-group">
-										 <h:inputFile class="file" value="#{medicamentoController.to.file}" label="#{resources['label.global.upload']}" />  
-									</div>
-								</div>
-									
-									
-								
-								
-								
-								
-								
-								<div class="form-group row">
-								    <label class="col-2 col-form-label">#{resources['label.global.email']}:</label>
-								    <div class="col-10">
-								        <h:inputText value="#{operadoraController.to.operadora.email}" styleClass="form-control" required="true" label="#{resources['label.global.email']}" pt:placeholder="#{resources['label.placeHolder.email']}" />
-								    </div>
-								</div>
-								<div class="form-group row">
-								    <label class="col-2 col-form-label">#{resources['label.global.telefone']}:</label>
-								    <div class="col-10">
-								        <h:inputText value="#{operadoraController.to.operadora.telefone}" styleClass="form-control" pt:type="number" required="true" label="#{resources['label.global.telefone']}" pt:placeholder="#{resources['label.placeHolder.telefone']}" />
-								    </div>
-								</div>
-								<div class="form-group row">
-								    <label class="col-2 col-form-label">#{resources['label.global.enderecoCompleto']}:</label>
-								    <div class="col-10">
-								        <h:inputText value="#{operadoraController.to.operadora.enderecoCompleto}" styleClass="form-control" required="true" label="#{resources['label.global.enderecoCompleto']}" pt:placeholder="#{resources['label.placeHolder.endereco']}" />
-								    </div>
-								</div>
-								<div class="form-group row">
-								    <label class="col-2 col-form-label">#{resources['label.global.complemento']}:</label>
-								    <div class="col-10">
-								        <h:inputText value="#{operadoraController.to.operadora.complemento}" styleClass="form-control" label="#{resources['label.global.complemento']}" pt:placeholder="#{resources['label.placeHolder.complemento']}" />
-								    </div>
-								</div>
-								<div class="form-group row">
-								    <label class="col-2 col-form-label">#{resources['label.global.uf']}:</label>
-								    <div class="col-10">
-								        <h:inputText value="#{operadoraController.to.operadora.uf}" styleClass="form-control" required="true" label="#{resources['label.global.uf']}" pt:placeholder="#{resources['label.global.uf']}" />
-								    </div>
-								</div>
-								<div class="form-group row">
-								    <label class="col-2 col-form-label">#{resources['label.global.cep']}:</label>
-								    <div class="col-10">
-								        <h:inputText value="#{operadoraController.to.operadora.cep}" styleClass="form-control" pt:type="number" required="true" label="#{resources['label.global.cep']}" pt:placeholder="#{resources['label.placeHolder.cep']}" />
-								    </div>
-								</div>
-								<div class="form-group row">
-								    <label class="col-2 col-form-label">#{resources['label.global.observacoes']}:</label>
-								    <div class="col-10">
-								        <h:inputTextarea value="#{operadoraController.to.operadora.observacao}" pt:type="textarea" rows="5" styleClass="form-control" label="#{resources['label.global.observacoes']}" pt:placeholder="#{resources['label.uc.operadora.placeHolder.observacoes']}" />
-								    </div>
-								</div><br/>
+							
                                	<div class="button-list">
-	                               	<ui:fragment rendered="#{operadoraController.to.operadora.id eq null}">
-		                                <h:commandButton value="#{resources['label.global.cadastrar']}" styleClass="btn btn-primary pull-left">
-		                                	<f:ajax execute="panelNovaOperadora" listener="#{operadoraController.incluir()}" event="click" render="@form"></f:ajax>
-		                                </h:commandButton>
-		                            </ui:fragment>
-		                            <ui:fragment rendered="#{operadoraController.to.operadora.id != null}">
-		                                <h:commandButton value="#{resources['label.global.alterar']}" styleClass="btn btn-primary pull-left">
-		                                	<f:ajax execute="panelNovaOperadora" listener="#{operadoraController.alterar()}" event="click" render="@form"></f:ajax>
-		                                </h:commandButton>
-		                                <h:commandButton value="#{resources['label.global.cancelar']}" styleClass="btn btn-primary pull-left">
-			                            	<f:ajax execute="panelPesquisarOperadora" listener="#{operadoraController.pesquisar()}" event="click" render="@form"></f:ajax>
-			                            </h:commandButton>
-		                            </ui:fragment>
+	                                <h:commandButton value="#{resources['label.global.alterar']}" styleClass="btn btn-primary pull-left">
+	                                	<f:ajax execute="panelParametrosOperadora" listener="#{parametrosOperadoraController.alterar()}" event="click" render="@form"></f:ajax>
+	                                </h:commandButton>
 	                            </div>
                             </div>
                         </div>

@@ -5,8 +5,10 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
+
 import br.com.techHouse.zmed.entity.ParametrosOperadora;
 import br.com.techHouse.zmed.enums.ZmedNavegacaoEnum;
+import br.com.techHouse.zmed.service.OperadoraService;
 import br.com.techHouse.zmed.service.ParametrosOperadoraService;
 import br.com.techHouse.zmed.to.ParametrosOperadoraTO;
 
@@ -17,6 +19,7 @@ public class ParametrosOperadoraController extends ZmedController<ParametrosOper
 	private static final long serialVersionUID = 2279068945912404629L;
 	
 	private @Inject ParametrosOperadoraService ParametrosOperadoraService;
+	private @Inject OperadoraService operadoraService;
 
 	@PostConstruct
 	private void inicializar() {
@@ -28,6 +31,7 @@ public class ParametrosOperadoraController extends ZmedController<ParametrosOper
 	 			}
 			}
 			getTo().setListaParametrosOperadora(ParametrosOperadoraService.pesquisar(getTo()));
+			getTo().setListaOperadora(operadoraService.listar());
 		}catch(Exception e){
 			e.printStackTrace();
 		}	
