@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:f="http://java.sun.com/jsf/core"
@@ -74,9 +73,13 @@
 											</h:outputText>
 										</h:column>
 										<h:column>
+											<f:facet name="header">#{resources['label.global.valorCompra']} (#{resources['label.global.simboloMonetario']})</f:facet>
+											<h:outputText value="#{medicamentoInventario.valorCompra}"/>
+										</h:column>
+										<h:column>
 											<f:facet name="header">#{resources['label.global.acoes']}</f:facet>
 								    			<div class="actions">
-										    		<h:commandLink title="#{resources['label.global.excluir']}" class="on-default">
+										    		<h:commandLink onclick="return confirm ('#{resources['label.uc.medicamentoInventario.msg.excluir']}');" title="#{resources['label.global.excluir']}" class="on-default">
 										    			<i class="fa fa-trash-o"></i>
 										    			<f:ajax execute="@this" render="panelPesquisarMedicamentoInventario" listener="#{medicamentoInventarioController.excluir(medicamentoInventario)}" />
 										    		</h:commandLink>
@@ -114,14 +117,13 @@
                         <div class="col-12">
                             <div class="p-20">
                             	<div class="form-group row">
-								    <label class="col-2 col-form-label">#{resources['label.uc.medicamento.medicamentoAvulso']}:</label>
+								    <label class="col-2 col-form-label">#{resources['label.uc.medicamento.titulo']}:</label>
 								    <div class="col-10">
-								    	<h:selectOneMenu styleClass="form-control select2" value="#{medicamentoInventarioController.to.medicamentoInventario.medicamento}" label="#{resources['label.uc.medicamento.titulo']}" onclick="mostrarDivMedicamentoAvulso(this);" >
+								    	<h:selectOneMenu styleClass="form-control select2" value="#{medicamentoInventarioController.to.medicamentoInventario.medicamento}" label="#{resources['label.uc.medicamento.titulo']}" required="true" >
 								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
 								       		<f:selectItems value="#{medicamentoInventarioController.to.listaMedicamento}" var="medicamento" 
 								       				itemLabel="#{medicamento.apresentacao}" itemValue="#{medicamento}"/>
 								       		<f:converter converterId="medicamentoConverter" />
-								       		<f:ajax event="change" execute="@this" render="panelListMedicamentoAvulso" />
 								       	</h:selectOneMenu>
 										<!-- <div class="ui-widget">
 									        <input class="form-control bs-autocomplete" id="inputApresentacaoMedicamento" placeholder="Type two characters of a city name..." type="text" />
@@ -131,7 +133,7 @@
 								<div class="form-group row">
 								    <label class="col-2 col-form-label">#{resources['label.uc.notaFiscal.titulo']}:</label>
 								    <div class="col-10">
-								    	<h:selectOneMenu styleClass="form-control select2" value="#{medicamentoInventarioController.to.medicamentoInventario.notaFiscal}" label="#{resources['label.uc.notaFiscal.titulo']}" onclick="mostrarDivNotaFiscal(this);" >
+								    	<h:selectOneMenu styleClass="form-control select2" value="#{medicamentoInventarioController.to.medicamentoInventario.notaFiscal}" label="#{resources['label.uc.notaFiscal.titulo']}" required="true" >
 								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
 								       		<f:selectItems value="#{medicamentoInventarioController.to.listaNotaFiscal}" var="notaFiscal" 
 								       				itemLabel="#{notaFiscal.numero}" itemValue="#{notaFiscal}"/>
@@ -148,29 +150,34 @@
 								<div class="form-group row">
 								    <label class="col-2 col-form-label">#{resources['label.global.tipoFracionamento']}:</label>
 								    <div class="col-10">
-								    	<h:selectOneMenu styleClass="form-control select2" value="#{medicamentoInventarioController.to.medicamentoInventario.tipoFracionamento}" label="#{resources['label.global.tipoFracionamento']}" >
-								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
-								       		<f:selectItem itemLabel="#{resources['label.global.layoutBrasindice']}" itemValue="#{resources['label.global.layoutBrasindice']}" />
-            								<f:selectItem itemLabel="#{resources['label.global.layoutSimpro']}" itemValue="#{resources['label.global.layoutSimpro']}" />
-								       	</h:selectOneMenu>
+								       	<h:selectOneMenu styleClass="form-control select2" value="#{medicamentoInventarioController.to.medicamentoInventario.tipoFracionamento}" label="#{resources['label.global.tipoFracionamento']}" required="true" >
+											<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
+											<f:selectItems value="#{medicamentoInventarioController.fracionamentoMedicamentoEnum}"
+												var="tipoFracionamento"
+												itemLabel="#{tipoFracionamento.key}"
+												itemValue="#{tipoFracionamento}" />
+										</h:selectOneMenu>
 								    </div>
 								</div>
 								<div class="form-group row">
-								    <label class="col-2 col-form-label">#{resources['label.global.quantidade']}:</label>
+								    <label class="col-2 col-form-label">#{resources['label.global.qtdFracionamento']}:</label>
 								    <div class="col-md-10">
-								        <h:inputText value="#{medicamentoInventarioController.to.medicamentoInventario.quantidade}" pt:type="number" styleClass="form-control" required="true" label="#{resources['label.global.quantidade']}" pt:placeholder="#{resources['label.global.quantidade']}" />
+								        <h:inputText value="#{medicamentoInventarioController.to.medicamentoInventario.qtdFracionamento}" required="true" styleClass="form-control" label="#{resources['label.global.qtdFracionamento']}" pt:placeholder="#{resources['label.global.qtdFracionamento']}" />
 								    </div>
 								</div>
-								
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.valorCompra']}:</label>
+								    <div class="col-md-10">
+								    	<h:inputText value="#{medicamentoInventarioController.to.medicamentoInventario.valorCompra}" pt:type="number" styleClass="form-control" required="true" label="#{resources['label.global.valorCompra']}" pt:placeholder="#{resources['label.global.simboloMonetario']}" />
+								    </div>
+								</div>
                                 <div class="button-list">
 	                               	<ui:fragment rendered="#{medicamentoInventarioController.to.medicamentoInventario.id eq null}">
-		                                <h:commandButton value="#{resources['label.global.cadastrar']}" styleClass="btn btn-primary pull-left">
-		                                	<f:ajax execute="panelNovoMedicamentoInventario" listener="#{medicamentoInventarioController.incluir()}" event="click" render="@form"/>
-		                                </h:commandButton>
+		                                <h:commandButton value="#{resources['label.global.cadastrar']}" styleClass="btn btn-primary pull-left" action="#{medicamentoInventarioController.incluir()}"/>
 		                            </ui:fragment>
 		                            <ui:fragment rendered="#{medicamentoInventarioController.to.medicamentoInventario.id != null}">
 		                                <h:commandButton value="#{resources['label.global.alterar']}" styleClass="btn btn-primary pull-left">
-		                                	<f:ajax execute="panelNovoMedicamentoInventario" listener="#{medicamentoInventarioControlle.alterar()}" event="click" render="@form"/>
+		                                	<f:ajax execute="panelNovoMedicamentoInventario" listener="#{medicamentoInventarioController.alterar()}" event="click" render="@form"/>
 		                                </h:commandButton>
 		                                <h:commandButton value="#{resources['label.global.cancelar']}" styleClass="btn btn-primary pull-left">
 			                            	<f:ajax execute="panelPesquisarMedicamentoInventario" listener="#{medicamentoInventarioController.pesquisar()}" event="click" render="@form"/>
@@ -183,188 +190,7 @@
                 </div> 
             </div>
         </h:panelGroup>
-        
-        <!-- MEDICAMENTO AVULSO LIST -->
-        <div id="divMedicamentoAvulso" style="display: none;">
-	        <h:panelGroup layout="block" styleClass="row" id="panelListMedicamentoAvulso">
-	            <div class="col-12">
-	                <div class="card-box">
-	                    <h4 class="m-t-0 header-title"><b>#{resources['label.uc.medicamento.medicamentoAvulso']}</b></h4>
-	                    <p class="text-muted m-b-30 font-14">
-	                        
-	                    </p>
-	                    <div class="row">
-	                        <div class="col-12">
-	                            <div class="p-20">
-	                            	
-	                            	<div class="form-group row">
-									    <label class="col-2 col-form-label">#{resources['label.global.apresentacao']}:</label>
-									    <div class="col-10">
-									    	#{medicamentoInventarioController.to.medicamentoInventario.medicamento.apresentacao}
-									    </div>
-									</div>
-									<div class="form-group row">
-									    <label class="col-2 col-form-label">#{resources['label.global.registroMS']}:</label>
-									    <div class="col-md-10">
-									        
-									    </div>
-									</div>
-									<div class="form-group row">
-									    <label class="col-2 col-form-label">#{resources['label.global.lote']}:</label>
-									    <div class="col-md-10">
-									        
-									    </div>
-									</div>
-									<div class="form-group row">
-									    <label class="col-2 col-form-label">#{resources['label.global.dataValidade']}:</label>
-									    <div class="col-10">
-									    
-									    </div>
-									</div>
-									<div class="form-group row">
-									    <label class="col-2 col-form-label">#{resources['label.global.valorCompra']}:</label>
-									    <div class="col-md-10">
-									    	
-									    </div>
-									</div>
-								    <div class="form-group row">
-									    <label class="col-2 col-form-label">#{resources['label.global.tipo']}:</label>
-									    <div class="col-md-10">
-									    	
-									    </div>ndex.jsf;jsessionid=i61EStt8jFyp-JMl1ZkXiylI6kFuNMswSFThvCuF.jeremias
-									</div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div> 
-	            </div>
-	        </h:panelGroup>
-        </div>
-        
-        <!-- NOTA FISCAL LIST -->
-        <div id="divNotaFiscal" style="display: none;">
-	        <h:panelGroup layout="block" styleClass="row" id="panelListNotaFiscal">
-	            <div class="col-12">
-	                <div class="card-box">
-	                    <h4 class="m-t-0 header-title"><b>#{resources['label.uc.notaFiscal.titulo']}</b></h4>
-	                    <p class="text-muted m-b-30 font-14">
-	                        
-	                    </p>
-	                    <div class="row">
-	                        <div class="col-12">
-	                            <div class="p-20">
-	                            	
-	                            	<div class="form-group row">
-									    <label class="col-2 col-form-label">#{resources['label.global.apresentacao']}:</label>
-									    <div class="col-10">
-									    
-									    </div>
-									</div>
-									<div class="form-group row">
-									    <label class="col-2 col-form-label">#{resources['label.global.registroMS']}:</label>
-									    <div class="col-md-10">
-									        
-									    </div>
-									</div>
-									<div class="form-group row">
-									    <label class="col-2 col-form-label">#{resources['label.global.lote']}:</label>
-									    <div class="col-md-10">
-									        
-									    </div>
-									</div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div> 
-	            </div>
-	        </h:panelGroup>
-        </div>
-        
-        <!-- MEDICAMENTO AVULSO NEW -->
-        <div id="divNovoMedicamentoAvulso" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel" aria-hidden="true" style="display: none;">
-        	<h:panelGroup layout="block" styleClass="row" id="panelNovoMedicamentoAvulso">
-		        <div class="modal-dialog" style="width:80%;">
-		            <div class="modal-content">
-		                <div class="modal-header">
-		                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		                    <h4 class="modal-title" id="custom-width-modalLabel">#{resources['label.uc.medicamento.novoMedicamentoAvulso']}</h4>
-		                </div>
-		                <div class="modal-body">
-		                   
-		                   <div class="form-group row">
-							    <label class="col-2 col-form-label">#{resources['label.global.apresentacao']}:</label>
-							    <div class="col-10">
-							        <h:inputText value="#{medicamentoController.to.medicamento.apresentacao}" styleClass="form-control" required="true" label="#{resources['label.global.apresentacao']}" pt:placeholder="#{resources['label.global.nomeDescricao']}" />
-							    </div>
-							</div>
-							<div class="form-group row">
-							    <label class="col-2 col-form-label">#{resources['label.global.registroMS']}:</label>
-							    <div class="col-md-10">
-							        <h:inputText value="#{medicamentoController.to.medicamento.registroMS}" pt:type="number" styleClass="form-control" required="true" label="#{resources['label.global.registroMS']}" pt:placeholder="#{resources['label.global.registroMSCompleto']}" />
-							    </div>
-							</div>
-							<div class="form-group row">
-							    <label class="col-2 col-form-label">#{resources['label.global.lote']}:</label>
-							    <div class="col-md-10">
-							        <h:inputText value="#{medicamentoController.to.medicamento.lote}" pt:type="number" styleClass="form-control" required="true" label="#{resources['label.global.lote']}" pt:placeholder="#{resources['label.global.loteAnvisa']}" />
-							    </div>
-							</div>
-							<div class="form-group row">
-							    <label class="col-2 col-form-label">#{resources['label.global.dataValidade']}:</label>
-							    <div class="col-10">
-							        <h:inputText value="#{medicamentoController.to.medicamento.validade}" onkeypress="mascara(this,data);" styleClass="form-control" required="true" label="#{resources['label.global.dataValidade']}" pt:placeholder="#{resources['label.global.mascaraData']}" >
-							        	 <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-							        </h:inputText>
-							    </div>
-							</div>
-							<div class="form-group row">
-							    <label class="col-2 col-form-label">#{resources['label.global.valorCompra']}:</label>
-							    <div class="col-md-10">
-							    	<h:inputText value="#{medicamentoController.to.medicamento.valorCompra}" pt:type="number" styleClass="form-control" required="true" label="#{resources['label.global.valorCompra']}" pt:placeholder="#{resources['label.global.simboloMonetario']}" />
-							    </div>
-							</div>
-						    <div class="checkbox checkbox-primary">
-	                        <h:selectManyCheckbox value="#{medicamentoController.to.tipoMedicamento}" pt:type="checkbox" id="selectItemTipoMedicamento">
-						   		<f:selectItem itemValue="G" itemLabel="#{resources['label.uc.medicamento.medicamentoGenerico']}" />
-							</h:selectManyCheckbox></div>
-		                   
-		                </div>
-		                <div class="modal-footer">
-		                	<h:commandButton value="#{resources['label.global.cadastrar']}" styleClass="btn btn-primary pull-left">
-	                        	<f:ajax execute="panelNovoMedicamentoAvulso" listener="#{medicamentoInventarioController.incluir()}" event="click" render="@form"/>
-	                        </h:commandButton>
-		                    <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">#{resources['label.global.cancelar']}</button>
-		                </div>
-		            </div>
-		        </div>
-			</h:panelGroup>        
-	    </div>
-	    
-	    <!-- NOTA FISCAL NEW -->
-	    <div id="divNovaNotaFiscal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel" aria-hidden="true" style="display: none;">
-        	<h:panelGroup layout="block" styleClass="row" id="panelNovaNotaFiscal">
-		        <div class="modal-dialog" style="width:80%;">
-		            <div class="modal-content">
-		                <div class="modal-header">
-		                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		                    <h4 class="modal-title" id="custom-width-modalLabel">#{resources['label.uc.notaFiscal.novaNotaFiscal']}</h4>
-		                </div>
-		                <div class="modal-body">
-		                   
-		                 
-		                </div>
-		                <div class="modal-footer">
-		                	<h:commandButton value="#{resources['label.global.cadastrar']}" styleClass="btn btn-primary pull-left">
-	                        	<f:ajax execute="panelNovaNotaFiscal" listener="#{medicamentoInventarioController.incluir()}" event="click" render="@form"/>
-	                        </h:commandButton>
-		                    <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">#{resources['label.global.cancelar']}</button>
-		                </div>
-		            </div>
-		        </div>
-			</h:panelGroup>        
-	    </div>
-	    
-	</div>
+		</div>
 	</h:form>
 	
 	<script>

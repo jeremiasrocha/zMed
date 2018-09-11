@@ -8,6 +8,7 @@ import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 
 import br.com.techHouse.zmed.entity.MedicamentoInventario;
+import br.com.techHouse.zmed.enums.FracionamentoMedicamentoEnum;
 import br.com.techHouse.zmed.enums.StatusEnum;
 import br.com.techHouse.zmed.enums.ZmedNavegacaoEnum;
 import br.com.techHouse.zmed.service.MedicamentoInventarioService;
@@ -37,6 +38,12 @@ public class MedicamentoInventarioController extends ZmedController<MedicamentoI
 			getTo().setListaMedicamentoInventario(medicamentoInventarioService.pesquisar(getTo()));
 			getTo().setListaNotaFiscal(notaFiscalService.listar());
 			getTo().setListaMedicamento(medicamentoService.listar());
+			
+			
+			getTo().getListaMedicamentoInventario();
+			getTo().getListaNotaFiscal();
+			getTo().getListaMedicamento();
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}	
@@ -56,6 +63,7 @@ public class MedicamentoInventarioController extends ZmedController<MedicamentoI
 	}
 	
 	public String alterar() throws Exception {
+		getTo().getMedicamentoInventario();
 		definirDadosParaAlterarMedicamentoInventario();
 		medicamentoInventarioService.alterar(getTo().getMedicamentoInventario());
 		adicionarMensagemAlteracaoSucesso();
@@ -98,6 +106,10 @@ public class MedicamentoInventarioController extends ZmedController<MedicamentoI
 		getTo().getMedicamentoInventario().setDataAlteracao(new Date());
 		/*getTo().getMedicamentoInventario().setTipo(getTo().getMedicamentoInventario().equals(TipoMedicamentoEnum.G.getName())
 				? TipoMedicamentoEnum.G.getTipo() : TipoMedicamentoEnum.NG.getTipo());*/
+	}
+	
+	public FracionamentoMedicamentoEnum[] getFracionamentoMedicamentoEnum()throws Exception{
+		return FracionamentoMedicamentoEnum.values();
 	}
 	
 	private void definirDadosParaExcluirMedicamentoInventario(MedicamentoInventario medicamentoInventario) throws Exception {

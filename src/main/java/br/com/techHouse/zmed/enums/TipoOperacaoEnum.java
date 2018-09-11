@@ -2,10 +2,10 @@ package br.com.techHouse.zmed.enums;
 
 public enum TipoOperacaoEnum {
 	
-	C("CADASTRAR"),
-	A("ALTERAR"),
-	E("EXCLUIR"),
-	P("PESQUISAR");
+	C("Cadastrar"),
+	A("Alterar"),
+	E("Excluir"),
+	P("Pesquisar");
 
 	private TipoOperacaoEnum(String tipo) {
 		this.tipo = tipo;

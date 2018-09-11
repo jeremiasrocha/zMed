@@ -38,10 +38,21 @@ public class ParametrosOperadoraService extends ServiceAbstract<ParametrosOperad
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public void paginar(FiltroTO<ParametrosOperadoraTO> filtro) throws Exception {
 	}
-
+	
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-	public List<ParametrosOperadora> pesquisar(ParametrosOperadoraTO parametrosOperadoraTO) throws Exception{
-		return parametrosOperadoraDAO.pesquisar(parametrosOperadoraTO);
+	public ParametrosOperadora recuperarParametrosOperadora(Integer idOperadora) throws Exception {
+		ParametrosOperadora parametrosOperadora = parametrosOperadoraDAO.recuperarParametrosOperadora(idOperadora);
+		return parametrosOperadora;
 	}
 	
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+	public List<ParametrosOperadora> pesquisar(ParametrosOperadoraTO parametrosOperadoraTO) throws Exception{
+		List<ParametrosOperadora> listaParametrosOperadoraCompleta = parametrosOperadoraDAO.pesquisar(parametrosOperadoraTO);
+		/*for (ParametrosOperadora parametrosOperadora : listaParametrosOperadoraCompleta) {
+			parametrosOperadora.setOperadora(operadoraService.recuperarCompletoPorId(parametrosOperadora.getOperadora().getId()));
+			listaParametrosOperadoraCompleta.add(parametrosOperadora);
+		}*/
+		return listaParametrosOperadoraCompleta;
+	}
+
 }

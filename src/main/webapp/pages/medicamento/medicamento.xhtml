@@ -71,13 +71,13 @@
 											</h:outputText>
 										</h:column>
 										<h:column>
-											<f:facet name="header">#{resources['label.global.valorCompraAbreviado']} (#{resources['label.global.simboloMonetario']})</f:facet>
+											<f:facet name="header">#{resources['label.global.valorGenerico']} (#{resources['label.global.simboloMonetario']})</f:facet>
 											<h:outputText value="#{medicamento.valorCompra}"/>
 										</h:column>
 										<h:column>
 											<f:facet name="header">#{resources['label.global.acoes']}</f:facet>
 							    			<div class="actions">
-									    		<h:commandLink title="#{resources['label.global.excluir']}" class="on-default">
+									    		<h:commandLink onclick="return confirm ('#{resources['label.uc.medicamento.msg.excluir']}');" title="#{resources['label.global.excluir']}" class="on-default">
 									    			<i class="fa fa-trash-o"></i>
 									    			<f:ajax execute="@this" render="panelPesquisarMedicamento" listener="#{medicamentoController.excluir(medicamento)}" ></f:ajax>
 									    		</h:commandLink>
@@ -133,9 +133,9 @@
 								    </div>
 								</div>
 								<div class="form-group row">
-								    <label class="col-2 col-form-label">#{resources['label.global.valorCompra']}:</label>
+								    <label class="col-2 col-form-label">#{resources['label.global.valorGenerico']}:</label>
 								    <div class="col-md-10">
-								    	<h:inputText value="#{medicamentoController.to.medicamento.valorCompra}" pt:type="number" styleClass="form-control" required="true" label="#{resources['label.global.valorCompra']}" pt:placeholder="#{resources['label.global.simboloMonetario']}" />
+								    	<h:inputText value="#{medicamentoController.to.medicamento.valorCompra}" pt:type="number" styleClass="form-control" required="true" label="#{resources['label.global.valorGenerico']}" pt:placeholder="#{resources['label.global.simboloMonetario']}" />
 								    </div>
 								</div>
 							    <div class="checkbox checkbox-primary">
@@ -145,9 +145,7 @@
                                	</div><br/>
                                	<div class="button-list">
 	                               	<ui:fragment rendered="#{medicamentoController.to.medicamento.id eq null}">
-		                                <h:commandButton value="#{resources['label.global.cadastrar']}" styleClass="btn btn-primary pull-left">
-		                                	<f:ajax execute="panelNovoMedicamento" listener="#{medicamentoController.incluir()}" event="click" render="@form"></f:ajax>
-		                                </h:commandButton>
+		                                <h:commandButton value="#{resources['label.global.cadastrar']}" styleClass="btn btn-primary pull-left" action="#{medicamentoController.incluir()}" />
 		                            </ui:fragment>
 		                            <ui:fragment rendered="#{medicamentoController.to.medicamento.id != null}">
 		                                <h:commandButton value="#{resources['label.global.alterar']}" styleClass="btn btn-primary pull-left">

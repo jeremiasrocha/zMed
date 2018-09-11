@@ -2,10 +2,10 @@ package br.com.techHouse.zmed.enums;
 
 public enum TipoIntervaloTempoEnum {
 
-	HORA("label.dominio.intervaloHora"),
-	DIA("label.dominio.intervaloDia"),
-	MES("label.dominio.intervaloMes"),
-	ANO("label.dominio.intervaloAno");
+	HORA("Hora"),
+	DIA("Dia"),
+	MES("Mês"),
+	ANO("Ano");
 
 	private String key;
 

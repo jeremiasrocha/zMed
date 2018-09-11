@@ -2,8 +2,8 @@ package br.com.techHouse.zmed.enums;
 
 public enum SexoEnum {
 
-	M("label.global.masculino","1"),
-	F("label.global.feminino","3");
+	M("Masculino","1"),
+	F("Feminino","2");
 
 	private String key;
 	private String codigo;

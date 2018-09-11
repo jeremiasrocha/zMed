@@ -55,10 +55,30 @@ public class ParametrosOperadoraDAO extends ZmedDataAbstract<ParametrosOperadora
 			throw new ParametrosOperadoraNaoEncontradosException(mensagemFactory.getMensagem(ZmedMensagemEnum.UC_PARAMETROS_OPERADORA_NAO_ENCONTRADOS.getKey())+": "+nome);
 		}
 	}
-
+	
+	public ParametrosOperadora recuperarParametrosOperadora(Integer idOperadora) throws Exception {
+		CriteriaQuery<ParametrosOperadora> criteria = getCriteriaBuilder().createQuery(ParametrosOperadora.class);
+		Root<ParametrosOperadora> root = criteria.from(ParametrosOperadora.class);
+		try {
+			return getManager().createQuery(criteria.select(root).where(getCriteriaBuilder().equal(root.get("operadora"), idOperadora))).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	public List<ParametrosOperadora> pesquisar(ParametrosOperadoraTO parametrosOperadoraTO) {
+		CriteriaQuery<ParametrosOperadora> criteria = getCriteriaBuilder().createQuery(ParametrosOperadora.class);
+		Root<ParametrosOperadora> root = criteria.from(ParametrosOperadora.class);
+		Predicate[] listaPredicate = comporFiltro(root, parametrosOperadoraTO, criteria);
+		try {
+			return getManager().createQuery(criteria.select(root).where(listaPredicate)).getResultList();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
 	private Predicate[] comporFiltro(Root<ParametrosOperadora> root, ParametrosOperadoraTO parametrosOperadoraTO, CriteriaQuery<?> criteria) {
 		List<Predicate> listaPredicate = new ArrayList<>();
-		listaPredicate.add(comporFiltroPorDataExclusao(root));
 		if (!UtilNullEmpty.isNullOrEmpty(parametrosOperadoraTO.getParametrosOperadora().getId())) {
 			listaPredicate.add(comporFiltroPorId(parametrosOperadoraTO.getParametrosOperadora().getId(), root));
 		}
@@ -74,21 +94,6 @@ public class ParametrosOperadoraDAO extends ZmedDataAbstract<ParametrosOperadora
 	
 	private Predicate comporFiltroPorId(Integer id, Root<ParametrosOperadora> root) {
 		return getCriteriaBuilder().equal(root.<String>get("id"), id);
-	}
-	
-	private Predicate comporFiltroPorDataExclusao(Root<ParametrosOperadora> root) {
-		return getCriteriaBuilder().or(getCriteriaBuilder().isNull(root.<Date>get("dataExclusao")));
-	}
-
-	public List<ParametrosOperadora> pesquisar(ParametrosOperadoraTO parametrosOperadoraTO) {
-		CriteriaQuery<ParametrosOperadora> criteria = getCriteriaBuilder().createQuery(ParametrosOperadora.class);
-		Root<ParametrosOperadora> root = criteria.from(ParametrosOperadora.class);
-		Predicate[] listaPredicate = comporFiltro(root, parametrosOperadoraTO, criteria);
-		try {
-			return getManager().createQuery(criteria.select(root).where(listaPredicate)).getResultList();
-		} catch (Exception e) {
-			return null;
-		}
 	}
 	
 }

@@ -127,11 +127,10 @@
 								        <h:inputText value="#{fornecedorController.to.fornecedor.inscricaoEstadual}" styleClass="form-control" required="true" label="#{resources['label.global.inscricaoEstadual']}" pt:placeholder="#{resources['label.placeHolder.inscricaoEstadual']}" />
 								    </div>
 								</div>
-								
 								<div class="form-group row">
 								    <label class="col-2 col-form-label">#{resources['label.global.tipoPessoa']}:</label>
 								    <div class="col-md-10">
-								        <h:selectOneMenu styleClass="form-control select2" value="#{fornecedorController.to.fornecedor.tipoPessoa}" label="#{resources['label.global.tipoPessoa']}" id="idTipoPessoa" onclick="mostrarDivInputCodigoFornecedor(this);" >
+								        <h:selectOneMenu styleClass="form-control select2" value="#{fornecedorController.to.fornecedor.tipoPessoa}" label="#{resources['label.global.tipoPessoa']}" id="idTipoPessoa" onclick="mostrarDivInputCodigoFornecedor(this);" required="true" >
 								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
 								       		<f:selectItem itemLabel="#{resources['label.global.fisica']}" itemValue="#{resources['label.global.fisica']}" />
 		          							<f:selectItem itemLabel="#{resources['label.global.juridica']}" itemValue="#{resources['label.global.juridica']}" />
@@ -150,12 +149,10 @@
 								        <h:inputText value="#{fornecedorController.to.fornecedor.codigo}" styleClass="form-control" label="#{resources['label.global.cnpj']}" pt:placeholder="#{resources['label.placeHolder.cnpj']}" />
 								    </div>
 								</div>
-								
-								
 								<div class="form-group row">
 								    <label class="col-2 col-form-label">#{resources['label.global.tipoOperacao']}:</label>
 								    <div class="col-md-10">
-								        <h:selectOneMenu styleClass="form-control select2" value="#{fornecedorController.to.fornecedor.tipoOperacao}" label="#{resources['label.global.tipoOperacao']}" >
+								        <h:selectOneMenu styleClass="form-control select2" value="#{fornecedorController.to.fornecedor.tipoOperacao}" label="#{resources['label.global.tipoOperacao']}" required="true" >
 								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
 								       		<f:selectItem itemLabel="#{resources['label.global.aluguel']}" itemValue="#{resources['label.global.aluguel']}" />
 		          							<f:selectItem itemLabel="#{resources['label.global.compra']}" itemValue="#{resources['label.global.compra']}" />
@@ -167,7 +164,7 @@
 								<div class="form-group row">
 								    <label class="col-2 col-form-label">#{resources['label.global.produtosAltoCusto']}:</label>
 								    <div class="col-md-10">
-								        <h:selectOneMenu styleClass="form-control select2" value="#{fornecedorController.to.fornecedor.altoCusto}" label="#{resources['label.global.tipoOperacao']}" >
+								        <h:selectOneMenu styleClass="form-control select2" value="#{fornecedorController.to.fornecedor.altoCusto}" label="#{resources['label.global.tipoOperacao']}" required="true" >
 								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
 								       		<f:selectItem itemLabel="#{resources['label.global.sim']}" itemValue="#{resources['label.global.sim']}" />
 		          							<f:selectItem itemLabel="#{resources['label.global.nao']}" itemValue="#{resources['label.global.nao']}" />
@@ -177,7 +174,7 @@
 								<div class="form-group row">
 								    <label class="col-2 col-form-label">#{resources['label.global.email']}:</label>
 								    <div class="col-10">
-								        <h:inputText value="#{fornecedorController.to.fornecedor.email}" styleClass="form-control" required="true" label="#{resources['label.global.email']}" pt:placeholder="#{resources['label.placeHolder.email']}" />
+								        <h:inputText value="#{fornecedorController.to.fornecedor.email}" styleClass="form-control" label="#{resources['label.global.email']}" pt:placeholder="#{resources['label.placeHolder.email']}" />
 								    </div>
 								</div>
 								<div class="form-group row">
@@ -218,9 +215,7 @@
 								</div><br/>
                                	<div class="button-list">
 	                               	<ui:fragment rendered="#{fornecedorController.to.fornecedor.id eq null}">
-		                                <h:commandButton value="#{resources['label.global.cadastrar']}" styleClass="btn btn-primary pull-left">
-		                                	<f:ajax execute="panelNovoFornecedor" listener="#{fornecedorController.incluir()}" event="click" render="@form"></f:ajax>
-		                                </h:commandButton>
+		                                <h:commandButton value="#{resources['label.global.cadastrar']}" styleClass="btn btn-primary pull-left" action="#{fornecedorController.incluir()}" />
 		                            </ui:fragment>
 		                            <ui:fragment rendered="#{fornecedorController.to.fornecedor.id != null}">
 		                                <h:commandButton value="#{resources['label.global.alterar']}" styleClass="btn btn-primary pull-left">
@@ -237,7 +232,6 @@
                 </div> 
             </div>
         </h:panelGroup>
-        
 	</div>
 	</h:form>
 	

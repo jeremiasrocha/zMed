@@ -10,6 +10,7 @@ import br.com.techHouse.zmed.enums.StatusEnum;
 import br.com.techHouse.zmed.enums.ZmedNavegacaoEnum;
 import br.com.techHouse.zmed.service.OperadoraService;
 import br.com.techHouse.zmed.to.OperadoraTO;
+import br.com.techHouse.zmed.util.UtilArquivo;
 
 @ManagedBean(name = "operadoraController")
 @ViewScoped
@@ -83,11 +84,18 @@ public class OperadoraController extends ZmedController<OperadoraTO> {
 	private void definirDadosParaIncluirOperadora() throws Exception {
 		getTo().getOperadora().setDataCadastro(new Date());
 		getTo().getOperadora().setStatus(StatusEnum.A.getKey());
-		getTo().getOperadora();
-		//PASSAGEM ID USUARIO CADASTRO MANUAL- PROVISÓRIO
-		//getTo().getNotaFiscal().getUsuarioCadastro().setId(1);
+		getTo().getOperadora().setContrato(UtilArquivo.converteInputStreamEmBytes(getTo().getFileContrato().getInputStream()));
+		getTo().getOperadora().setTabelaPrecosContrato(UtilArquivo.converteInputStreamEmBytes(getTo().getFileTabelaPrecos().getInputStream()));
 		//getTo().getNotaFiscal().setTipo(getTo().getTipoMedicamentoString().equals(TipoMedicamentoEnum.G.getName())
 		//		? TipoMedicamentoEnum.G.getTipo() : TipoMedicamentoEnum.NG.getTipo());
+	}
+	
+	public void downloadContrato(Operadora Operadora) throws Exception {
+		download(UtilArquivo.converterBytesEmByteArrayOutputStream(Operadora.getContrato()), "Contrato " + Operadora.getNome());
+	}
+	
+	public void downloadTabelaPrecos(Operadora Operadora) throws Exception {
+		download(UtilArquivo.converterBytesEmByteArrayOutputStream(Operadora.getTabelaPrecosContrato()), "Tabela " + Operadora.getNome());
 	}
 	
 	private void definirDadosParaAlterarOperadora() throws Exception {

@@ -66,7 +66,8 @@ public class MedicamentoController extends ZmedController<MedicamentoTO> {
 	}
 	
 	public void pesquisar() throws Exception {
-		limparObjetoMedicamento();
+		getTo().getMedicamento();
+		//limparObjetoMedicamento();
 		getTo().setMedicamentos(medicamentoService.pesquisar(getTo()));
 	}
 	

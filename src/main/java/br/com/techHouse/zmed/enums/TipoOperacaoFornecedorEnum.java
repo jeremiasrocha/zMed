@@ -2,10 +2,10 @@ package br.com.techHouse.zmed.enums;
 
 public enum TipoOperacaoFornecedorEnum {
 
-	C("label.global.compra"),
-	V("label.global.venda"),
-	A("label.global.aluguel"),
-	O("label.global.outros");
+	C("Compra"),
+	V("Venda"),
+	A("Aluguel"),
+	O("Outros");
 	
 	private TipoOperacaoFornecedorEnum(String key){
 		setKey(key);

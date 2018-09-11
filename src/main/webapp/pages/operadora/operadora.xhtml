@@ -65,13 +65,19 @@
 										<h:column>
 											<f:facet name="header">#{resources['label.global.acoes']}</f:facet>
 								    			<div class="actions">
-										    		<h:commandLink title="#{resources['label.global.excluir']}" class="on-default">
+										    		<h:commandLink onclick="return confirm ('#{resources['label.uc.operadora.msg.excluir']}');" title="#{resources['label.global.excluir']}" class="on-default">
 										    			<i class="fa fa-trash-o"></i>
-										    			<f:ajax execute="@this" render="panelPesquisarOperadora" listener="#{operadoraController.excluir(operadora)}" ></f:ajax>
+										    			<f:ajax execute="@this" render="@form" listener="#{operadoraController.excluir(operadora)}" ></f:ajax>
 										    		</h:commandLink>
 										    		<h:commandLink title="#{resources['label.global.alterar']}" class="on-default">
 										    			<i class="fa fa-pencil"></i>
-										    			<f:ajax execute="@this" render="panelNovaOperadora" listener="#{operadoraController.recuperarCompletoPorId(operadora)}" ></f:ajax>
+										    			<f:ajax execute="@this" render="@form" listener="#{operadoraController.recuperarCompletoPorId(operadora)}" ></f:ajax>
+										    		</h:commandLink>
+										    		<h:commandLink title="#{resources['label.uc.operadora.downloadContrato']}" class="on-default" action="#{operadoraController.downloadContrato(operadora)}" immediate="true">
+										    			<i class="fa fa-floppy-o"></i>
+										    		</h:commandLink>
+										    		<h:commandLink title="#{resources['label.uc.operadora.downloadTabelaPrecos']}" class="on-default" action="#{operadoraController.downloadTabelaPrecos(operadora)}" immediate="true">
+										    			<i class="fa fa-floppy-o"></i>
 										    		</h:commandLink>
 									    		</div>
 										</h:column>
@@ -115,35 +121,35 @@
 								<div class="form-group row">
 								    <label class="col-2 col-form-label">#{resources['label.global.cnpj']}:</label>
 								    <div class="col-10">
-								        <h:inputText value="#{operadoraController.to.operadora.cnpj}" styleClass="form-control" pt:type="number" required="true" label="#{resources['label.global.cnpj']}" pt:placeholder="#{resources['label.placeHolder.cnpj']}" />
+								        <h:inputText value="#{operadoraController.to.operadora.cnpj}" styleClass="form-control" label="#{resources['label.global.cnpj']}" pt:placeholder="#{resources['label.placeHolder.cnpj']}"  required="true" />
 								    </div>
 								</div>
 								<div class="form-group row">
-								    <label class="col-2 col-form-label">#{resources['label.uc.operadora.dataAssinaturaContrato']}:</label>
+								    <label class="col-2 col-form-label">#{resources['label.uc.operadora.assinaturaContrato']}:</label>
 								    <div class="col-10">
-								        <h:inputText value="#{operadoraController.to.operadora.dataAssinaturaContrato}" styleClass="form-control" onkeypress="mascara(this,data);" required="true" label="#{resources['label.uc.operadora.dataAssinaturaContrato']}" pt:placeholder="#{resources['label.global.mascaraData']}" >
+								        <h:inputText value="#{operadoraController.to.operadora.dataAssinaturaContrato}" styleClass="form-control" onkeypress="mascara(this,data);" required="true" label="#{resources['label.uc.operadora.assinaturaContrato']}" pt:placeholder="#{resources['label.global.mascaraData']}" >
 								    		<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 								    	</h:inputText>
 								    </div>
 								</div>
-								
-								
-								
-								
 								<div class="form-group row">
 								    <label class="col-2 col-form-label">#{resources['label.global.contrato']}:</label>
 								    <div class="col-10">
-								        <h:inputFile class="file" type="file" 
+								        <h:inputFile class="file" type="file"
 								        	value="#{operadoraController.to.fileContrato}" 
-								        	label="#{resources['label.global.upload']}"
-								        	required="true">
+								        	label="#{resources['label.global.contrato']}">
 								        </h:inputFile>
 								    </div>
 								</div>
-								
-								
-								
-								
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.tabelaDePrecos']}:</label>
+								    <div class="col-10">
+								        <h:inputFile class="file" type="file" 
+								        	value="#{operadoraController.to.fileTabelaPrecos}" 
+								        	label="#{resources['label.global.tabelaDePrecos']}">
+								        </h:inputFile>
+								    </div>
+								</div>
 								<div class="form-group row">
 								    <label class="col-2 col-form-label">#{resources['label.global.email']}:</label>
 								    <div class="col-10">
@@ -183,14 +189,12 @@
 								<div class="form-group row">
 								    <label class="col-2 col-form-label">#{resources['label.global.observacoes']}:</label>
 								    <div class="col-10">
-								        <h:inputTextarea value="#{operadoraController.to.operadora.observacao}" pt:type="textarea" rows="5" styleClass="form-control" label="#{resources['label.global.observacoes']}" pt:placeholder="#{resources['label.uc.operadora.placeHolder.observacoes']}" />
+								        <h:inputTextarea value="#{operadoraController.to.operadora.observacao}" pt:type="textarea" required="true" rows="5" styleClass="form-control" label="#{resources['label.global.observacoes']}" pt:placeholder="#{resources['label.uc.operadora.placeHolder.observacoes']}" />
 								    </div>
 								</div><br/>
                                	<div class="button-list">
 	                               	<ui:fragment rendered="#{operadoraController.to.operadora.id eq null}">
-		                                <h:commandButton value="#{resources['label.global.cadastrar']}" styleClass="btn btn-primary pull-left">
-		                                	<f:ajax execute="panelNovaOperadora" listener="#{operadoraController.incluir()}" event="click" render="@form"></f:ajax>
-		                                </h:commandButton>
+		                                <h:commandButton value="#{resources['label.global.cadastrar']}" action="#{operadoraController.incluir()}" styleClass="btn btn-primary pull-left" />
 		                            </ui:fragment>
 		                            <ui:fragment rendered="#{operadoraController.to.operadora.id != null}">
 		                                <h:commandButton value="#{resources['label.global.alterar']}" styleClass="btn btn-primary pull-left">

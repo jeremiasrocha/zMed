@@ -26,7 +26,7 @@ public class ParametrosOperadora implements Serializable {
 	@Column(name="envio_fatura")
 	private String envioFatura;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_operadora")
 	private Operadora operadora;
 

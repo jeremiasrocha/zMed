@@ -1,6 +1,7 @@
 package br.com.techHouse.zmed.controller;
 
 import java.util.Date;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -8,7 +9,6 @@ import javax.inject.Inject;
 
 import br.com.techHouse.zmed.entity.ParametrosOperadora;
 import br.com.techHouse.zmed.enums.ZmedNavegacaoEnum;
-import br.com.techHouse.zmed.service.OperadoraService;
 import br.com.techHouse.zmed.service.ParametrosOperadoraService;
 import br.com.techHouse.zmed.to.ParametrosOperadoraTO;
 
@@ -19,7 +19,6 @@ public class ParametrosOperadoraController extends ZmedController<ParametrosOper
 	private static final long serialVersionUID = 2279068945912404629L;
 	
 	private @Inject ParametrosOperadoraService ParametrosOperadoraService;
-	private @Inject OperadoraService operadoraService;
 
 	@PostConstruct
 	private void inicializar() {
@@ -31,7 +30,6 @@ public class ParametrosOperadoraController extends ZmedController<ParametrosOper
 	 			}
 			}
 			getTo().setListaParametrosOperadora(ParametrosOperadoraService.pesquisar(getTo()));
-			getTo().setListaOperadora(operadoraService.listar());
 		}catch(Exception e){
 			e.printStackTrace();
 		}	
@@ -39,6 +37,10 @@ public class ParametrosOperadoraController extends ZmedController<ParametrosOper
 	
 	public String abrirTela() throws Exception {
 		return ZmedNavegacaoEnum.parametrosOperadora.getName();
+	}
+	
+	public void recuperarParametrosOperadora()throws Exception {
+		getTo().setParametrosOperadora(ParametrosOperadoraService.recuperarParametrosOperadora(getTo().getParametrosOperadora().getOperadora().getId()));
 	}
 
 	public String incluir() throws Exception {
@@ -61,7 +63,7 @@ public class ParametrosOperadoraController extends ZmedController<ParametrosOper
 	
 	public void pesquisar() throws Exception {
 		limparObjetoParametrosOperadora();
-		getTo().setListaParametrosOperadora(ParametrosOperadoraService.pesquisar(getTo()));
+		//getTo().setListaParametrosOperadora(ParametrosOperadoraService.pesquisar(getTo()));
 	}
 	
 	public void recuperarCompletoPorId(ParametrosOperadora ParametrosOperadora)throws Exception {

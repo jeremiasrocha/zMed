@@ -1,6 +1,8 @@
 package br.com.techHouse.zmed.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,6 +10,7 @@ import java.util.Date;
  * The persistent class for the zmed_medicamento_inventario database table.
  * 
  */
+
 @Entity
 @Table(name="zmed_medicamento_inventario")
 public class MedicamentoInventario implements Serializable {
@@ -33,18 +36,18 @@ public class MedicamentoInventario implements Serializable {
 	private Date dataExclusao;
 	
 	@Column(name="qtd_fracionamento")
-	private Integer qtdFracionamento;
+	private String qtdFracionamento;
 
 	private Integer quantidade;
 
 	@Column(name="tipo_fracionamento")
 	private String tipoFracionamento;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_medicamento")
 	private Medicamento medicamento;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_nota_fiscal")
 	private NotaFiscal notaFiscal;
 	
@@ -55,6 +58,9 @@ public class MedicamentoInventario implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_usuario_cadastro")
 	private Usuario UsuarioCadastro;
+	
+	@Column(name="valor_compra")
+	private BigDecimal valorCompra;
 
 	public MedicamentoInventario() {
 	}
@@ -91,11 +97,11 @@ public class MedicamentoInventario implements Serializable {
 		this.dataExclusao = dataExclusao;
 	}
 
-	public Integer getQtdFracionamento() {
+	public String getQtdFracionamento() {
 		return this.qtdFracionamento;
 	}
 
-	public void setQtdFracionamento(Integer qtdFracionamento) {
+	public void setQtdFracionamento(String qtdFracionamento) {
 		this.qtdFracionamento = qtdFracionamento;
 	}
 
@@ -153,6 +159,14 @@ public class MedicamentoInventario implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public BigDecimal getValorCompra() {
+		return valorCompra;
+	}
+
+	public void setValorCompra(BigDecimal valorCompra) {
+		this.valorCompra = valorCompra;
 	}
 
 }

@@ -17,6 +17,8 @@ public class MedicamentoInventarioTO {
 	public MedicamentoInventario getMedicamentoInventario() {
 		if (medicamentoInventario == null) {
 			medicamentoInventario = new MedicamentoInventario();
+			medicamentoInventario.setMedicamento(new Medicamento());
+			medicamentoInventario.setNotaFiscal(new NotaFiscal());
 		}
 		return medicamentoInventario;
 	}

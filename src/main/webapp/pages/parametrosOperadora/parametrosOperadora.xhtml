@@ -12,7 +12,7 @@
 
         <!-- TITLE -->
 		<h5 class="card-header" style="background-color: #28a5d4; color: white; text-transform: uppercase;">
-			<b>#{resources['label.uc.parametros.operadora.listaParametros']}</b>
+			<b>#{resources['label.uc.parametros.operadora.titulo']}</b>
 		</h5><br/>
 		 
 		<!-- PANEL OPERADORA LIST -->
@@ -22,21 +22,22 @@
                     <h4 class="m-t-0 header-title"><b>#{resources['label.uc.operadora.operadoras']}</b></h4>
                     <p class="text-muted m-b-30 font-13">
                     </p>
-                    <div class="row">
-                        <div class="col-sm-12 form-inline">
-                        	
-                        	<div class="form-group row">
-							    <label class="col-2 col-form-label">#{resources['label.uc.operadora.titulo']}:</label>
-							    <div class="col-10">
-							    	<h:selectOneMenu styleClass="form-control select2" value="#{parametrosOperadoraController.to.parametrosOperadora.operadora}" label="#{resources['label.uc.operadora.titulo']}" onclick="mostrarDivParametrosOperadora(this);"  >
-							       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
-							       		<f:selectItems value="#{parametrosOperadoraController.to.listaOperadora}" var="operadora" 
-							       				itemLabel="#{operadora.nome}" itemValue="operadora"/>
-							       		<f:converter converterId="operadoraConverter" />
-							       	</h:selectOneMenu>	 
-							    </div>
-							</div>
-                            
+                   	<div class="row">
+                        <div class="col-12">
+                            <div class="p-20">
+	                        	<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.uc.operadora.titulo']}:</label>
+								    <div class="col-10">
+								    	<h:selectOneMenu styleClass="form-control select2" value="#{parametrosOperadoraController.to.parametrosOperadora}" label="#{resources['label.uc.operadora.titulo']}" >
+								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
+								       		<f:selectItems value="#{parametrosOperadoraController.to.listaParametrosOperadora}" var="parametrosOperadora" 
+								       				itemLabel="#{parametrosOperadora.operadora.nome}" itemValue="#{parametrosOperadora}"/>
+								       		<f:converter converterId="parametrosOperadoraConverter" />
+								       		<f:ajax event="change" execute="@this" render="panelParametrosOperadora" />
+								       	</h:selectOneMenu>	 
+								    </div>
+								</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -71,10 +72,16 @@
 								        <h:inputText value="#{parametrosOperadoraController.to.parametrosOperadora.pagamento}" styleClass="form-control" label="#{resources['label.global.pagamento']}" pt:placeholder="#{resources['label.placeHolder.tempoModoLugar']}" />
 								    </div>
 								</div>
+								
+								
 								<div class="form-group row">
 								    <label class="col-2 col-form-label">#{resources['label.uc.parametros.operadora.utilizaPacote']}:</label>
 								    <div class="col-10">
-								        <h:inputText value="#{parametrosOperadoraController.to.parametrosOperadora.utilizaPacote}" styleClass="form-control"  required="true" label="#{resources['label.uc.parametros.operadora.utilizaPacote']}" pt:placeholder="#{resources['label.uc.parametros.operadora.utilizaPacote']}" />
+								    	<h:selectOneMenu styleClass="form-control select2" value="#{parametrosOperadoraController.to.parametrosOperadora.utilizaPacote}" label="#{resources['label.uc.parametros.operadora.utilizaPacote']}" >
+								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
+								       		<f:selectItem itemLabel="#{resources['label.global.sim']}" itemValue="#{resources['label.global.sim']}" />
+            								<f:selectItem itemLabel="#{resources['label.global.nao']}" itemValue="#{resources['label.global.nao']}" />
+								       	</h:selectOneMenu>
 								    </div>
 								</div>
 							

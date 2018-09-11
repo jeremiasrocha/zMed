@@ -2,9 +2,15 @@ package br.com.techHouse.zmed.enums;
 
 public enum FracionamentoMedicamentoEnum {
 
-	A("label.global.ativo"),
-	I("label.global.inativo"),
-	E("label.global.excluido");
+	Am("Ampola"),
+	bl("Blister"),
+	Ev("Envelope"),
+	Fl("Flaconete"),
+	Fr("Frasco"),
+	Gt("Gotas"),
+	pl("Pílula"),
+	Sa("Sachê"),
+	Sg("Seringa");
 	
 	private FracionamentoMedicamentoEnum(String key){
 		setKey(key);
@@ -18,6 +24,10 @@ public enum FracionamentoMedicamentoEnum {
 
 	public void setKey(String key) {
 		this.key = key;
+	}
+	
+	public String getName(){
+		return name();
 	}
 	
 }
