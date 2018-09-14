@@ -59,8 +59,8 @@ public class Prestador implements Serializable {
 
 	private String tipo;
 
-	@Column(name="tipo_pessoa")
-	private String tipoPessoa;
+	@Column(name="tipo_atividade")
+	private String tipoAtividade;
 
 	private String uf;
 	
@@ -219,12 +219,12 @@ public class Prestador implements Serializable {
 		this.tipo = tipo;
 	}
 
-	public String getTipoPessoa() {
-		return this.tipoPessoa;
+	public String getTipoAtividade() {
+		return this.tipoAtividade;
 	}
 
-	public void setTipoPessoa(String tipoPessoa) {
-		this.tipoPessoa = tipoPessoa;
+	public void setTipoAtividade(String tipoAtividade) {
+		this.tipoAtividade = tipoAtividade;
 	}
 
 	public String getUf() {

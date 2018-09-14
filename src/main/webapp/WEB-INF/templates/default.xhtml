@@ -61,7 +61,6 @@
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<h:form id="formDefault" prependId="false">
 				<ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-			        
 	
 			        <!-- MENU MEDICAMENTO -->
 			        <li class="nav-item" data-toggle="tooltip" data-placement="right">
@@ -125,12 +124,12 @@
 						</h:commandLink>
 					</li>
 					
-					<!-- MENU FORNECEDOR -->
+					<!-- MENU PACIENTE -->
 					<li class="nav-item" data-toggle="tooltip" data-placement="right">
 						<h:commandLink action="#{fornecedorController.abrirTela()}" styleClass="nav-link" >
-							<i class="fa fa-truck"></i>
+							<i class="fa fa-user-plus"></i>
 							<span class="nav-link-text">
-								<h:outputText value="Paciente" />
+								<h:outputText value="#{resources['label.uc.paciente.titulo']}" />
 							</span>
 						</h:commandLink>
 					</li>
