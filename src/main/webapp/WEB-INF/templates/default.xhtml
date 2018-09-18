@@ -134,6 +134,16 @@
 						</h:commandLink>
 					</li>
 					
+					<!-- MENU PROFISSIONAL -->
+					<li class="nav-item" data-toggle="tooltip" data-placement="right">
+						<h:commandLink action="#{profissionalController.abrirTela()}" styleClass="nav-link" >
+							<i class="fa fa-user-md"></i>
+							<span class="nav-link-text">
+								<h:outputText value="#{resources['label.uc.profissional.titulo']}" />
+							</span>
+						</h:commandLink>
+					</li>
+					
 					 <!-- MENU PARÂMETROS -->
 			        <li class="nav-item" data-toggle="tooltip" data-placement="right">
 						<a class="nav-link nav-link-collapse collapsed"	data-toggle="collapse" href="#menuParametros" data-parent="#exampleAccordion"> 

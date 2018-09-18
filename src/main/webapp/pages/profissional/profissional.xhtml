@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+    template="/WEB-INF/templates/default.xhtml">
+    
+<ui:define name="content">
+	<h:form id="formProfissional" enctype="multipart/form-data" >
+		<div style="background-color: #e8e8e8;">
+
+        <!-- TITLE -->
+		<h5 class="card-header" style="background-color: #28a5d4; color: white; text-transform: uppercase;">
+			<b>#{resources['label.uc.profissional.titulo']}</b>
+		</h5><br/>
+		 
+		<!-- PROFISSIONAL LIST -->
+		<h:panelGroup layout="block" styleClass="row" id="panelPesquisarProfissional">
+            <div class="col-md-12">
+                <div class="card-box">
+                    <h4 class="m-t-0 header-title"><b>#{resources['label.uc.profissional.profissionais']}</b></h4>
+                    <p class="text-muted m-b-30 font-13">
+                    </p>
+                    <div class="row">
+                        <div class="col-sm-12 form-inline">
+                            <div class="form-group m-r-10">
+                            	<label for="nome" class="mr-sm-2">#{resources['label.global.nome']}:</label>
+                                <h:inputText value="#{profissionalController.to.profissional.nome}" styleClass="form-control" label="#{resources['label.global.nome']}" pt:placeholder="#{resources['label.global.nome']}" />
+                            </div>
+                            <div class="form-group m-r-10">
+                                <label for="codigo" class="mr-sm-2">#{resources['label.global.codigo']}:</label>
+                                <h:inputText value="#{profissionalController.to.profissional.codigo}" pt:type="number" styleClass="form-control" label="#{resources['label.global.codigo']}" pt:placeholder="#{resources['label.global.codigo']}" />
+                            </div>
+                            <div class="form-group m-r-10">
+							    <label for="tipoOperacao" class="mr-sm-2">#{resources['label.uc.profissional.especialidade']}:</label>
+						    	<h:selectOneMenu styleClass="form-control select2" value="#{profissionalController.to.profissional.especialidade}" label="#{resources['label.uc.profissional.especialidade']}" >
+						       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
+						       		<f:selectItem itemLabel="#{resources['label.global.aluguel']}" itemValue="#{resources['label.global.aluguel']}" />
+          							<f:selectItem itemLabel="#{resources['label.global.compra']}" itemValue="#{resources['label.global.compra']}" />
+          							<f:selectItem itemLabel="#{resources['label.global.venda']}" itemValue="#{resources['label.global.venda']}" />
+          							<f:selectItem itemLabel="#{resources['label.global.outros']}" itemValue="#{resources['label.global.outros']}" />
+						       	</h:selectOneMenu>
+							</div>
+                            <h:commandButton value="#{resources['label.global.pesquisar']}" styleClass="btn btn-primary pull-left">
+                            	<f:ajax execute="panelPesquisarProfissional" listener="#{profissionalController.pesquisar()}" event="click" render="@form"></f:ajax>
+                            </h:commandButton><br /><br /><br />
+                            <div class="col-12">
+                                <div class="card-box table-responsive">
+                                	<h:dataTable id="lstProfissional" value="#{profissionalController.to.listaProfissional}" var="profissional" styleClass="table table-striped table-bordered table-hover">
+										<h:column>
+											<f:facet name="header">#{resources['label.global.codigo']}</f:facet>
+											<h:outputText value="#{profissional.codigo}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.nome']}</f:facet>
+											<h:outputText value="#{profissional.nome}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.uc.profissional.especialidade']}</f:facet>
+											<h:outputText value="#{profissional.especialidade}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.tipoAtendimento']}</f:facet>
+											<h:outputText value="#{profissional.tipoAtendimento}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.telefone']}</f:facet>
+											<h:outputText value="#{profissional.telefone}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.endereco']}</f:facet>
+											<h:outputText value="#{profissional.enderecoCompleto}"/> - <h:outputText value="#{profissional.uf}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.cep']}</f:facet>
+											<h:outputText value="#{profissional.cep}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.acoes']}</f:facet>
+								    			<div class="actions">
+										    		<h:commandLink title="#{resources['label.global.excluir']}" class="on-default">
+										    			<i class="fa fa-trash-o"></i>
+										    			<f:ajax execute="@this" render="panelPesquisarProfissional" listener="#{profissionalController.excluir(profissional)}" ></f:ajax>
+										    		</h:commandLink>
+										    		<h:commandLink title="#{resources['label.global.alterar']}" class="on-default">
+										    			<i class="fa fa-pencil"></i>
+										    			<f:ajax execute="@this" render="panelNovoProfissional" listener="#{profissionalController.recuperarCompletoPorId(profissional)}" ></f:ajax>
+										    		</h:commandLink>
+									    		</div>
+										</h:column>
+									</h:dataTable>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:panelGroup>
+		
+	    <!-- PROFISSIONAL NEW -->
+        <h:panelGroup layout="block" styleClass="row" id="panelNovoProfissional">
+            <div class="col-12">
+                <div class="card-box">
+                    <h4 class="m-t-0 header-title"><b>#{resources['label.uc.profissional.novoProfissional']}</b></h4>
+                    <p class="text-muted m-b-30 font-14">
+                    </p>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="p-20">
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.nome']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{profissionalController.to.profissional.nome}" styleClass="form-control" required="true" label="#{resources['label.global.nome']}" pt:placeholder="#{resources['label.uc.profissional.placeHolder.nome']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.tipo']}:</label>
+								    <div class="col-md-10">
+								        <h:selectOneMenu styleClass="form-control select2" value="#{profissionalController.to.profissional.tipo}" label="#{resources['label.global.tipo']}" id="idTipoPessoa" onclick="mostrarDivInputCodigoProfissional(this);" required="true" >
+								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
+								       		<f:selectItem itemLabel="#{resources['label.global.fisica']}" itemValue="#{resources['label.global.fisica']}" />
+		          							<f:selectItem itemLabel="#{resources['label.global.juridica']}" itemValue="#{resources['label.global.juridica']}" />
+								       	</h:selectOneMenu>
+								    </div>
+								</div>
+								<div class="form-group row" style="display: none;" id="divInputCodigoTipoCPF">
+								    <label class="col-2 col-form-label">#{resources['label.global.cpf']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{profissionalController.to.profissional.codigo}" styleClass="form-control" label="#{resources['label.global.cpf']}" pt:placeholder="#{resources['label.placeHolder.cpf']}" />
+								    </div>
+								</div>
+								<div class="form-group row" style="display: none;" id="divInputCodigoTipoCNPJ">
+								    <label class="col-2 col-form-label">#{resources['label.global.cnpj']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{profissionalController.to.profissional.codigo}" styleClass="form-control" label="#{resources['label.global.cnpj']}" pt:placeholder="#{resources['label.placeHolder.cnpj']}" />
+								    </div>
+								</div>
+								<div class="form-group row" style="display: none;" id="divInputRazaoSocialTipoCNPJ">
+								    <label class="col-2 col-form-label">#{resources['label.global.razaoSocial']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{profissionalController.to.profissional.razaoSocial}" styleClass="form-control" label="#{resources['label.global.razaoSocial']}" pt:placeholder="#{resources['label.global.razaoSocial']}" />
+								    </div>
+								</div>
+
+
+
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.uc.profissional.especialidade']}:</label>
+								    <div class="col-md-10">
+								        <h:selectOneMenu styleClass="form-control select2" value="#{profissionalController.to.profissional.especialidade}" label="#{resources['label.uc.profissional.especialidade']']}" required="true" >
+								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
+								       		<f:selectItem itemLabel="#{resources['label.global.aluguel']}" itemValue="#{resources['label.global.aluguel']}" />
+		          							<f:selectItem itemLabel="#{resources['label.global.compra']}" itemValue="#{resources['label.global.compra']}" />
+		          							<f:selectItem itemLabel="#{resources['label.global.venda']}" itemValue="#{resources['label.global.venda']}" />
+		          							<f:selectItem itemLabel="#{resources['label.global.outros']}" itemValue="#{resources['label.global.outros']}" />
+								       	</h:selectOneMenu>
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.tipoAtendimento']}:</label>
+								    <div class="col-md-10">
+								        <h:selectOneMenu styleClass="form-control select2" value="#{profissionalController.to.profissional.tipoAtendimento}" label="#{resources['label.global.tipoAtendimento']}" required="true" >
+								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
+								       		<f:selectItem itemLabel="#{resources['label.global.aluguel']}" itemValue="#{resources['label.global.aluguel']}" />
+		          							<f:selectItem itemLabel="#{resources['label.global.compra']}" itemValue="#{resources['label.global.compra']}" />
+		          							<f:selectItem itemLabel="#{resources['label.global.venda']}" itemValue="#{resources['label.global.venda']}" />
+		          							<f:selectItem itemLabel="#{resources['label.global.outros']}" itemValue="#{resources['label.global.outros']}" />
+								       	</h:selectOneMenu>
+								    </div>
+								</div>
+								
+								
+								
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.uc.profissional.atendimentoAltoCusto']}:</label>
+								    <div class="col-md-10">
+								        <h:selectOneMenu styleClass="form-control select2" value="#{profissionalController.to.profissional.altoCusto}" label="#{resources['label.uc.profissional.atendimentoAltoCusto']}">
+								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
+								       		<f:selectItem itemLabel="#{resources['label.global.sim']}" itemValue="#{resources['label.global.sim']}" />
+		          							<f:selectItem itemLabel="#{resources['label.global.nao']}" itemValue="#{resources['label.global.nao']}" />
+								       	</h:selectOneMenu>
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.imagemAssinatura']}:</label>
+								    <div class="col-10">
+								        <h:inputFile class="file" type="file"
+								        	value="#{profissionalController.to.imgAssinatura}" 
+								        	label="#{resources['label.global.imagemAssinatura']}">
+								        </h:inputFile>
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.valorAtendimento']}:</label>
+								    <div class="col-md-10">
+								    	<h:inputText value="#{profissionalController.to.profissional.valorAtendimento}" pt:type="number" styleClass="form-control" required="true" label="#{resources['label.global.valorAtendimento']}" pt:placeholder="#{resources['label.global.simboloMonetario']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.taxaAdministrativa']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{profissionalController.to.profissional.taxaAdministrativa}" styleClass="form-control" required="true" label="#{resources['label.global.taxaAdministrativa']']}" pt:placeholder="#{resources['label.global.taxaAdministrativa']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.email']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{profissionalController.to.profissional.email}" styleClass="form-control" label="#{resources['label.global.email']}" pt:placeholder="#{resources['label.placeHolder.email']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.telefone']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{profissionalController.to.profissional.telefone}" styleClass="form-control" required="true" label="#{resources['label.global.telefone']}" pt:placeholder="#{resources['label.placeHolder.telefone']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.enderecoCompleto']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{profissionalController.to.profissional.enderecoCompleto}" styleClass="form-control" required="true" label="#{resources['label.global.enderecoCompleto']}" pt:placeholder="#{resources['label.placeHolder.endereco']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.complemento']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{profissionalController.to.profissional.complemento}" styleClass="form-control" label="#{resources['label.global.complemento']}" pt:placeholder="#{resources['label.placeHolder.complemento']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.uf']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{profissionalController.to.profissional.uf}" styleClass="form-control" required="true" label="#{resources['label.global.uf']}" pt:placeholder="#{resources['label.global.uf']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.cep']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{profissionalController.to.profissional.cep}" styleClass="form-control" required="true" label="#{resources['label.global.cep']}" pt:placeholder="#{resources['label.placeHolder.cep']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.observacoes']}:</label>
+								    <div class="col-10">
+								        <h:inputTextarea value="#{profissionalController.to.profissional.observacao}" pt:type="textarea" rows="5" styleClass="form-control" label="#{resources['label.global.observacoes']}" pt:placeholder="#{resources['label.uc.fornecedor.placeHolder.observacoes']}" />
+								    </div>
+								</div><br/>
+                               	<div class="button-list">
+	                               	<ui:fragment rendered="#{profissionalController.to.profissional.id eq null}">
+		                                <h:commandButton value="#{resources['label.global.cadastrar']}" styleClass="btn btn-primary pull-left" action="#{profissionalController.incluir()}" />
+		                            </ui:fragment>
+		                            <ui:fragment rendered="#{profissionalController.to.profissional.id != null}">
+		                                <h:commandButton value="#{resources['label.global.alterar']}" styleClass="btn btn-primary pull-left">
+		                                	<f:ajax execute="panelNovoProfissional" listener="#{profissionalController.alterar()}" event="click" render="@form"></f:ajax>
+		                                </h:commandButton>
+		                                <h:commandButton value="#{resources['label.global.cancelar']}" styleClass="btn btn-primary pull-left">
+			                            	<f:ajax execute="panelPesquisarProfissional" listener="#{profissionalController.pesquisar()}" event="click" render="@form"></f:ajax>
+			                            </h:commandButton>
+		                            </ui:fragment>
+	                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </h:panelGroup>
+	</div>
+	</h:form>
+	
+	<script>
+
+		function mostrarDivInputCodigoProfissional(tipoPessoa) {
+			if(tipoPessoa.value != "") {
+				if(tipoPessoa.value == "Física") {
+					document.getElementById("divInputCodigoTipoCPF").style.display = "";
+					document.getElementById("divInputCodigoTipoCNPJ").style.display = "none";
+					document.getElementById("divInputRazaoSocialTipoCNPJ").style.display = "none";
+				}
+				if(tipoPessoa.value == "Jurídica") {
+					document.getElementById("divInputCodigoTipoCNPJ").style.display = "";
+					document.getElementById("divInputRazaoSocialTipoCNPJ").style.display = "";
+					document.getElementById("divInputCodigoTipoCPF").style.display = "none";
+				}
+			} else {
+				document.getElementById("divInputCodigoTipoCPF").style.display = "none";
+				document.getElementById("divInputCodigoTipoCNPJ").style.display = "none";
+				document.getElementById("divInputRazaoSocialTipoCNPJ").style.display = "none";
+			}
+		}
+	
+	</script>
+	
+</ui:define>
+</ui:composition>

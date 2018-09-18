@@ -53,7 +53,7 @@ public class PacienteDAO extends ZmedDataAbstract<Paciente> {
 			Root<Paciente> root = criteria.from(Paciente.class);
 			return getManager().createQuery(criteria.select(root).where(getCriteriaBuilder().equal(root.get("nome"), nome))).getSingleResult();
 		} catch (NoResultException e) {
-			throw new PacienteNaoEncontradoException(mensagemFactory.getMensagem(ZmedMensagemEnum.UC_FORNECEDOR_NAO_ENCONTRADO.getKey())+": "+nome);
+			throw new PacienteNaoEncontradoException(mensagemFactory.getMensagem(ZmedMensagemEnum.UC_PACIENTE_NAO_ENCONTRADO.getKey())+": "+nome);
 		}
 	}
 
