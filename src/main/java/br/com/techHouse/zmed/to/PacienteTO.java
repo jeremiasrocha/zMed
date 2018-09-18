@@ -2,33 +2,47 @@ package br.com.techHouse.zmed.to;
 
 import java.util.ArrayList;
 import java.util.List;
-import br.com.techHouse.zmed.entity.Fornecedor;
+
+import br.com.techHouse.zmed.entity.Operadora;
+import br.com.techHouse.zmed.entity.Paciente;
 
 public class PacienteTO {
 
-    private Fornecedor fornecedor;
-    private List<Fornecedor> listaFornecedor;
+    private Paciente paciente;
+    private List<Paciente> listaPaciente;
+    private List<Operadora> listaOperadora;
     
-	public Fornecedor getFornecedor() {
-		if (fornecedor == null) {
-			fornecedor = new Fornecedor();
+	public Paciente getPaciente() {
+		if (paciente == null) {
+			paciente = new Paciente();
 		}
-		return fornecedor;
+		return paciente;
 	}
 	
-	public void setFornecedor(Fornecedor fornecedor) {
-		this.fornecedor = fornecedor;
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
 	}
 	
-	public List<Fornecedor> getListaFornecedor() {
-		if (listaFornecedor == null) {
-			listaFornecedor = new ArrayList<Fornecedor>();
+	public List<Paciente> getListaPaciente() {
+		if (listaPaciente == null) {
+			listaPaciente = new ArrayList<Paciente>();
 		}
-		return listaFornecedor;
+		return listaPaciente;
 	}
 	
-	public void setListaFornecedor(List<Fornecedor> listaFornecedor) {
-		this.listaFornecedor = listaFornecedor;
+	public void setListaPaciente(List<Paciente> listaPaciente) {
+		this.listaPaciente = listaPaciente;
+	}
+
+	public List<Operadora> getListaOperadora() {
+		if (listaOperadora == null) {
+			listaOperadora = new ArrayList<Operadora>();
+		}
+		return listaOperadora;
+	}
+
+	public void setListaOperadora(List<Operadora> listaOperadora) {
+		this.listaOperadora = listaOperadora;
 	}
     
 }

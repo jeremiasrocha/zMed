@@ -7,46 +7,46 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
-import br.com.techHouse.zmed.data.FornecedorDAO;
+import br.com.techHouse.zmed.data.PacienteDAO;
 import br.com.techHouse.zmed.data.ZmedDataAbstract;
-import br.com.techHouse.zmed.entity.Fornecedor;
+import br.com.techHouse.zmed.entity.Paciente;
 import br.com.techHouse.zmed.to.FiltroTO;
-import br.com.techHouse.zmed.to.FornecedorTO;
+import br.com.techHouse.zmed.to.PacienteTO;
 
 @Stateless
-public class PacienteService extends ServiceAbstract<Fornecedor> {
+public class PacienteService extends ServiceAbstract<Paciente> {
 
-	private @Inject FornecedorDAO fornecedorDAO;
+	private @Inject PacienteDAO pacienteDAO;
 
 	@Override
-	protected ZmedDataAbstract<Fornecedor> getEntityBean() {
-		return fornecedorDAO;
+	protected ZmedDataAbstract<Paciente> getEntityBean() {
+		return pacienteDAO;
 	}
 	
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-	public Fornecedor recuperarCompletoPorNome(String nome) throws Exception {
-		Fornecedor fornecedor = fornecedorDAO.recuperarPorNome(nome);
-		return fornecedor;
+	public Paciente recuperarCompletoPorNome(String nome) throws Exception {
+		Paciente paciente = pacienteDAO.recuperarPorNome(nome);
+		return paciente;
 	}
 	
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-	public Fornecedor recuperarCompletoPorId(Integer id) throws Exception {
-		Fornecedor fornecedor = fornecedorDAO.recuperarCompleto(id);
-		return fornecedor;
+	public Paciente recuperarCompletoPorId(Integer id) throws Exception {
+		Paciente paciente = pacienteDAO.recuperarCompleto(id);
+		return paciente;
 	}
 
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-	public void paginar(FiltroTO<FornecedorTO> filtro) throws Exception {
+	public void paginar(FiltroTO<PacienteTO> filtro) throws Exception {
 	}
 
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-	public List<Fornecedor> pesquisar(FornecedorTO fornecedorTO) throws Exception{
-		return fornecedorDAO.pesquisar(fornecedorTO);
+	public List<Paciente> pesquisar(PacienteTO pacienteTO) throws Exception{
+		return pacienteDAO.pesquisar(pacienteTO);
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void excluirFornecedor(Fornecedor fornecedor) throws Exception {
-		fornecedorDAO.excluirFornecedor(fornecedor);
+	public void excluirPaciente(Paciente paciente) throws Exception {
+		pacienteDAO.excluirPaciente(paciente);
 	}
 	
 }

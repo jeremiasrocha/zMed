@@ -32,7 +32,7 @@
 								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
 								       		<f:selectItems value="#{parametrosOperadoraController.to.listaParametrosOperadora}" var="parametrosOperadora" 
 								       				itemLabel="#{parametrosOperadora.operadora.nome}" itemValue="#{parametrosOperadora}"/>
-								       		<f:converter converterId="parametrosOperadoraConverter" />
+								       		<f:converter converterId="operadoraConverter" />
 								       		<f:ajax event="change" execute="@this" render="panelParametrosOperadora" />
 								       	</h:selectOneMenu>	 
 								    </div>

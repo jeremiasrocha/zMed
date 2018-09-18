@@ -14,22 +14,22 @@ import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import br.com.techHouse.zmed.entity.Fornecedor;
+import br.com.techHouse.zmed.entity.Paciente;
 import br.com.techHouse.zmed.enums.ZmedMensagemEnum;
-import br.com.techHouse.zmed.exception.FornecedorNaoEncontradoException;
+import br.com.techHouse.zmed.exception.PacienteNaoEncontradoException;
 import br.com.techHouse.zmed.message.MensagemFactory;
-import br.com.techHouse.zmed.to.FornecedorTO;
+import br.com.techHouse.zmed.to.PacienteTO;
 import br.com.techHouse.zmed.util.UtilNullEmpty;
 
 @Stateless
-public class PacienteDAO extends ZmedDataAbstract<Fornecedor> {
+public class PacienteDAO extends ZmedDataAbstract<Paciente> {
 	
 	private @Inject MensagemFactory mensagemFactory;
 
 	@Override
-	public Fornecedor recuperar(Serializable id) throws Exception {
-		CriteriaQuery<Fornecedor> criteria = getCriteriaBuilder().createQuery(Fornecedor.class);
-		Root<Fornecedor> root = criteria.from(Fornecedor.class);
+	public Paciente recuperar(Serializable id) throws Exception {
+		CriteriaQuery<Paciente> criteria = getCriteriaBuilder().createQuery(Paciente.class);
+		Root<Paciente> root = criteria.from(Paciente.class);
 		try {
 			return getManager().createQuery(criteria.select(root).where(getCriteriaBuilder().equal(root.get("id"), id))).getSingleResult();
 		} catch (NoResultException e) {
@@ -37,9 +37,9 @@ public class PacienteDAO extends ZmedDataAbstract<Fornecedor> {
 		}
 	}
 
-	public Fornecedor recuperarCompleto(Integer id) throws Exception {
-		CriteriaQuery<Fornecedor> criteria = getCriteriaBuilder().createQuery(Fornecedor.class);
-		Root<Fornecedor> root = criteria.from(Fornecedor.class);
+	public Paciente recuperarCompleto(Integer id) throws Exception {
+		CriteriaQuery<Paciente> criteria = getCriteriaBuilder().createQuery(Paciente.class);
+		Root<Paciente> root = criteria.from(Paciente.class);
 		try {
 			return getManager().createQuery(criteria.select(root).where(getCriteriaBuilder().equal(root.get("id"), id))).getSingleResult();
 		} catch (NoResultException e) {
@@ -47,51 +47,58 @@ public class PacienteDAO extends ZmedDataAbstract<Fornecedor> {
 		}
 	}
 
-	public Fornecedor recuperarPorNome(String nome) throws FornecedorNaoEncontradoException {
+	public Paciente recuperarPorNome(String nome) throws PacienteNaoEncontradoException {
 		try {
-			CriteriaQuery<Fornecedor> criteria = getCriteriaBuilder().createQuery(Fornecedor.class);
-			Root<Fornecedor> root = criteria.from(Fornecedor.class);
+			CriteriaQuery<Paciente> criteria = getCriteriaBuilder().createQuery(Paciente.class);
+			Root<Paciente> root = criteria.from(Paciente.class);
 			return getManager().createQuery(criteria.select(root).where(getCriteriaBuilder().equal(root.get("nome"), nome))).getSingleResult();
 		} catch (NoResultException e) {
-			throw new FornecedorNaoEncontradoException(mensagemFactory.getMensagem(ZmedMensagemEnum.UC_FORNECEDOR_NAO_ENCONTRADO.getKey())+": "+nome);
+			throw new PacienteNaoEncontradoException(mensagemFactory.getMensagem(ZmedMensagemEnum.UC_FORNECEDOR_NAO_ENCONTRADO.getKey())+": "+nome);
 		}
 	}
 
-	private Predicate[] comporFiltro(Root<Fornecedor> root, FornecedorTO fornecedorTO, CriteriaQuery<?> criteria) {
+	private Predicate[] comporFiltro(Root<Paciente> root, PacienteTO pacienteTO, CriteriaQuery<?> criteria) {
 		List<Predicate> listaPredicate = new ArrayList<>();
 		listaPredicate.add(comporFiltroPorDataExclusao(root));
-		if (!UtilNullEmpty.isNullOrEmpty(fornecedorTO.getFornecedor().getId())) {
-			listaPredicate.add(comporFiltroPorId(fornecedorTO.getFornecedor().getId(), root));
+		if (!UtilNullEmpty.isNullOrEmpty(pacienteTO.getPaciente().getId())) {
+			listaPredicate.add(comporFiltroPorId(pacienteTO.getPaciente().getId(), root));
 		}
-		if (!UtilNullEmpty.isNullOrEmpty(fornecedorTO.getFornecedor().getCodigo())) {
-			listaPredicate.add(comporFiltroPorCodigo(fornecedorTO.getFornecedor().getCodigo().toString(), root));
+		if (!UtilNullEmpty.isNullOrEmpty(pacienteTO.getPaciente().getCpf())) {
+			listaPredicate.add(comporFiltroPorCPF(pacienteTO.getPaciente().getCpf().toString(), root));
 		}
-		if (!UtilNullEmpty.isNullOrEmpty(fornecedorTO.getFornecedor().getDataCadastro())) {
-			listaPredicate.add(comporFiltroPorDataCadastro(fornecedorTO.getFornecedor().getDataCadastro(), root));
+		if (!UtilNullEmpty.isNullOrEmpty(pacienteTO.getPaciente().getDataCadastro())) {
+			listaPredicate.add(comporFiltroPorDataCadastro(pacienteTO.getPaciente().getDataCadastro(), root));
+		}
+		if (!UtilNullEmpty.isNullOrEmpty(pacienteTO.getPaciente().getNome())) {
+			listaPredicate.add(comporFiltroPorNome(pacienteTO.getPaciente().getNome().toString(), root));
 		}
 		return (Predicate[]) listaPredicate.toArray(new Predicate[listaPredicate.size()]);
 	}
 	
-	private Predicate comporFiltroPorCodigo(String codigo, Root<Fornecedor> root) {
-		return getCriteriaBuilder().like(getCriteriaBuilder().lower(getCriteriaBuilder().trim(root.<String>get("codigo"))), "%"+codigo.toLowerCase()+"%");
+	private Predicate comporFiltroPorNome(String nome, Root<Paciente> root) {
+		return getCriteriaBuilder().like(getCriteriaBuilder().lower(getCriteriaBuilder().trim(root.<String>get("nome"))), "%"+nome.toLowerCase()+"%");
 	}
 	
-	private Predicate comporFiltroPorDataCadastro(Date dataCadastro, Root<Fornecedor> root) {
+	private Predicate comporFiltroPorCPF(String cpf, Root<Paciente> root) {
+		return getCriteriaBuilder().like(getCriteriaBuilder().lower(getCriteriaBuilder().trim(root.<String>get("cpf"))), "%"+cpf.toLowerCase()+"%");
+	}
+	
+	private Predicate comporFiltroPorDataCadastro(Date dataCadastro, Root<Paciente> root) {
 		return getCriteriaBuilder().equal(root.<Timestamp>get("dataCadastro"), dataCadastro);
 	}
 	
-	private Predicate comporFiltroPorId(Integer id, Root<Fornecedor> root) {
+	private Predicate comporFiltroPorId(Integer id, Root<Paciente> root) {
 		return getCriteriaBuilder().equal(root.<String>get("id"), id);
 	}
 	
-	private Predicate comporFiltroPorDataExclusao(Root<Fornecedor> root) {
+	private Predicate comporFiltroPorDataExclusao(Root<Paciente> root) {
 		return getCriteriaBuilder().or(getCriteriaBuilder().isNull(root.<Date>get("dataExclusao")));
 	}
 
-	public List<Fornecedor> pesquisar(FornecedorTO fornecedorTO) {
-		CriteriaQuery<Fornecedor> criteria = getCriteriaBuilder().createQuery(Fornecedor.class);
-		Root<Fornecedor> root = criteria.from(Fornecedor.class);
-		Predicate[] listaPredicate = comporFiltro(root, fornecedorTO, criteria);
+	public List<Paciente> pesquisar(PacienteTO pacienteTO) {
+		CriteriaQuery<Paciente> criteria = getCriteriaBuilder().createQuery(Paciente.class);
+		Root<Paciente> root = criteria.from(Paciente.class);
+		Predicate[] listaPredicate = comporFiltro(root, pacienteTO, criteria);
 		try {
 			return getManager().createQuery(criteria.select(root).where(listaPredicate)).getResultList();
 		} catch (Exception e) {
@@ -99,12 +106,12 @@ public class PacienteDAO extends ZmedDataAbstract<Fornecedor> {
 		}
 	}
 
-	public void excluirFornecedor(Fornecedor fornecedor) {
-		CriteriaUpdate<Fornecedor> criteria = getCriteriaBuilder().createCriteriaUpdate(Fornecedor.class);
-		Root<Fornecedor> root = criteria.from(Fornecedor.class);
+	public void excluirPaciente(Paciente paciente) {
+		CriteriaUpdate<Paciente> criteria = getCriteriaBuilder().createCriteriaUpdate(Paciente.class);
+		Root<Paciente> root = criteria.from(Paciente.class);
 		criteria.set("dataExclusao", new Date());
-		criteria.set("status", fornecedor.getStatus());
-		criteria.where(getCriteriaBuilder().equal(root.get("id"),fornecedor.getId()));
+		criteria.set("status", paciente.getSituacao());
+		criteria.where(getCriteriaBuilder().equal(root.get("id"),paciente.getId()));
 		getManager().createQuery(criteria).executeUpdate();
 	}
 	

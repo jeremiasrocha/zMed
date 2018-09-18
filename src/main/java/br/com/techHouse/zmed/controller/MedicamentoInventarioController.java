@@ -38,12 +38,6 @@ public class MedicamentoInventarioController extends ZmedController<MedicamentoI
 			getTo().setListaMedicamentoInventario(medicamentoInventarioService.pesquisar(getTo()));
 			getTo().setListaNotaFiscal(notaFiscalService.listar());
 			getTo().setListaMedicamento(medicamentoService.listar());
-			
-			
-			getTo().getListaMedicamentoInventario();
-			getTo().getListaNotaFiscal();
-			getTo().getListaMedicamento();
-			
 		}catch(Exception e){
 			e.printStackTrace();
 		}	

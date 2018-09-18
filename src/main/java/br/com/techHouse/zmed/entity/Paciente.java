@@ -3,6 +3,7 @@ package br.com.techHouse.zmed.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+
 /**
  * The persistent class for the zmed_paciente database table.
  * 
@@ -47,19 +48,21 @@ public class Paciente implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_usuario_alteracao")
-	private Usuario usuarioAlteracao;
-	
+	private Usuario UsuarioAlteracao;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_usuario_cadastro")
-	private Usuario usuarioCadastro;
+	private Usuario UsuarioCadastro;
 	
 	private String nome;
 
 	@Column(name="numero_carteira")
 	private String numeroCarteira;
 
-	private String operadora;
-
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="id_operadora")
+	private Operadora operadora;
+	
 	@Column(name="quadro_clinico")
 	private String quadroClinico;
 
@@ -197,14 +200,6 @@ public class Paciente implements Serializable {
 		this.numeroCarteira = numeroCarteira;
 	}
 
-	public String getOperadora() {
-		return this.operadora;
-	}
-
-	public void setOperadora(String operadora) {
-		this.operadora = operadora;
-	}
-
 	public String getQuadroClinico() {
 		return this.quadroClinico;
 	}
@@ -251,6 +246,14 @@ public class Paciente implements Serializable {
 
 	public void setUf(String uf) {
 		this.uf = uf;
+	}
+
+	public Operadora getOperadora() {
+		return operadora;
+	}
+
+	public void setOperadora(Operadora operadora) {
+		this.operadora = operadora;
 	}
 
 }

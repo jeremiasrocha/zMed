@@ -5,19 +5,21 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
-import br.com.techHouse.zmed.entity.Fornecedor;
+import br.com.techHouse.zmed.entity.Paciente;
 import br.com.techHouse.zmed.enums.StatusEnum;
 import br.com.techHouse.zmed.enums.ZmedNavegacaoEnum;
-import br.com.techHouse.zmed.service.FornecedorService;
-import br.com.techHouse.zmed.to.FornecedorTO;
+import br.com.techHouse.zmed.service.OperadoraService;
+import br.com.techHouse.zmed.service.PacienteService;
+import br.com.techHouse.zmed.to.PacienteTO;
+import br.com.techHouse.zmed.util.UtilNullEmpty;
 
-@ManagedBean(name = "fornecedorController")
+@ManagedBean(name = "pacienteController")
 @ViewScoped
-public class PacienteController extends ZmedController<FornecedorTO> {
+public class PacienteController extends ZmedController<PacienteTO> {
 
-	private static final long serialVersionUID = 996572960606200534L;
-	
-	private @Inject FornecedorService fornecedorService;
+	private static final long serialVersionUID = 8029902120216625584L;
+	private @Inject PacienteService pacienteService;
+	private @Inject OperadoraService operadoraService;
 
 	@PostConstruct
 	private void inicializar() {
@@ -28,79 +30,76 @@ public class PacienteController extends ZmedController<FornecedorTO> {
 	 				recuperar(Integer.valueOf(getRequest().getParameter("id")));
 	 			}
 			}
-			getTo().setListaFornecedor(fornecedorService.pesquisar(getTo()));
+			getTo().setListaPaciente(pacienteService.pesquisar(getTo()));
+			getTo().setListaOperadora(operadoraService.listar());
 		}catch(Exception e){
 			e.printStackTrace();
 		}	
 	}
 	
 	public String abrirTela() throws Exception {
-		return ZmedNavegacaoEnum.fornecedor.getName();
+		return ZmedNavegacaoEnum.paciente.getName();
 	}
 
 	public String incluir() throws Exception {
-		definirDadosParaIncluirFornecedor();
-		fornecedorService.incluir(getTo().getFornecedor());
+		definirDadosParaIncluirPaciente();
+		pacienteService.incluir(getTo().getPaciente());
 		adicionarMensagemIncluirSucesso();
-		limparObjetoFornecedor();
+		limparObjetoPaciente();
 		pesquisar();
-		return ZmedNavegacaoEnum.fornecedor.getName();
+		return ZmedNavegacaoEnum.paciente.getName();
 	}
 	
 	public String alterar() throws Exception {
-		definirDadosParaAlterarFornecedor();
-		fornecedorService.alterar(getTo().getFornecedor());
+		definirDadosParaAlterarPaciente();
+		pacienteService.alterar(getTo().getPaciente());
 		adicionarMensagemAlteracaoSucesso();
-		limparObjetoFornecedor();
+		limparObjetoPaciente();
 		pesquisar();
-		return ZmedNavegacaoEnum.fornecedor.getName();
+		return ZmedNavegacaoEnum.paciente.getName();
 	}
 
-	public String excluir(Fornecedor fornecedor)throws Exception {
-		definirDadosParaExcluirFornecedor(fornecedor);
-		fornecedorService.excluirFornecedor(fornecedor);
+	public String excluir(Paciente paciente)throws Exception {
+		definirDadosParaExcluirPaciente(paciente);
+		pacienteService.excluirPaciente(paciente);
 		adicionarMensagemExclusaoSucesso();
 		pesquisar();
-		return ZmedNavegacaoEnum.fornecedor.getName();
+		return ZmedNavegacaoEnum.paciente.getName();
 	}
 	
 	public void pesquisar() throws Exception {
-		limparObjetoFornecedor();
-		getTo().setListaFornecedor(fornecedorService.pesquisar(getTo()));
+		limparObjetoPaciente();
+		getTo().setListaPaciente(pacienteService.pesquisar(getTo()));
 	}
 	
-	public void recuperarCompletoPorId(Fornecedor fornecedor)throws Exception {
-		recuperar(fornecedor.getId());
-		//getTo().getNotaFiscal().setTipo(getTo().getTipoMedicamentoString().equals(TipoMedicamentoEnum.G.getName())
-		//		? TipoMedicamentoEnum.G.getTipo() : TipoMedicamentoEnum.NG.getTipo());
+	public void recuperarCompletoPorId(Paciente paciente)throws Exception {
+		recuperar(paciente.getId());
 	}
 	
 	private void recuperar(Integer id) throws Exception {
-		getTo().setFornecedor(fornecedorService.recuperar(id));
+		getTo().setPaciente(pacienteService.recuperar(id));
 	}
 	
-	private void definirDadosParaIncluirFornecedor() throws Exception {
-		getTo().getFornecedor().setDataCadastro(new Date());
-		getTo().getFornecedor().setStatus(StatusEnum.A.getKey());
-		getTo().getFornecedor();
-		//PASSAGEM ID USUARIO CADASTRO MANUAL- PROVISÓRIO
-		//getTo().getNotaFiscal().getUsuarioCadastro().setId(1);
-		//getTo().getNotaFiscal().setTipo(getTo().getTipoMedicamentoString().equals(TipoMedicamentoEnum.G.getName())
-		//		? TipoMedicamentoEnum.G.getTipo() : TipoMedicamentoEnum.NG.getTipo());
+	private void definirDadosParaIncluirPaciente() throws Exception {
+		getTo().getPaciente().setDataCadastro(new Date());
+		if(UtilNullEmpty.isNullOrEmpty(getTo().getPaciente().getTipoAtendimento())) {
+			getTo().getPaciente().setOperadora(null);
+			getTo().getPaciente().setNumeroCarteira(null);
+		}
+		//TODO ID USUARIO CADASTRO INSERIDO MANUALMENTE- PROVISÓRIO
+		getTo().getPaciente().getUsuarioCadastro().setId(1);
 	}
 	
-	private void definirDadosParaAlterarFornecedor() throws Exception {
-		getTo().getFornecedor().setDataAlteracao(new Date());
-		//getTo().getNotaFiscal().setTipo(getTo().getTipoMedicamentoString().equals(TipoMedicamentoEnum.G.getName())
-		//		? TipoMedicamentoEnum.G.getTipo() : TipoMedicamentoEnum.NG.getTipo());
+	private void definirDadosParaAlterarPaciente() throws Exception {
+		getTo().getPaciente().setDataAlteracao(new Date());
 	}
 	
-	private void definirDadosParaExcluirFornecedor(Fornecedor fornecedor) throws Exception {
-		fornecedor.setStatus(StatusEnum.E.getKey());
+	private void definirDadosParaExcluirPaciente(Paciente paciente) throws Exception {
+		paciente.setSituacao(StatusEnum.E.getKey());
 	}
 
-	private void limparObjetoFornecedor() throws Exception {
-		getTo().setFornecedor(null);
+	private void limparObjetoPaciente() throws Exception {
+		getTo().setPaciente(null);
 	}
 
 }

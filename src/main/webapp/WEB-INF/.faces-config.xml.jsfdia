@@ -57,4 +57,13 @@
   NAME="rules:#pages#parametrosOperadora#parametrosOperadora.xhtml"
   PATH="/pages/parametrosOperadora/parametrosOperadora.xhtml"
   SHAPE="240,481,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::5" SHAPE="32,577,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::5" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="paciente::#pages#paciente#paciente.xhtml"
+    NAME="output" PATH="/pages/paciente/paciente.xhtml"
+    TARGET="rules:#pages#paciente#paciente.xhtml" TITLE="paciente" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#paciente#paciente.xhtml"
+  PATH="/pages/paciente/paciente.xhtml" SHAPE="240,593,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>
