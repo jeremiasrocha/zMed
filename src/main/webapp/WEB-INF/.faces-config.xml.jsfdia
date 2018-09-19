@@ -66,4 +66,26 @@
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#pages#paciente#paciente.xhtml"
   PATH="/pages/paciente/paciente.xhtml" SHAPE="240,593,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::6" SHAPE="32,689,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::6" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="profissional::#pages#profissional#profissional.xhtml"
+    NAME="output" PATH="/pages/profissional/profissional.xhtml"
+    TARGET="rules:#pages#profissional#profissional.xhtml"
+    TITLE="profissional" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#profissional#profissional.xhtml"
+  PATH="/pages/profissional/profissional.xhtml" SHAPE="240,705,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::7" SHAPE="32,801,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::7" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="equipamento::#pages#equipamento#equipamento.xhtml" NAME="output"
+    PATH="/pages/equipamento/equipamento.xhtml"
+    TARGET="rules:#pages#equipamento#equipamento.xhtml"
+    TITLE="equipamento" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#equipamento#equipamento.xhtml"
+  PATH="/pages/equipamento/equipamento.xhtml" SHAPE="240,817,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

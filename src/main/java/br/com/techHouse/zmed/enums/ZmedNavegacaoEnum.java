@@ -9,7 +9,8 @@ public enum ZmedNavegacaoEnum {
 	operadora,
 	parametrosOperadora,
 	paciente,
-	profissional;
+	profissional,
+	equipamento;
 	
 	public String getName(){
 		return name();

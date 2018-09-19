@@ -94,6 +94,26 @@
 						</ul>
 					</li>
 					
+					 <!-- MENU EQUIPAMENTO -->
+			        <li class="nav-item" data-toggle="tooltip" data-placement="right">
+						<a class="nav-link nav-link-collapse collapsed"	data-toggle="collapse" href="#menuEquipamento" data-parent="#exampleAccordion"> 
+							<i class="fa fa-medkit"></i>
+							<span class="nav-link-text">#{resources['label.uc.equipamento.titulo']}</span>
+						</a>
+						<ul class="sidenav-second-level collapse" id="menuEquipamento">
+							<li> 
+								<h:commandLink action="#{equipamentoController.abrirTela()}" >
+									<h:outputText value="#{resources['label.global.avulso']}" />
+								</h:commandLink>
+							</li>
+							<li> 
+								<h:commandLink action="#{medicamentoInventarioController.abrirTela()}" >
+									<h:outputText value="#{resources['label.global.inventario']}" />
+								</h:commandLink>
+							</li>
+						</ul>
+					</li>
+					
 					<!-- MENU FORNECEDOR -->
 					<li class="nav-item" data-toggle="tooltip" data-placement="right">
 						<h:commandLink action="#{fornecedorController.abrirTela()}" styleClass="nav-link" >

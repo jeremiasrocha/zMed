@@ -45,12 +45,16 @@ public enum ZmedMensagemEnum {
 	
 	//MENSAGENS PACIENTE
 	UC_PACIENTE_NAO_ENCONTRADO("label.uc.paciente.msg.pacienteNaoEncontrado","label.uc.paciente.msg.pacienteNaoEncontrado"),
-	UC_PACIENTE_JA_CADASTRADOS("label.uc.paciente.msg.pacienteJaCadastrado","label.uc.paciente.msg.pacienteJaCadastrado"),
+	UC_PACIENTE_JA_CADASTRADO("label.uc.paciente.msg.pacienteJaCadastrado","label.uc.paciente.msg.pacienteJaCadastrado"),
 	
 	//MENSAGENS PROFISSIONAL
 	UC_PROFISSIONAL_NAO_ENCONTRADO("label.uc.profissional.msg.profissionalNaoEncontrado","label.uc.profissional.msg.profissionalNaoEncontrado"),
-	UC_PROFISSIONAL_JA_CADASTRADOS("label.uc.profissional.msg.profissionalJaCadastrado","label.uc.profissional.msg.profissionalJaCadastrado");
+	UC_PROFISSIONAL_JA_CADASTRADO("label.uc.profissional.msg.profissionalJaCadastrado","label.uc.profissional.msg.profissionalJaCadastrado"),
 	
+	//MENSAGENS EQUIPAMENTO
+	UC_EQUIPAMENTO_NAO_ENCONTRADO("label.uc.equipamento.msg.equipamentoNaoEncontrado","label.uc.equipamento.msg.equipamentoNaoEncontrado"),
+	UC_EQUIPAMENTO_JA_CADASTRADO("label.uc.equipamento.msg.equipamentoJaCadastrado","label.uc.equipamento.msg.equipamentoJaCadastrado");
+
 	private ZmedMensagemEnum(String key,String text){
 		this.key = key;
 		this.text = text;

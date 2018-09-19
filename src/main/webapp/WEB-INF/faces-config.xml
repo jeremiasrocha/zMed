@@ -47,6 +47,20 @@
 		</navigation-case>
 	</navigation-rule>
 	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>profissional</from-outcome>
+			<to-view-id>/pages/profissional/profissional.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>equipamento</from-outcome>
+			<to-view-id>/pages/equipamento/equipamento.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
 	<application>
 		<locale-config>
 			<default-locale>pt_BR</default-locale>
