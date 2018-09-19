@@ -6,12 +6,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import br.com.techHouse.zmed.entity.Paciente;
-import br.com.techHouse.zmed.enums.StatusEnum;
 import br.com.techHouse.zmed.enums.ZmedNavegacaoEnum;
 import br.com.techHouse.zmed.service.OperadoraService;
 import br.com.techHouse.zmed.service.PacienteService;
 import br.com.techHouse.zmed.to.PacienteTO;
-import br.com.techHouse.zmed.util.UtilNullEmpty;
 
 @ManagedBean(name = "pacienteController")
 @ViewScoped
@@ -58,17 +56,8 @@ public class PacienteController extends ZmedController<PacienteTO> {
 		pesquisar();
 		return ZmedNavegacaoEnum.paciente.getName();
 	}
-
-	public String excluir(Paciente paciente)throws Exception {
-		definirDadosParaExcluirPaciente(paciente);
-		pacienteService.excluirPaciente(paciente);
-		adicionarMensagemExclusaoSucesso();
-		pesquisar();
-		return ZmedNavegacaoEnum.paciente.getName();
-	}
 	
 	public void pesquisar() throws Exception {
-		limparObjetoPaciente();
 		getTo().setListaPaciente(pacienteService.pesquisar(getTo()));
 	}
 	
@@ -82,22 +71,21 @@ public class PacienteController extends ZmedController<PacienteTO> {
 	
 	private void definirDadosParaIncluirPaciente() throws Exception {
 		getTo().getPaciente().setDataCadastro(new Date());
-		if(UtilNullEmpty.isNullOrEmpty(getTo().getPaciente().getTipoAtendimento())) {
+		if(getTo().getPaciente().getTipoAtendimento().equals("Particular")) {
 			getTo().getPaciente().setOperadora(null);
 			getTo().getPaciente().setNumeroCarteira(null);
 		}
+		
+		getTo().getPaciente().getOperadora();
+		getTo().getPaciente().getNumeroCarteira();
 		//TODO ID USUARIO CADASTRO INSERIDO MANUALMENTE- PROVISÓRIO
-		getTo().getPaciente().getUsuarioCadastro().setId(1);
+		//getTo().getPaciente().getUsuarioCadastro().setId(1);
 	}
 	
 	private void definirDadosParaAlterarPaciente() throws Exception {
 		getTo().getPaciente().setDataAlteracao(new Date());
 	}
 	
-	private void definirDadosParaExcluirPaciente(Paciente paciente) throws Exception {
-		paciente.setSituacao(StatusEnum.E.getKey());
-	}
-
 	private void limparObjetoPaciente() throws Exception {
 		getTo().setPaciente(null);
 	}

@@ -94,7 +94,7 @@ public class ProfissionalController extends ZmedController<ProfissionalTO> {
 	}
 	
 	public void downloadImagemAssinatura(Profissional profissional) throws Exception {
-		download(UtilArquivo.converterBytesEmByteArrayOutputStream(profissional.getAssinatura()), "Assinatura " + profissional.getNome());
+		download(UtilArquivo.converterBytesEmByteArrayOutputStream(profissional.getAssinatura()), "Assinatura " + profissional.getNome()+".jpg");
 	}
 	
 	private void definirDadosParaAlterarProfissional() throws Exception {

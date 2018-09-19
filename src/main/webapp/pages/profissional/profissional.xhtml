@@ -37,10 +37,6 @@
 							    <label for="tipoOperacao" class="mr-sm-2">#{resources['label.uc.profissional.especialidade']}:</label>
 						    	<h:selectOneMenu styleClass="form-control select2" value="#{profissionalController.to.profissional.especialidade}" label="#{resources['label.uc.profissional.especialidade']}" >
 						       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
-						       		<f:selectItem itemLabel="#{resources['label.global.aluguel']}" itemValue="#{resources['label.global.aluguel']}" />
-          							<f:selectItem itemLabel="#{resources['label.global.compra']}" itemValue="#{resources['label.global.compra']}" />
-          							<f:selectItem itemLabel="#{resources['label.global.venda']}" itemValue="#{resources['label.global.venda']}" />
-          							<f:selectItem itemLabel="#{resources['label.global.outros']}" itemValue="#{resources['label.global.outros']}" />
 						       	</h:selectOneMenu>
 							</div>
                             <h:commandButton value="#{resources['label.global.pesquisar']}" styleClass="btn btn-primary pull-left">
@@ -87,6 +83,9 @@
 										    		<h:commandLink title="#{resources['label.global.alterar']}" class="on-default">
 										    			<i class="fa fa-pencil"></i>
 										    			<f:ajax execute="@this" render="panelNovoProfissional" listener="#{profissionalController.recuperarCompletoPorId(profissional)}" ></f:ajax>
+										    		</h:commandLink>
+										    		<h:commandLink title="#{resources['label.uc.profissional.downloadAssinatura']}" class="on-default" action="#{profissionalController.downloadImagemAssinatura(profissional)}" immediate="true">
+										    			<i class="fa fa-floppy-o"></i>
 										    		</h:commandLink>
 									    		</div>
 										</h:column>
@@ -149,7 +148,7 @@
 								<div class="form-group row">
 								    <label class="col-2 col-form-label">#{resources['label.uc.profissional.especialidade']}:</label>
 								    <div class="col-md-10">
-								        <h:selectOneMenu styleClass="form-control select2" value="#{profissionalController.to.profissional.especialidade}" label="#{resources['label.uc.profissional.especialidade']']}" required="true" >
+								        <h:selectOneMenu styleClass="form-control select2" value="#{profissionalController.to.profissional.especialidade}" label="#{resources['label.uc.profissional.especialidade']}" required="true" >
 								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
 								       		<f:selectItem itemLabel="#{resources['label.global.aluguel']}" itemValue="#{resources['label.global.aluguel']}" />
 		          							<f:selectItem itemLabel="#{resources['label.global.compra']}" itemValue="#{resources['label.global.compra']}" />
@@ -201,7 +200,7 @@
 								<div class="form-group row">
 								    <label class="col-2 col-form-label">#{resources['label.global.taxaAdministrativa']}:</label>
 								    <div class="col-10">
-								        <h:inputText value="#{profissionalController.to.profissional.taxaAdministrativa}" styleClass="form-control" required="true" label="#{resources['label.global.taxaAdministrativa']']}" pt:placeholder="#{resources['label.global.taxaAdministrativa']}" />
+								        <h:inputText value="#{profissionalController.to.profissional.taxaAdministrativa}" styleClass="form-control" required="true" label="#{resources['label.global.taxaAdministrativa']}" pt:placeholder="#{resources['label.global.taxaAdministrativa']}" />
 								    </div>
 								</div>
 								<div class="form-group row">
@@ -243,7 +242,7 @@
 								<div class="form-group row">
 								    <label class="col-2 col-form-label">#{resources['label.global.observacoes']}:</label>
 								    <div class="col-10">
-								        <h:inputTextarea value="#{profissionalController.to.profissional.observacao}" pt:type="textarea" rows="5" styleClass="form-control" label="#{resources['label.global.observacoes']}" pt:placeholder="#{resources['label.uc.fornecedor.placeHolder.observacoes']}" />
+								        <h:inputTextarea value="#{profissionalController.to.profissional.observacao}" pt:type="textarea" rows="5" styleClass="form-control" label="#{resources['label.global.observacoes']}" pt:placeholder="#{resources['label.uc.profissional.placeHolder.observacoes']}" />
 								    </div>
 								</div><br/>
                                	<div class="button-list">

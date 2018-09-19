@@ -72,11 +72,18 @@ public class PacienteDAO extends ZmedDataAbstract<Paciente> {
 		if (!UtilNullEmpty.isNullOrEmpty(pacienteTO.getPaciente().getNome())) {
 			listaPredicate.add(comporFiltroPorNome(pacienteTO.getPaciente().getNome().toString(), root));
 		}
+		if (!UtilNullEmpty.isNullOrEmpty(pacienteTO.getPaciente().getCid())) {
+			listaPredicate.add(comporFiltroPorCID(pacienteTO.getPaciente().getCid().toString(), root));
+		}
 		return (Predicate[]) listaPredicate.toArray(new Predicate[listaPredicate.size()]);
 	}
 	
 	private Predicate comporFiltroPorNome(String nome, Root<Paciente> root) {
 		return getCriteriaBuilder().like(getCriteriaBuilder().lower(getCriteriaBuilder().trim(root.<String>get("nome"))), "%"+nome.toLowerCase()+"%");
+	}
+	
+	private Predicate comporFiltroPorCID(String cid, Root<Paciente> root) {
+		return getCriteriaBuilder().like(getCriteriaBuilder().lower(getCriteriaBuilder().trim(root.<String>get("cid"))), "%"+cid.toLowerCase()+"%");
 	}
 	
 	private Predicate comporFiltroPorCPF(String cpf, Root<Paciente> root) {

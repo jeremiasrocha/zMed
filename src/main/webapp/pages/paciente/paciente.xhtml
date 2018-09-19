@@ -34,8 +34,8 @@
                                 <h:inputText value="#{pacienteController.to.paciente.cpf}" pt:type="number" styleClass="form-control" label="#{resources['label.global.cpf']}" pt:placeholder="#{resources['label.global.cpf']}" />
                             </div>
                             <div class="form-group m-r-10">
-                                <label for="codigo" class="mr-sm-2">#{resources['label.uc.paciente.numeroCarteira']}:</label>
-                                <h:inputText value="#{pacienteController.to.paciente.numeroCarteira}" pt:type="number" styleClass="form-control" label="#{resources['label.uc.paciente.numeroCarteira']}" pt:placeholder="#{resources['label.uc.paciente.numeroCarteira']}" />
+                                <label for="codigo" class="mr-sm-2">#{resources['label.global.cid']}:</label>
+                                <h:inputText value="#{pacienteController.to.paciente.cid}" styleClass="form-control" label="#{resources['label.global.cid']}" pt:placeholder="#{resources['label.global.cid']}" />
                             </div>
                             <h:commandButton value="#{resources['label.global.pesquisar']}" styleClass="btn btn-primary pull-left">
                             	<f:ajax execute="panelPesquisarPaciente" listener="#{pacienteController.pesquisar()}" event="click" render="@form"></f:ajax>
@@ -57,7 +57,9 @@
 										</h:column>
 										<h:column>
 											<f:facet name="header">#{resources['label.global.dataCadastro']}</f:facet>
-											<h:outputText value="#{paciente.dataCadastro}"/>
+											<h:outputText value="#{paciente.dataCadastro}">
+												<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+											</h:outputText>
 										</h:column>
 										<h:column>
 											<f:facet name="header">#{resources['label.uc.paciente.diagnostico']}</f:facet>
@@ -74,10 +76,6 @@
 										<h:column>
 											<f:facet name="header">#{resources['label.global.acoes']}</f:facet>
 								    			<div class="actions">
-										    		<h:commandLink title="#{resources['label.global.excluir']}" class="on-default">
-										    			<i class="fa fa-trash-o"></i>
-										    			<f:ajax execute="@this" render="panelPesquisarPaciente" listener="#{pacienteController.excluir(paciente)}" ></f:ajax>
-										    		</h:commandLink>
 										    		<h:commandLink title="#{resources['label.global.alterar']}" class="on-default">
 										    			<i class="fa fa-pencil"></i>
 										    			<f:ajax execute="@this" render="panelNovoPaciente" listener="#{pacienteController.recuperarCompletoPorId(paciente)}" ></f:ajax>
@@ -203,6 +201,10 @@
 								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
 								       		<f:selectItem itemLabel="#{resources['label.global.vinculado']}" itemValue="#{resources['label.global.vinculado']}" />
 		          							<f:selectItem itemLabel="#{resources['label.global.naoVinculado']}" itemValue="#{resources['label.global.naoVinculado']}" />
+		          							<f:selectItem itemLabel="#{resources['label.global.encerramentoObito']}" itemValue="#{resources['label.global.encerramentoObito']}" />
+		          							<f:selectItem itemLabel="#{resources['label.global.encerramentoAdministrativo']}" itemValue="#{resources['label.global.encerramentoAdministrativo']}" />
+		          							<f:selectItem itemLabel="#{resources['label.global.encerramentoTransferencia']}" itemValue="#{resources['label.global.encerramentoTransferencia']}" />
+		          							<f:selectItem itemLabel="#{resources['label.global.encerramentoAlta']}" itemValue="#{resources['label.global.encerramentoAlta']}" />
 								       	</h:selectOneMenu>
 								    </div>
 								</div><br/>
@@ -239,6 +241,8 @@
 			} else {
 				document.getElementById("divInputOperadora").style.display = "none";
 				document.getElementById("divInputNumeroCarteira").style.display = "none";
+				document.getElementById("divInputOperadora").value = "";
+				document.getElementById("divInputNumeroCarteira").value = "";
 			}
 		}
 	

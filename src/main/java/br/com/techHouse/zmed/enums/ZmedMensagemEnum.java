@@ -53,8 +53,12 @@ public enum ZmedMensagemEnum {
 	
 	//MENSAGENS EQUIPAMENTO
 	UC_EQUIPAMENTO_NAO_ENCONTRADO("label.uc.equipamento.msg.equipamentoNaoEncontrado","label.uc.equipamento.msg.equipamentoNaoEncontrado"),
-	UC_EQUIPAMENTO_JA_CADASTRADO("label.uc.equipamento.msg.equipamentoJaCadastrado","label.uc.equipamento.msg.equipamentoJaCadastrado");
-
+	UC_EQUIPAMENTO_JA_CADASTRADO("label.uc.equipamento.msg.equipamentoJaCadastrado","label.uc.equipamento.msg.equipamentoJaCadastrado"),
+	
+	//MENSAGENS EQUIPAMENTO INVENTÁRIO
+	UC_EQUIPAMENTO_INVENTARIO_NAO_ENCONTRADO("label.uc.equipamentoInventario.msg.equipamentoNaoEncontrado","label.uc.equipamentoInventario.msg.equipamentoNaoEncontrado"),
+	UC_EQUIPAMENTO_INVENTARIO_JA_CADASTRADO("label.uc.equipamentoInventario.msg.equipamentoJaCadastrado","label.uc.equipamentoInventario.msg.equipamentoJaCadastrado");
+	
 	private ZmedMensagemEnum(String key,String text){
 		this.key = key;
 		this.text = text;

@@ -75,8 +75,6 @@
     TITLE="profissional" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
- <PROCESS-ITEM NAME="rules:#pages#profissional#profissional.xhtml"
-  PATH="/pages/profissional/profissional.xhtml" SHAPE="240,705,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules::7" SHAPE="32,801,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules::7" NAME="item" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT
@@ -88,4 +86,19 @@
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#pages#equipamento#equipamento.xhtml"
   PATH="/pages/equipamento/equipamento.xhtml" SHAPE="240,817,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#profissional#profissional.xhtml"
+  PATH="/pages/profissional/profissional.xhtml" SHAPE="240,705,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::8" SHAPE="32,913,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::8" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="equipamentoInventario::#pages#equipamento#equipamento_inventario.xhtml"
+    NAME="output" PATH="/pages/equipamento/equipamento_inventario.xhtml"
+    TARGET="rules:#pages#equipamento#equipamento_inventario.xhtml"
+    TITLE="equipamentoInventario" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#pages#equipamento#equipamento_inventario.xhtml"
+  PATH="/pages/equipamento/equipamento_inventario.xhtml"
+  SHAPE="240,929,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>
