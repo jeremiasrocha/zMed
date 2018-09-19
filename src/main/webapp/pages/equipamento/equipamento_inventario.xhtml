@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+    template="/WEB-INF/templates/default.xhtml">
+    
+<ui:define name="content">
+	<h:form id="formMedicamentoInventario" prependId="false" >
+		<div style="background-color: #e8e8e8;">
+       
+        <!-- TITLE -->
+		<h5 class="card-header" style="background-color: #28a5d4; color: white; text-transform: uppercase;">
+			<b>#{resources['label.uc.medicamentoInventario.titulo']}</b>
+		</h5><br/>
+		 
+		<!-- MEDICAMENTO INVENTÁRIO LIST -->
+		<h:panelGroup layout="block" styleClass="row" id="panelPesquisarMedicamentoInventario">
+            <div class="col-md-12">
+                <div class="card-box">
+                    <h4 class="m-t-0 header-title"><b>#{resources['label.uc.medicamentoInventario.medicamentosInventario']}</b></h4>
+                    <p class="text-muted m-b-30 font-13">
+                    </p>
+                    <div class="row">
+                        <div class="col-sm-12 form-inline">
+                        	<div class="form-group m-r-10">
+                            	<label for="apresentacao" class="mr-sm-2">#{resources['label.global.apresentacao']}:</label>
+                                <h:inputText value="#{medicamentoInventarioController.to.medicamentoInventario.medicamento.apresentacao}" styleClass="form-control" label="#{resources['label.global.nomeDescricao']}" pt:placeholder="#{resources['label.global.nomeDescricao']}" />
+                            </div>
+                            <div class="form-group m-r-10">
+                                <label for="registroMS" class="mr-sm-2">#{resources['label.global.quantidade']}:</label>
+                                <h:inputText value="#{medicamentoInventarioController.to.medicamentoInventario.quantidade}" pt:type="number" styleClass="form-control" label="#{resources['label.global.quantidade']}" pt:placeholder="#{resources['label.global.qtde']}" />
+                            </div>
+                            <div class="form-group m-r-10">
+                                <label for="dataValidade" class="mr-sm-2">#{resources['label.global.dataCadastro']}:</label>
+                                <h:inputText value="#{medicamentoInventarioController.to.medicamentoInventario.dataCadastro}" onkeypress="mascara(this,data);" styleClass="form-control" label="#{resources['label.global.dataCadastro']}" pt:placeholder="#{resources['label.global.mascaraData']}" >
+						        	 <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+						        </h:inputText>
+                            </div>
+                            <h:commandButton value="#{resources['label.global.pesquisar']}" styleClass="btn btn-primary pull-left">
+                            	<f:ajax execute="panelPesquisarMedicamentoInventario" listener="#{medicamentoInventarioController.pesquisar()}" event="click" render="@form"/>
+                            </h:commandButton><br /><br /><br />
+                            <div class="col-12">
+                                <div class="card-box table-responsive">
+                                	<h:dataTable id="lstMedicamentoInventario" value="#{medicamentoInventarioController.to.listaMedicamentoInventario}" var="medicamentoInventario" styleClass="table table-striped table-bordered table-hover">
+										<h:column>
+											<f:facet name="header">#{resources['label.global.codigo']}</f:facet>
+											<h:outputText value="#{medicamentoInventario.medicamento.codigo}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.apresentacao']}</f:facet>
+											<h:outputText value="#{medicamentoInventario.medicamento.apresentacao}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.tipo']}</f:facet>
+											<h:outputText value="#{medicamentoInventario.medicamento.tipo}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.qtde']}</f:facet>
+											<h:outputText value="#{medicamentoInventario.quantidade}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.dataCadastro']}</f:facet>
+											<h:outputText value="#{medicamentoInventario.medicamento.dataCadastro}">
+												<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.dataValidade']}</f:facet>
+											<h:outputText value="#{medicamentoInventario.medicamento.validade}">
+												<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.valorCompra']} (#{resources['label.global.simboloMonetario']})</f:facet>
+											<h:outputText value="#{medicamentoInventario.valorCompra}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.acoes']}</f:facet>
+								    			<div class="actions">
+										    		<h:commandLink onclick="return confirm ('#{resources['label.uc.medicamentoInventario.msg.excluir']}');" title="#{resources['label.global.excluir']}" class="on-default">
+										    			<i class="fa fa-trash-o"></i>
+										    			<f:ajax execute="@this" render="panelPesquisarMedicamentoInventario" listener="#{medicamentoInventarioController.excluir(medicamentoInventario)}" />
+										    		</h:commandLink>
+										    		<h:commandLink title="#{resources['label.global.alterar']}" class="on-default">
+										    			<i class="fa fa-pencil"></i>
+										    			<f:ajax execute="@this" render="panelNovoMedicamentoInventario" listener="#{medicamentoInventarioController.recuperarCompletoPorId(medicamentoInventario)}" ></f:ajax>
+										    		</h:commandLink>
+									    		</div>
+										</h:column>
+									</h:dataTable>
+                                </div>
+                                <!-- <div class="button-list">
+                                    <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#divNovoMedicamentoAvulso">
+                                    	#{resources['label.uc.medicamento.novoMedicamentoAvulso']}
+                                    </button>
+                                    <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#divNovaNotaFiscal">
+                                    	#{resources['label.uc.notaFiscal.novaNotaFiscal']}
+                                    </button>
+	                            </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:panelGroup>
+		
+	    <!-- MEDICAMENTO INVENTÁRIO NEW -->
+        <h:panelGroup layout="block" styleClass="row" id="panelNovoMedicamentoInventario">
+            <div class="col-12">
+                <div class="card-box">
+                    <h4 class="m-t-0 header-title"><b>#{resources['label.uc.medicamentoInventario.novoMedicamento']}</b></h4>
+                    <p class="text-muted m-b-30 font-14">
+                    </p>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="p-20">
+                            	<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.uc.medicamento.titulo']}:</label>
+								    <div class="col-10">
+								    	<h:selectOneMenu styleClass="form-control select2" value="#{medicamentoInventarioController.to.medicamentoInventario.medicamento}" label="#{resources['label.uc.medicamento.titulo']}" required="true" >
+								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
+								       		<f:selectItems value="#{medicamentoInventarioController.to.listaMedicamento}" var="medicamento" 
+								       				itemLabel="#{medicamento.apresentacao}" itemValue="#{medicamento}"/>
+								       		<f:converter converterId="medicamentoConverter" />
+								       	</h:selectOneMenu>
+										<!-- <div class="ui-widget">
+									        <input class="form-control bs-autocomplete" id="inputApresentacaoMedicamento" placeholder="Type two characters of a city name..." type="text" />
+								        </div> -->
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.uc.notaFiscal.titulo']}:</label>
+								    <div class="col-10">
+								    	<h:selectOneMenu styleClass="form-control select2" value="#{medicamentoInventarioController.to.medicamentoInventario.notaFiscal}" label="#{resources['label.uc.notaFiscal.titulo']}" required="true" >
+								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
+								       		<f:selectItems value="#{medicamentoInventarioController.to.listaNotaFiscal}" var="notaFiscal" 
+								       				itemLabel="#{notaFiscal.numero}" itemValue="#{notaFiscal}"/>
+								       		<f:converter converterId="notaFiscalConverter" />
+								       	</h:selectOneMenu>	 
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.quantidade']}:</label>
+								    <div class="col-md-10">
+								        <h:inputText value="#{medicamentoInventarioController.to.medicamentoInventario.quantidade}" pt:type="number" styleClass="form-control" required="true" label="#{resources['label.global.quantidade']}" pt:placeholder="#{resources['label.global.quantidadeTotal']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.tipoFracionamento']}:</label>
+								    <div class="col-10">
+								       	<h:selectOneMenu styleClass="form-control select2" value="#{medicamentoInventarioController.to.medicamentoInventario.tipoFracionamento}" label="#{resources['label.global.tipoFracionamento']}" required="true" >
+											<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
+											<f:selectItems value="#{medicamentoInventarioController.fracionamentoMedicamentoEnum}"
+												var="tipoFracionamento"
+												itemLabel="#{tipoFracionamento.key}"
+												itemValue="#{tipoFracionamento}" />
+										</h:selectOneMenu>
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.qtdFracionamento']}:</label>
+								    <div class="col-md-10">
+								        <h:inputText value="#{medicamentoInventarioController.to.medicamentoInventario.qtdFracionamento}" required="true" styleClass="form-control" label="#{resources['label.global.qtdFracionamento']}" pt:placeholder="#{resources['label.global.qtdFracionamento']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.valorCompra']}:</label>
+								    <div class="col-md-10">
+								    	<h:inputText value="#{medicamentoInventarioController.to.medicamentoInventario.valorCompra}" pt:type="number" styleClass="form-control" required="true" label="#{resources['label.global.valorCompra']}" pt:placeholder="#{resources['label.global.simboloMonetario']}" />
+								    </div>
+								</div>
+                                <div class="button-list">
+	                               	<ui:fragment rendered="#{medicamentoInventarioController.to.medicamentoInventario.id eq null}">
+		                                <h:commandButton value="#{resources['label.global.cadastrar']}" styleClass="btn btn-primary pull-left" action="#{medicamentoInventarioController.incluir()}"/>
+		                            </ui:fragment>
+		                            <ui:fragment rendered="#{medicamentoInventarioController.to.medicamentoInventario.id != null}">
+		                                <h:commandButton value="#{resources['label.global.alterar']}" styleClass="btn btn-primary pull-left">
+		                                	<f:ajax execute="panelNovoMedicamentoInventario" listener="#{medicamentoInventarioController.alterar()}" event="click" render="@form"/>
+		                                </h:commandButton>
+		                                <h:commandButton value="#{resources['label.global.cancelar']}" styleClass="btn btn-primary pull-left">
+			                            	<f:ajax execute="panelPesquisarMedicamentoInventario" listener="#{medicamentoInventarioController.pesquisar()}" event="click" render="@form"/>
+			                            </h:commandButton>
+		                            </ui:fragment>
+	                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </h:panelGroup>
+		</div>
+	</h:form>
+	
+	<script>
+
+		  $( function() {
+			    function log( message ) {
+			    	d = document.createElement('div');
+			    	$(d).text(message).prependTo( "#log" );
+			      	$( "#log" ).scrollTop( 0 );
+			    }
+		    $( "#inputApresentacaoMedicamento" ).autocomplete({
+		      source: function( request, response ) {
+		        $.ajax( {
+		          url: "#{request.contextPath}/rest/medicamento/pesquisar",
+		          dataType: "json",
+		          data: {
+		            term: request.term
+		          },
+		          success: function( data ) {
+		            response( data );
+		          }
+		        } );
+		      },
+		      minLength: 2,
+		      select: function( event, ui ) {
+		        
+		      }
+		    } );
+		  } );
+		
+	</script>
+	
+	<style>
+	  .ui-autocomplete-loading {
+	    background: white url("images/ui-anim_basic_16x16.gif") right center no-repeat;
+	  }
+	</style>
+	
+</ui:define>
+</ui:composition>

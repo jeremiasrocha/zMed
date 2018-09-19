@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+    template="/WEB-INF/templates/default.xhtml">
+    
+<ui:define name="content">
+	<h:form id="formMedicamento" prependId="false" enctype="multipart/form-data" >
+		<div style="background-color: #e8e8e8;">
+
+        <!-- TITLE -->
+		<h5 class="card-header" style="background-color: #28a5d4; color: white; text-transform: uppercase;">
+			<b>#{resources['label.uc.medicamento.medicamentoAvulso']}</b>
+		</h5><br/>
+		 
+		<!-- MEDICAMENTO LIST -->
+		<h:panelGroup layout="block" styleClass="row" id="panelPesquisarMedicamento">
+            <div class="col-md-12">
+                <div class="card-box">
+                    <h4 class="m-t-0 header-title"><b>#{resources['label.uc.medicamento.medicamentosAvulsos']}</b></h4>
+                    <p class="text-muted m-b-30 font-13">
+                    </p>
+                    <div class="row">
+                        <div class="col-sm-12 form-inline">
+                            <div class="form-group m-r-10">
+                            	<label for="apresentacao" class="mr-sm-2">#{resources['label.global.apresentacao']}:</label>
+                                <h:inputText value="#{medicamentoController.to.medicamento.apresentacao}" styleClass="form-control" label="#{resources['label.global.nomeDescricao']}" pt:placeholder="#{resources['label.global.nomeDescricao']}" />
+                            </div>
+                            <div class="form-group m-r-10">
+                                <label for="registroMS" class="mr-sm-2">#{resources['label.global.registroMS']}:</label>
+                                <h:inputText value="#{medicamentoController.to.medicamento.registroMS}" pt:type="number" styleClass="form-control" label="#{resources['label.global.registroMS']}" pt:placeholder="#{resources['label.global.registroMS']}" />
+                            </div>
+                            <div class="form-group m-r-10">
+                                <label for="dataValidade" class="mr-sm-2">#{resources['label.global.dtValidade']}:</label>
+                                <h:inputText value="#{medicamentoController.to.medicamento.validade}" onkeypress="mascara(this,data);" styleClass="form-control" label="#{resources['label.global.dtValidade']}" pt:placeholder="#{resources['label.global.mascaraData']}" >
+						        	 <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+						        </h:inputText>
+                            </div>
+                            <h:commandButton value="#{resources['label.global.pesquisar']}" styleClass="btn btn-primary pull-left">
+                            	<f:ajax execute="panelPesquisarMedicamento" listener="#{medicamentoController.pesquisar()}" event="click" render="@form"></f:ajax>
+                            </h:commandButton><br /><br /><br />
+                            <div class="col-12">
+                                <div class="card-box table-responsive">
+                                	<h:dataTable id="lstMedicamentos" value="#{medicamentoController.to.medicamentos}" var="medicamento" styleClass="table table-striped table-bordered table-hover">
+										<h:column>
+											<f:facet name="header">#{resources['label.global.codigo']}</f:facet>
+											<h:outputText value="#{medicamento.codigo}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.apresentacao']}</f:facet>
+											<h:outputText value="#{medicamento.apresentacao}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.registroMS']}</f:facet>
+											<h:outputText value="#{medicamento.registroMS}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.lote']}</f:facet>
+											<h:outputText value="#{medicamento.lote}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.tipo']}</f:facet>
+											<h:outputText value="#{medicamento.tipo}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.dataValidade']}</f:facet>
+											<h:outputText value="#{medicamento.validade}">
+												<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.valorGenerico']} (#{resources['label.global.simboloMonetario']})</f:facet>
+											<h:outputText value="#{medicamento.valorCompra}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.acoes']}</f:facet>
+							    			<div class="actions">
+									    		<h:commandLink onclick="return confirm ('#{resources['label.uc.medicamento.msg.excluir']}');" title="#{resources['label.global.excluir']}" class="on-default">
+									    			<i class="fa fa-trash-o"></i>
+									    			<f:ajax execute="@this" render="panelPesquisarMedicamento" listener="#{medicamentoController.excluir(medicamento)}" ></f:ajax>
+									    		</h:commandLink>
+									    		<h:commandLink title="#{resources['label.global.alterar']}" class="on-default">
+									    			<i class="fa fa-pencil"></i>
+									    			<f:ajax execute="@this" render="panelNovoMedicamento" listener="#{medicamentoController.recuperarCompletoPorId(medicamento)}" ></f:ajax>
+									    		</h:commandLink>
+								    		</div>
+										</h:column>
+									</h:dataTable>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:panelGroup>
+		
+	    <!-- MEDICAMENTO NEW -->
+        <h:panelGroup layout="block" styleClass="row" id="panelNovoMedicamento">
+            <div class="col-12">
+                <div class="card-box">
+                    <h4 class="m-t-0 header-title"><b>#{resources['label.uc.medicamento.novoMedicamentoAvulso']}</b></h4>
+                    <p class="text-muted m-b-30 font-14">
+                    </p>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="p-20">
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.apresentacao']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{medicamentoController.to.medicamento.apresentacao}" styleClass="form-control" required="true" label="#{resources['label.global.apresentacao']}" pt:placeholder="#{resources['label.global.nomeDescricao']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.registroMS']}:</label>
+								    <div class="col-md-10">
+								        <h:inputText value="#{medicamentoController.to.medicamento.registroMS}" pt:type="number" styleClass="form-control" required="true" label="#{resources['label.global.registroMS']}" pt:placeholder="#{resources['label.global.registroMSCompleto']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.lote']}:</label>
+								    <div class="col-md-10">
+								        <h:inputText value="#{medicamentoController.to.medicamento.lote}" pt:type="number" styleClass="form-control" required="true" label="#{resources['label.global.lote']}" pt:placeholder="#{resources['label.global.loteAnvisa']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.dataValidade']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{medicamentoController.to.medicamento.validade}" onkeypress="mascara(this,data);" styleClass="form-control" required="true" label="#{resources['label.global.dataValidade']}" pt:placeholder="#{resources['label.global.mascaraData']}" >
+								        	 <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+								        </h:inputText>
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.valorGenerico']}:</label>
+								    <div class="col-md-10">
+								    	<h:inputText value="#{medicamentoController.to.medicamento.valorCompra}" pt:type="number" styleClass="form-control" required="true" label="#{resources['label.global.valorGenerico']}" pt:placeholder="#{resources['label.global.simboloMonetario']}" />
+								    </div>
+								</div>
+							    <div class="checkbox checkbox-primary">
+                               		<h:selectManyCheckbox value="#{medicamentoController.to.tipoMedicamento}" pt:type="checkbox" id="selectItemTipoMedicamento">
+									   	<f:selectItem itemValue="G" itemLabel="#{resources['label.uc.medicamento.medicamentoGenerico']}" />
+									</h:selectManyCheckbox>
+                               	</div><br/>
+                               	<div class="button-list">
+	                               	<ui:fragment rendered="#{medicamentoController.to.medicamento.id eq null}">
+		                                <h:commandButton value="#{resources['label.global.cadastrar']}" styleClass="btn btn-primary pull-left" action="#{medicamentoController.incluir()}" />
+		                            </ui:fragment>
+		                            <ui:fragment rendered="#{medicamentoController.to.medicamento.id != null}">
+		                                <h:commandButton value="#{resources['label.global.alterar']}" styleClass="btn btn-primary pull-left">
+		                                	<f:ajax execute="panelNovoMedicamento" listener="#{medicamentoController.alterar()}" event="click" render="@form"></f:ajax>
+		                                </h:commandButton>
+		                                <h:commandButton value="#{resources['label.global.cancelar']}" styleClass="btn btn-primary pull-left">
+			                            	<f:ajax execute="panelPesquisarMedicamento" listener="#{medicamentoController.pesquisar()}" event="click" render="@form"></f:ajax>
+			                            </h:commandButton>
+		                            </ui:fragment>
+	                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </h:panelGroup>
+        
+        <!-- MEDICAMENTO UPLOAD -->
+        <h:panelGroup layout="block" styleClass="row" id="panelUploadMedicamento">
+            <div class="col-12">
+                <div class="card-box">
+                    <h4 class="m-t-0 header-title"><b>#{resources['label.uc.medicamento.uploadAvulso']}</b></h4>
+                    <p class="text-muted m-b-30 font-14">
+                    </p>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="p-20">
+                               	<div class="form-group row">
+                               		<div class="col-sm-6">
+										<div class="form-group">
+											 <h:inputFile class="file" value="#{medicamentoController.to.file}" label="#{resources['label.global.upload']}" />  
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.layoutArquivo']}:</label>
+								    <div class="col-10">
+								    	<h:selectOneMenu styleClass="form-control select2" value="#{medicamentoController.to.tipoLayoutArquivo}" label="#{resources['label.global.layoutArquivo']}" >
+								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
+								       		<f:selectItem itemLabel="#{resources['label.global.layoutBrasindice']}" itemValue="#{resources['label.global.layoutBrasindice']}" />
+            								<f:selectItem itemLabel="#{resources['label.global.layoutSimpro']}" itemValue="#{resources['label.global.layoutSimpro']}" />
+								       	</h:selectOneMenu>
+								    </div>
+								</div>
+								<!-- <div class="form-group">
+									<div class="radio radio-primary">		
+										<h:selectOneRadio value="#{medicamentoController.to.tipoLayoutArquivo}" >
+										   	<f:selectItem itemValue="S" itemLabel="#{resources['label.global.layoutSimpro']}" />
+										   	<f:selectItem itemValue="B" itemLabel="#{resources['label.global.layoutBrasindice']}" />
+										</h:selectOneRadio>
+									</div>
+								</div> -->
+								<h:commandButton value="#{resources['label.global.upload']}" styleClass="btn btn-primary pull-left">
+                                	<f:ajax execute="panelUploadMedicamento" listener="#{medicamentoController.incluir()}" event="click" render="@form"></f:ajax>
+                                </h:commandButton>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </h:panelGroup>
+        
+        <!-- <div class="row">
+            <div class="col-12">
+                <div class="card-box table-responsive">
+                    <h4 class="m-t-0 header-title"><b>Default Example</b></h4>
+                    <p class="text-muted font-13 m-b-30">
+                        DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function: <code>$().DataTable();</code>.
+                    </p>
+
+                    <table id="datatable" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start date</th>
+                            <th>Salary</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Tiger Nixon</td>
+                            <td>System Architect</td>
+                            <td>Edinburgh</td>
+                            <td>61</td>
+                            <td>2011/04/25</td>
+                            <td>$320,800</td>
+                        </tr>
+                        <tr>
+                            <td>Garrett Winters</td>
+                            <td>Accountant</td>
+                            <td>Tokyo</td>
+                            <td>63</td>
+                            <td>2011/07/25</td>
+                            <td>$170,750</td>
+                        </tr>
+                        <tr>
+                            <td>Ashton Cox</td>
+                            <td>Junior Technical Author</td>
+                            <td>San Francisco</td>
+                            <td>66</td>
+                            <td>2009/01/12</td>
+                            <td>$86,000</td>
+                        </tr>
+                        <tr>
+                            <td>Cedric Kelly</td>
+                            <td>Senior Javascript Developer</td>
+                            <td>Edinburgh</td>
+                            <td>22</td>
+                            <td>2012/03/29</td>
+                            <td>$433,060</td>
+                        </tr>
+                        <tr>
+                            <td>Airi Satou</td>
+                            <td>Accountant</td>
+                            <td>Tokyo</td>
+                            <td>33</td>
+                            <td>2008/11/28</td>
+                            <td>$162,700</td>
+                        </tr>
+                        <tr>
+                            <td>Brielle Williamson</td>
+                            <td>Integration Specialist</td>
+                            <td>New York</td>
+                            <td>61</td>
+                            <td>2012/12/02</td>
+                            <td>$372,000</td>
+                        </tr>
+                        <tr>
+                            <td>Herrod Chandler</td>
+                            <td>Sales Assistant</td>
+                            <td>San Francisco</td>
+                            <td>59</td>
+                            <td>2012/08/06</td>
+                            <td>$137,500</td>
+                        </tr>
+                        <tr>
+                            <td>Rhona Davidson</td>
+                            <td>Integration Specialist</td>
+                            <td>Tokyo</td>
+                            <td>55</td>
+                            <td>2010/10/14</td>
+                            <td>$327,900</td>
+                        </tr>
+                        <tr>
+                            <td>Colleen Hurst</td>
+                            <td>Javascript Developer</td>
+                            <td>San Francisco</td>
+                            <td>39</td>
+                            <td>2009/09/15</td>
+                            <td>$205,500</td>
+                        </tr>
+                        <tr>
+                            <td>Sonya Frost</td>
+                            <td>Software Engineer</td>
+                            <td>Edinburgh</td>
+                            <td>23</td>
+                            <td>2008/12/13</td>
+                            <td>$103,600</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> end row -->
+
+	</div>
+	</h:form>
+	
+	<script>
+
+	</script>
+	
+</ui:define>
+</ui:composition>
