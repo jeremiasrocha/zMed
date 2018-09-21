@@ -61,6 +61,11 @@ public class PacienteController extends ZmedController<PacienteTO> {
 		getTo().setListaPaciente(pacienteService.pesquisar(getTo()));
 	}
 	
+	public void listar() throws Exception {
+		limparObjetoPaciente();
+		getTo().setListaPaciente(pacienteService.listar());
+	}
+	
 	public void recuperarCompletoPorId(Paciente paciente)throws Exception {
 		recuperar(paciente.getId());
 	}

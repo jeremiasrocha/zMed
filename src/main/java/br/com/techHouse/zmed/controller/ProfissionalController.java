@@ -12,6 +12,7 @@ import br.com.techHouse.zmed.enums.ZmedNavegacaoEnum;
 import br.com.techHouse.zmed.service.ProfissionalService;
 import br.com.techHouse.zmed.to.ProfissionalTO;
 import br.com.techHouse.zmed.util.UtilArquivo;
+import br.com.techHouse.zmed.util.UtilNullEmpty;
 
 @ManagedBean(name = "profissionalController")
 @ViewScoped
@@ -67,14 +68,16 @@ public class ProfissionalController extends ZmedController<ProfissionalTO> {
 	}
 	
 	public void pesquisar() throws Exception {
+		getTo().setListaProfissional(profissionalService.pesquisar(getTo()));
+	}
+	
+	public void listar() throws Exception {
 		limparObjetoProfissional();
 		getTo().setListaProfissional(profissionalService.pesquisar(getTo()));
 	}
 	
 	public void recuperarCompletoPorId(Profissional profissional)throws Exception {
 		recuperar(profissional.getId());
-		//getTo().getNotaFiscal().setTipo(getTo().getTipoMedicamentoString().equals(TipoMedicamentoEnum.G.getName())
-		//		? TipoMedicamentoEnum.G.getTipo() : TipoMedicamentoEnum.NG.getTipo());
 	}
 	
 	private void recuperar(Integer id) throws Exception {
@@ -84,9 +87,13 @@ public class ProfissionalController extends ZmedController<ProfissionalTO> {
 	private void definirDadosParaIncluirProfissional() throws Exception {
 		getTo().getProfissional().setDataCadastro(new Date());
 		getTo().getProfissional().setStatus(StatusEnum.A.getKey());
-		
+		if(!UtilNullEmpty.isNullOrEmpty(getTo().getCpf())) {
+			getTo().getProfissional().setCodigo(getTo().getCpf());
+		}
+		if(!UtilNullEmpty.isNullOrEmpty(getTo().getCnpj())) {
+			getTo().getProfissional().setCodigo(getTo().getCnpj());
+		}
 		getTo().getProfissional().setAssinatura(UtilArquivo.converteInputStreamEmBytes(getTo().getImgAssinatura().getInputStream()));
-		
 		//PASSAGEM ID USUARIO CADASTRO MANUAL- PROVISÓRIO
 		//getTo().getNotaFiscal().getUsuarioCadastro().setId(1);
 		//getTo().getNotaFiscal().setTipo(getTo().getTipoMedicamentoString().equals(TipoMedicamentoEnum.G.getName())
@@ -99,8 +106,12 @@ public class ProfissionalController extends ZmedController<ProfissionalTO> {
 	
 	private void definirDadosParaAlterarProfissional() throws Exception {
 		getTo().getProfissional().setDataAlteracao(new Date());
-		//getTo().getNotaFiscal().setTipo(getTo().getTipoMedicamentoString().equals(TipoMedicamentoEnum.G.getName())
-		//		? TipoMedicamentoEnum.G.getTipo() : TipoMedicamentoEnum.NG.getTipo());
+		if(!UtilNullEmpty.isNullOrEmpty(getTo().getCpf())) {
+			getTo().getProfissional().setCodigo(getTo().getCpf());
+		}
+		if(!UtilNullEmpty.isNullOrEmpty(getTo().getCnpj())) {
+			getTo().getProfissional().setCodigo(getTo().getCnpj());
+		}
 	}
 	
 	private void definirDadosParaExcluirProfissional(Profissional profissional) throws Exception {

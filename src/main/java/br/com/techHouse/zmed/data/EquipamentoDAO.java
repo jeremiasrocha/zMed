@@ -77,7 +77,7 @@ public class EquipamentoDAO extends ZmedDataAbstract<Equipamento> {
 	}
 	
 	private Predicate comporFiltroPorReferencia(String referencia, Root<Equipamento> root) {
-		return getCriteriaBuilder().equal(root.<String>get("referencia"), referencia);
+		return getCriteriaBuilder().like(getCriteriaBuilder().lower(getCriteriaBuilder().trim(root.<String>get("referencia"))), "%"+referencia.toLowerCase()+"%");
 	}
 	
 	private Predicate comporFiltroPorId(Integer id, Root<Equipamento> root) {

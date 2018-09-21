@@ -8,7 +8,7 @@
     template="/WEB-INF/templates/default.xhtml">
     
 <ui:define name="content">
-	<h:form id="formProfissional" enctype="multipart/form-data" >
+	<h:form id="formProfissional" prependId="false" enctype="multipart/form-data" >
 		<div style="background-color: #e8e8e8;">
 
         <!-- TITLE -->
@@ -37,6 +37,9 @@
 							    <label for="tipoOperacao" class="mr-sm-2">#{resources['label.uc.profissional.especialidade']}:</label>
 						    	<h:selectOneMenu styleClass="form-control select2" value="#{profissionalController.to.profissional.especialidade}" label="#{resources['label.uc.profissional.especialidade']}" >
 						       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
+						       		<f:selectItem itemLabel="Consulta" itemValue="Consulta" />
+						       		<f:selectItem itemLabel="Sessão" itemValue="Sessão" />
+						       		<f:selectItem itemLabel="Visita" itemValue="Visita" />
 						       	</h:selectOneMenu>
 							</div>
                             <h:commandButton value="#{resources['label.global.pesquisar']}" styleClass="btn btn-primary pull-left">
@@ -76,7 +79,7 @@
 										<h:column>
 											<f:facet name="header">#{resources['label.global.acoes']}</f:facet>
 								    			<div class="actions">
-										    		<h:commandLink title="#{resources['label.global.excluir']}" class="on-default">
+										    		<h:commandLink title="#{resources['label.global.excluir']}" onclick="return confirm ('#{resources['label.uc.profissional.msg.excluir']}');" class="on-default">
 										    			<i class="fa fa-trash-o"></i>
 										    			<f:ajax execute="@this" render="panelPesquisarProfissional" listener="#{profissionalController.excluir(profissional)}" ></f:ajax>
 										    		</h:commandLink>
@@ -127,13 +130,13 @@
 								<div class="form-group row" style="display: none;" id="divInputCodigoTipoCPF">
 								    <label class="col-2 col-form-label">#{resources['label.global.cpf']}:</label>
 								    <div class="col-10">
-								        <h:inputText value="#{profissionalController.to.profissional.codigo}" styleClass="form-control" label="#{resources['label.global.cpf']}" pt:placeholder="#{resources['label.placeHolder.cpf']}" />
+								        <h:inputText value="#{profissionalController.to.cpf}" styleClass="form-control" label="#{resources['label.global.cpf']}" pt:placeholder="#{resources['label.placeHolder.cpf']}" />
 								    </div>
 								</div>
 								<div class="form-group row" style="display: none;" id="divInputCodigoTipoCNPJ">
 								    <label class="col-2 col-form-label">#{resources['label.global.cnpj']}:</label>
 								    <div class="col-10">
-								        <h:inputText value="#{profissionalController.to.profissional.codigo}" styleClass="form-control" label="#{resources['label.global.cnpj']}" pt:placeholder="#{resources['label.placeHolder.cnpj']}" />
+								        <h:inputText value="#{profissionalController.to.cnpj}" styleClass="form-control" label="#{resources['label.global.cnpj']}" pt:placeholder="#{resources['label.placeHolder.cnpj']}" />
 								    </div>
 								</div>
 								<div class="form-group row" style="display: none;" id="divInputRazaoSocialTipoCNPJ">
@@ -142,18 +145,25 @@
 								        <h:inputText value="#{profissionalController.to.profissional.razaoSocial}" styleClass="form-control" label="#{resources['label.global.razaoSocial']}" pt:placeholder="#{resources['label.global.razaoSocial']}" />
 								    </div>
 								</div>
-
-
-
 								<div class="form-group row">
 								    <label class="col-2 col-form-label">#{resources['label.uc.profissional.especialidade']}:</label>
 								    <div class="col-md-10">
 								        <h:selectOneMenu styleClass="form-control select2" value="#{profissionalController.to.profissional.especialidade}" label="#{resources['label.uc.profissional.especialidade']}" required="true" >
 								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
-								       		<f:selectItem itemLabel="#{resources['label.global.aluguel']}" itemValue="#{resources['label.global.aluguel']}" />
-		          							<f:selectItem itemLabel="#{resources['label.global.compra']}" itemValue="#{resources['label.global.compra']}" />
-		          							<f:selectItem itemLabel="#{resources['label.global.venda']}" itemValue="#{resources['label.global.venda']}" />
-		          							<f:selectItem itemLabel="#{resources['label.global.outros']}" itemValue="#{resources['label.global.outros']}" />
+								       		<f:selectItem itemLabel="Fisioterapeuta" itemValue="Fisioterapeuta" />
+											<f:selectItem itemLabel="Fonoaudiólogo" itemValue="Fonoaudiólogo" />
+											<f:selectItem itemLabel="Médico Clínico" itemValue="Médico Clínico" />
+											<f:selectItem itemLabel="Médico Pediatra" itemValue="Médico Pediatra" />
+											<f:selectItem itemLabel="Médico Especialista" itemValue="Médico Especialista" />
+											<f:selectItem itemLabel="Psicologo" itemValue="Psicologo" />
+											<f:selectItem itemLabel="Assistente Social" itemValue="Assistente Social" />
+											<f:selectItem itemLabel="Terapeuta Ocupacional" itemValue="Terapeuta Ocupacional" />
+											<f:selectItem itemLabel="Enfermeiro" itemValue="Enfermeiro" />
+											<f:selectItem itemLabel="Técnico de Enfermagem - 12h" itemValue="Técnico de Enfermagem - 12h" />
+											<f:selectItem itemLabel="Técnico de Enfermagem - 24h" itemValue="Técnico de Enfermagem - 24h" />
+											<f:selectItem itemLabel="Técnico de Enfermagem - 24h VM" itemValue="Técnico de Enfermagem - 24h VM" />
+											<f:selectItem itemLabel="Técnico de Enfermagem - 6h" itemValue="Técnico de Enfermagem - 6h" />
+											<f:selectItem itemLabel="Nutricionista" itemValue="Nutricionista" />
 								       	</h:selectOneMenu>
 								    </div>
 								</div>
@@ -162,16 +172,12 @@
 								    <div class="col-md-10">
 								        <h:selectOneMenu styleClass="form-control select2" value="#{profissionalController.to.profissional.tipoAtendimento}" label="#{resources['label.global.tipoAtendimento']}" required="true" >
 								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
-								       		<f:selectItem itemLabel="#{resources['label.global.aluguel']}" itemValue="#{resources['label.global.aluguel']}" />
-		          							<f:selectItem itemLabel="#{resources['label.global.compra']}" itemValue="#{resources['label.global.compra']}" />
-		          							<f:selectItem itemLabel="#{resources['label.global.venda']}" itemValue="#{resources['label.global.venda']}" />
-		          							<f:selectItem itemLabel="#{resources['label.global.outros']}" itemValue="#{resources['label.global.outros']}" />
+								       		<f:selectItem itemLabel="Consulta" itemValue="Consulta" />
+						       				<f:selectItem itemLabel="Sessão" itemValue="Sessão" />
+						       				<f:selectItem itemLabel="Visita" itemValue="Visita" />
 								       	</h:selectOneMenu>
 								    </div>
 								</div>
-								
-								
-								
 								<div class="form-group row">
 								    <label class="col-2 col-form-label">#{resources['label.uc.profissional.atendimentoAltoCusto']}:</label>
 								    <div class="col-md-10">
@@ -254,7 +260,7 @@
 		                                	<f:ajax execute="panelNovoProfissional" listener="#{profissionalController.alterar()}" event="click" render="@form"></f:ajax>
 		                                </h:commandButton>
 		                                <h:commandButton value="#{resources['label.global.cancelar']}" styleClass="btn btn-primary pull-left">
-			                            	<f:ajax execute="panelPesquisarProfissional" listener="#{profissionalController.pesquisar()}" event="click" render="@form"></f:ajax>
+			                            	<f:ajax execute="panelPesquisarProfissional" listener="#{profissionalController.listar()}" event="click" render="@form"></f:ajax>
 			                            </h:commandButton>
 		                            </ui:fragment>
 	                            </div>
@@ -268,7 +274,6 @@
 	</h:form>
 	
 	<script>
-
 		function mostrarDivInputCodigoProfissional(tipoPessoa) {
 			if(tipoPessoa.value != "") {
 				if(tipoPessoa.value == "Física") {
@@ -287,7 +292,6 @@
 				document.getElementById("divInputRazaoSocialTipoCNPJ").style.display = "none";
 			}
 		}
-	
 	</script>
 	
 </ui:define>

@@ -12,7 +12,31 @@ public class ProfissionalTO {
     private Profissional profissional;
     private List<Profissional> listaProfissional;
     private Part imagemAssinatura;
+    private String cpf;
+    private String cnpj;
     
+	public String getCpf() {
+		if (cpf == null) {
+			cpf = new String();
+		}
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getCnpj() {
+		if (cnpj == null) {
+			cnpj = new String();
+		}
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+
 	public Profissional getProfissional() {
 		if (profissional == null) {
 			profissional = new Profissional();

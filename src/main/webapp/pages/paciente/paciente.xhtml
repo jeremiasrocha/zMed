@@ -217,7 +217,7 @@
 		                                	<f:ajax execute="panelNovoPaciente" listener="#{pacienteController.alterar()}" event="click" render="@form"></f:ajax>
 		                                </h:commandButton>
 		                                <h:commandButton value="#{resources['label.global.cancelar']}" styleClass="btn btn-primary pull-left">
-			                            	<f:ajax execute="panelPesquisarPaciente" listener="#{pacienteController.pesquisar()}" event="click" render="@form"></f:ajax>
+			                            	<f:ajax execute="panelPesquisarPaciente" listener="#{pacienteController.listar()}" event="click" render="@form"></f:ajax>
 			                            </h:commandButton>
 		                            </ui:fragment>
 	                            </div>

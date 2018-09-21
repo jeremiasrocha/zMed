@@ -65,8 +65,11 @@ public class EquipamentoController extends ZmedController<EquipamentoTO> {
 	}
 
 	public void pesquisar() throws Exception {
-		getTo().getEquipamento();
-		// limparObjetoEquipamento();
+		getTo().setEquipamentos(equipamentoService.pesquisar(getTo()));
+	}
+	
+	public void listar() throws Exception {
+		limparObjetoEquipamento();
 		getTo().setEquipamentos(equipamentoService.pesquisar(getTo()));
 	}
 

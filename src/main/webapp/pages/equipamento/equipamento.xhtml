@@ -30,7 +30,7 @@
                             </div>
                             <div class="form-group m-r-10">
                                 <label for="registroMS" class="mr-sm-2">#{resources['label.global.referencia']}:</label>
-                                <h:inputText value="#{equipamentoController.to.equipamento.referencia}" pt:type="number" styleClass="form-control" label="#{resources['label.global.referencia']}" pt:placeholder="#{resources['label.global.referencia']}" />
+                                <h:inputText value="#{equipamentoController.to.equipamento.referencia}" styleClass="form-control" label="#{resources['label.global.referencia']}" pt:placeholder="#{resources['label.global.referencia']}" />
                             </div>
                             <div class="form-group m-r-10">
                                 <label for="dataValidade" class="mr-sm-2">#{resources['label.global.dataCadastro']}:</label>
@@ -63,6 +63,12 @@
 										<h:column>
 											<f:facet name="header">#{resources['label.global.valorGenerico']} (#{resources['label.global.simboloMonetario']})</f:facet>
 											<h:outputText value="#{equipamento.valorCompra}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.dataCadastro']}</f:facet>
+											<h:outputText value="#{equipamento.dataCadastro}">
+												<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+											</h:outputText>
 										</h:column>
 										<h:column>
 											<f:facet name="header">#{resources['label.global.acoes']}</f:facet>
@@ -133,7 +139,7 @@
 		                                	<f:ajax execute="panelNovoEquipamento" listener="#{equipamentoController.alterar()}" event="click" render="@form"></f:ajax>
 		                                </h:commandButton>
 		                                <h:commandButton value="#{resources['label.global.cancelar']}" styleClass="btn btn-primary pull-left">
-			                            	<f:ajax execute="panelPesquisarEquipamento" listener="#{equipamentoController.pesquisar()}" event="click" render="@form"></f:ajax>
+			                            	<f:ajax execute="panelPesquisarEquipamento" listener="#{equipamentoController.listar()}" event="click" render="@form"></f:ajax>
 			                            </h:commandButton>
 		                            </ui:fragment>
 	                            </div>
