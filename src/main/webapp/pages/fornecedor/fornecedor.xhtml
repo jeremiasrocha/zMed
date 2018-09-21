@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+    template="/WEB-INF/templates/default.xhtml">
+    
+<ui:define name="content">
+	<h:form id="formFornecedor" prependId="false" >
+		<div style="background-color: #e8e8e8;">
+         <!-- TITLE -->
+		<h5 class="card-header" style="background-color: #28a5d4; color: white; text-transform: uppercase;">
+			<b>#{resources['label.uc.fornecedor.titulo']}</b>
+		</h5><br/>
+		 
+		<!-- FORNECEDOR LIST -->
+		<h:panelGroup layout="block" styleClass="row" id="panelPesquisarFornecedor">
+            <div class="col-md-12">
+                <div class="card-box">
+                    <h4 class="m-t-0 header-title"><b>#{resources['label.uc.fornecedor.fornecedores']}</b></h4>
+                    <p class="text-muted m-b-30 font-13">
+                    </p>
+                    <div class="row">
+                        <div class="col-sm-12 form-inline">
+                            <div class="form-group m-r-10">
+                            	<label for="nome" class="mr-sm-2">#{resources['label.global.nome']}:</label>
+                                <h:inputText value="#{fornecedorController.to.fornecedor.nome}" styleClass="form-control" label="#{resources['label.global.nome']}" pt:placeholder="#{resources['label.global.nome']}" />
+                            </div>
+                            <div class="form-group m-r-10">
+                                <label for="codigo" class="mr-sm-2">#{resources['label.global.codigo']}:</label>
+                                <h:inputText value="#{fornecedorController.to.fornecedor.codigo}" pt:type="number" styleClass="form-control" label="#{resources['label.global.codigo']}" pt:placeholder="#{resources['label.global.codigo']}" />
+                            </div>
+                            <div class="form-group m-r-10">
+							    <label for="tipoOperacao" class="mr-sm-2">#{resources['label.global.tipoOperacao']}:</label>
+						    	<h:selectOneMenu styleClass="form-control select2" value="#{fornecedorController.to.fornecedor.tipoOperacao}" label="#{resources['label.global.tipoOperacao']}" >
+						       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
+						       		<f:selectItem itemLabel="#{resources['label.global.aluguel']}" itemValue="#{resources['label.global.aluguel']}" />
+          							<f:selectItem itemLabel="#{resources['label.global.compra']}" itemValue="#{resources['label.global.compra']}" />
+          							<f:selectItem itemLabel="#{resources['label.global.venda']}" itemValue="#{resources['label.global.venda']}" />
+          							<f:selectItem itemLabel="#{resources['label.global.outros']}" itemValue="#{resources['label.global.outros']}" />
+						       	</h:selectOneMenu>
+							</div>
+                            <h:commandButton value="#{resources['label.global.pesquisar']}" styleClass="btn btn-primary pull-left">
+                            	<f:ajax execute="panelPesquisarFornecedor" listener="#{fornecedorController.pesquisar()}" event="click" render="@form"></f:ajax>
+                            </h:commandButton><br /><br /><br />
+                            <div class="col-12">
+                                <div class="card-box table-responsive">
+                                	<h:dataTable id="lstFornecedor" value="#{fornecedorController.to.listaFornecedor}" var="fornecedor" styleClass="table table-striped table-bordered table-hover">
+										<h:column>
+											<f:facet name="header">#{resources['label.global.codigo']}</f:facet>
+											<h:outputText value="#{fornecedor.codigo}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.nome']}</f:facet>
+											<h:outputText value="#{fornecedor.nome}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.tipoOperacao']}</f:facet>
+											<h:outputText value="#{fornecedor.tipoOperacao}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.produtosAltoCusto']}</f:facet>
+											<h:outputText value="#{fornecedor.altoCusto}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.telefone']}</f:facet>
+											<h:outputText value="#{fornecedor.telefone}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.endereco']}</f:facet>
+											<h:outputText value="#{fornecedor.enderecoCompleto}"/> - <h:outputText value="#{fornecedor.uf}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.cep']}</f:facet>
+											<h:outputText value="#{fornecedor.cep}"/>
+										</h:column>
+										<h:column>
+											<f:facet name="header">#{resources['label.global.acoes']}</f:facet>
+								    			<div class="actions">
+										    		<h:commandLink title="#{resources['label.global.excluir']}" onclick="return confirm ('#{resources['label.uc.fornecedor.msg.excluir']}');" class="on-default">
+										    			<i class="fa fa-trash-o"></i>
+										    			<f:ajax execute="@this" render="panelPesquisarFornecedor" listener="#{fornecedorController.excluir(fornecedor)}" ></f:ajax>
+										    		</h:commandLink>
+										    		<h:commandLink title="#{resources['label.global.alterar']}" class="on-default">
+										    			<i class="fa fa-pencil"></i>
+										    			<f:ajax execute="@this" render="panelNovoFornecedor" listener="#{fornecedorController.recuperarCompletoPorId(fornecedor)}" ></f:ajax>
+										    		</h:commandLink>
+									    		</div>
+										</h:column>
+									</h:dataTable>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:panelGroup>
+		
+	    <!-- FORNECEDOR NEW -->
+        <h:panelGroup layout="block" styleClass="row" id="panelNovoFornecedor">
+            <div class="col-12">
+                <div class="card-box">
+                    <h4 class="m-t-0 header-title"><b>#{resources['label.uc.fornecedor.novoFornecedor']}</b></h4>
+                    <p class="text-muted m-b-30 font-14">
+                    </p>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="p-20">
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.nome']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{fornecedorController.to.fornecedor.nome}" styleClass="form-control" required="true" label="#{resources['label.global.nome']}" pt:placeholder="#{resources['label.uc.fornecedor.placeHolder.nome']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.razaoSocial']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{fornecedorController.to.fornecedor.razaoSocial}" styleClass="form-control" required="true" label="#{resources['label.global.razaoSocial']}" pt:placeholder="#{resources['label.uc.fornecedor.placeHolder.razaoSocial']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.inscricaoEstadual']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{fornecedorController.to.fornecedor.inscricaoEstadual}" styleClass="form-control" required="true" label="#{resources['label.global.inscricaoEstadual']}" pt:placeholder="#{resources['label.placeHolder.inscricaoEstadual']}" />
+								    </div>
+								</div>
+								
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.tipoPessoa']}:</label>
+								    <div class="col-md-10">
+								        <h:selectOneMenu styleClass="form-control select2" value="#{fornecedorController.to.fornecedor.tipoPessoa}" label="#{resources['label.global.tipoPessoa']}" id="idTipoPessoa" onclick="mostrarDivInputCodigoFornecedor(this);" >
+								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
+								       		<f:selectItem itemLabel="#{resources['label.global.fisica']}" itemValue="#{resources['label.global.fisica']}" />
+		          							<f:selectItem itemLabel="#{resources['label.global.juridica']}" itemValue="#{resources['label.global.juridica']}" />
+								       	</h:selectOneMenu>
+								    </div>
+								</div>
+								<div class="form-group row" style="display: none;" id="divInputCodigoTipoCPF">
+								    <label class="col-2 col-form-label">#{resources['label.global.cpf']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{fornecedorController.to.fornecedor.codigo}" styleClass="form-control" label="#{resources['label.global.cpf']}" pt:placeholder="#{resources['label.placeHolder.cpf']}" />
+								    </div>
+								</div>
+								<div class="form-group row" style="display: none;" id="divInputCodigoTipoCNPJ">
+								    <label class="col-2 col-form-label">#{resources['label.global.cnpj']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{fornecedorController.to.fornecedor.codigo}" styleClass="form-control" label="#{resources['label.global.cnpj']}" pt:placeholder="#{resources['label.placeHolder.cnpj']}" />
+								    </div>
+								</div>
+								
+								
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.tipoOperacao']}:</label>
+								    <div class="col-md-10">
+								        <h:selectOneMenu styleClass="form-control select2" value="#{fornecedorController.to.fornecedor.tipoOperacao}" label="#{resources['label.global.tipoOperacao']}" >
+								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
+								       		<f:selectItem itemLabel="#{resources['label.global.aluguel']}" itemValue="#{resources['label.global.aluguel']}" />
+		          							<f:selectItem itemLabel="#{resources['label.global.compra']}" itemValue="#{resources['label.global.compra']}" />
+		          							<f:selectItem itemLabel="#{resources['label.global.venda']}" itemValue="#{resources['label.global.venda']}" />
+		          							<f:selectItem itemLabel="#{resources['label.global.outros']}" itemValue="#{resources['label.global.outros']}" />
+								       	</h:selectOneMenu>
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.produtosAltoCusto']}:</label>
+								    <div class="col-md-10">
+								        <h:selectOneMenu styleClass="form-control select2" value="#{fornecedorController.to.fornecedor.altoCusto}" label="#{resources['label.global.tipoOperacao']}" >
+								       		<f:selectItem itemLabel="#{resources['label.global.selecione']}"/>
+								       		<f:selectItem itemLabel="#{resources['label.global.sim']}" itemValue="#{resources['label.global.sim']}" />
+		          							<f:selectItem itemLabel="#{resources['label.global.nao']}" itemValue="#{resources['label.global.nao']}" />
+								       	</h:selectOneMenu>
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.email']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{fornecedorController.to.fornecedor.email}" styleClass="form-control" required="true" label="#{resources['label.global.email']}" pt:placeholder="#{resources['label.placeHolder.email']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.telefone']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{fornecedorController.to.fornecedor.telefone}" styleClass="form-control" required="true" label="#{resources['label.global.telefone']}" pt:placeholder="#{resources['label.placeHolder.telefone']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.enderecoCompleto']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{fornecedorController.to.fornecedor.enderecoCompleto}" styleClass="form-control" required="true" label="#{resources['label.global.enderecoCompleto']}" pt:placeholder="#{resources['label.placeHolder.endereco']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.complemento']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{fornecedorController.to.fornecedor.complemento}" styleClass="form-control" label="#{resources['label.global.complemento']}" pt:placeholder="#{resources['label.placeHolder.complemento']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.uf']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{fornecedorController.to.fornecedor.uf}" styleClass="form-control" required="true" label="#{resources['label.global.uf']}" pt:placeholder="#{resources['label.global.uf']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.cep']}:</label>
+								    <div class="col-10">
+								        <h:inputText value="#{fornecedorController.to.fornecedor.cep}" styleClass="form-control" required="true" label="#{resources['label.global.cep']}" pt:placeholder="#{resources['label.placeHolder.cep']}" />
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-2 col-form-label">#{resources['label.global.observacoes']}:</label>
+								    <div class="col-10">
+								        <h:inputTextarea value="#{fornecedorController.to.fornecedor.observacao}" pt:type="textarea" rows="5" styleClass="form-control" label="#{resources['label.global.observacoes']}" pt:placeholder="#{resources['label.uc.fornecedor.placeHolder.observacoes']}" />
+								    </div>
+								</div><br/>
+                               	<div class="button-list">
+	                               	<ui:fragment rendered="#{fornecedorController.to.fornecedor.id eq null}">
+		                                <h:commandButton value="#{resources['label.global.cadastrar']}" styleClass="btn btn-primary pull-left">
+		                                	<f:ajax execute="panelNovoFornecedor" listener="#{fornecedorController.incluir()}" event="click" render="@form"></f:ajax>
+		                                </h:commandButton>
+		                            </ui:fragment>
+		                            <ui:fragment rendered="#{fornecedorController.to.fornecedor.id != null}">
+		                                <h:commandButton value="#{resources['label.global.alterar']}" styleClass="btn btn-primary pull-left">
+		                                	<f:ajax execute="panelNovoFornecedor" listener="#{fornecedorController.alterar()}" event="click" render="@form"></f:ajax>
+		                                </h:commandButton>
+		                                <h:commandButton value="#{resources['label.global.cancelar']}" styleClass="btn btn-primary pull-left">
+			                            	<f:ajax execute="panelPesquisarFornecedor" listener="#{fornecedorController.pesquisar()}" event="click" render="@form"></f:ajax>
+			                            </h:commandButton>
+		                            </ui:fragment>
+	                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </h:panelGroup>
+	</div>
+	</h:form>
+	
+	<script>
+ 		function mostrarDivInputCodigoFornecedor(tipoPessoa) {
+			if(tipoPessoa.value != "") {
+				if(tipoPessoa.value == "Física") {
+					document.getElementById("divInputCodigoTipoCPF").style.display = "";
+					document.getElementById("divInputCodigoTipoCNPJ").style.display = "none";
+				}
+				if(tipoPessoa.value == "Jurídica") {
+					document.getElementById("divInputCodigoTipoCNPJ").style.display = "";
+					document.getElementById("divInputCodigoTipoCPF").style.display = "none";
+				}
+			} else {
+				document.getElementById("divInputCodigoTipoCPF").style.display = "none";
+				document.getElementById("divInputCodigoTipoCNPJ").style.display = "none";
+			}
+		}
+	</script>
+	
+</ui:define>
+</ui:composition>
